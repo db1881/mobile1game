@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_09
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 9
+  LevelName: Level 9
+  Width: 6
+  Height: 8
+  ColorVariety: 4
+  MaxMoves: 29
+  Goals:
+  - Type: 0
+    Color: 2
+    Amount: 26
+  - Type: 0
+    Color: 3
+    Amount: 30
+  StarOneScore: 2220
+  StarTwoScore: 5380
+  StarThreeScore: 10400
+  BlockedCells:
+  - {x: 3, y: 2}
+  - {x: 2, y: 5}
+  IceCells: []
+  WorldIndex: 1

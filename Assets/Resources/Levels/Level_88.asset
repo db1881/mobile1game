@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_88
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 88
+  LevelName: Level 88
+  Width: 9
+  Height: 11
+  ColorVariety: 7
+  MaxMoves: 14
+  Goals:
+  - Type: 0
+    Color: 5
+    Amount: 153
+  - Type: 0
+    Color: 6
+    Amount: 157
+  - Type: 0
+    Color: 7
+    Amount: 161
+  StarOneScore: 16440
+  StarTwoScore: 38560
+  StarThreeScore: 73600
+  BlockedCells:
+  - {x: 2, y: 2}
+  - {x: 8, y: 8}
+  - {x: 8, y: 5}
+  - {x: 0, y: 3}
+  - {x: 6, y: 6}
+  - {x: 1, y: 5}
+  - {x: 0, y: 7}
+  - {x: 6, y: 3}
+  IceCells:
+  - Position: {x: 2, y: 7}
+    Layers: 2
+  - Position: {x: 8, y: 2}
+    Layers: 2
+  - Position: {x: 0, y: 2}
+    Layers: 2
+  - Position: {x: 0, y: 5}
+    Layers: 2
+  - Position: {x: 2, y: 1}
+    Layers: 1
+  - Position: {x: 6, y: 5}
+    Layers: 1
+  - Position: {x: 4, y: 3}
+    Layers: 2
+  - Position: {x: 0, y: 9}
+    Layers: 2
+  - Position: {x: 8, y: 4}
+    Layers: 1
+  WorldIndex: 4

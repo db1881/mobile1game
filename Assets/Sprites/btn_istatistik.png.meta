@@ -1,0 +1,5005 @@
+fileFormatVersion: 2
+guid: 5d672610c7c0f324b87ad23ff9876486
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6076784705841087176
+    second: btn_istatistik_0
+  - first:
+      213: -4411149448438422276
+    second: btn_istatistik_1
+  - first:
+      213: -2925282252233624099
+    second: btn_istatistik_2
+  - first:
+      213: -4910633182434354318
+    second: btn_istatistik_3
+  - first:
+      213: -650276991153514454
+    second: btn_istatistik_4
+  - first:
+      213: 6553378356263950443
+    second: btn_istatistik_5
+  - first:
+      213: -4521411531398810618
+    second: btn_istatistik_6
+  - first:
+      213: -5799795781632213997
+    second: btn_istatistik_7
+  - first:
+      213: 8813646044268656
+    second: btn_istatistik_8
+  - first:
+      213: -637261142358390230
+    second: btn_istatistik_9
+  - first:
+      213: 8492611980985230513
+    second: btn_istatistik_10
+  - first:
+      213: -3097375662062199396
+    second: btn_istatistik_11
+  - first:
+      213: -5597873732062445063
+    second: btn_istatistik_12
+  - first:
+      213: -8773851563425660761
+    second: btn_istatistik_13
+  - first:
+      213: -6037986115535269713
+    second: btn_istatistik_14
+  - first:
+      213: 1795151454233865841
+    second: btn_istatistik_15
+  - first:
+      213: 1300197590750177240
+    second: btn_istatistik_16
+  - first:
+      213: 6379888069588194898
+    second: btn_istatistik_17
+  - first:
+      213: -3214450297435539219
+    second: btn_istatistik_18
+  - first:
+      213: -571246041060281346
+    second: btn_istatistik_19
+  - first:
+      213: 362165567799199557
+    second: btn_istatistik_20
+  - first:
+      213: 6759843201370986616
+    second: btn_istatistik_21
+  - first:
+      213: -500636461081287834
+    second: btn_istatistik_22
+  - first:
+      213: -3662624443560794840
+    second: btn_istatistik_23
+  - first:
+      213: 1329423734726775149
+    second: btn_istatistik_24
+  - first:
+      213: 6972409490028928524
+    second: btn_istatistik_25
+  - first:
+      213: 4955026230375206319
+    second: btn_istatistik_26
+  - first:
+      213: 4392307282698975430
+    second: btn_istatistik_27
+  - first:
+      213: -7177665315334862121
+    second: btn_istatistik_28
+  - first:
+      213: 5642842286307408400
+    second: btn_istatistik_29
+  - first:
+      213: 1899480871845285982
+    second: btn_istatistik_30
+  - first:
+      213: 7490520338519023585
+    second: btn_istatistik_31
+  - first:
+      213: -2935284759486023999
+    second: btn_istatistik_32
+  - first:
+      213: 2791997543858181454
+    second: btn_istatistik_33
+  - first:
+      213: 2121286745999202032
+    second: btn_istatistik_34
+  - first:
+      213: -3973671666910762731
+    second: btn_istatistik_35
+  - first:
+      213: 8537497201658998690
+    second: btn_istatistik_36
+  - first:
+      213: 3404958637117701887
+    second: btn_istatistik_37
+  - first:
+      213: 4657773096070337804
+    second: btn_istatistik_38
+  - first:
+      213: -6114471488683562571
+    second: btn_istatistik_39
+  - first:
+      213: 7563862631852288581
+    second: btn_istatistik_40
+  - first:
+      213: -8854119217306398831
+    second: btn_istatistik_41
+  - first:
+      213: 6089943570583413611
+    second: btn_istatistik_42
+  - first:
+      213: -5944160023252468830
+    second: btn_istatistik_43
+  - first:
+      213: 118873713652372692
+    second: btn_istatistik_44
+  - first:
+      213: -1319763783396218215
+    second: btn_istatistik_45
+  - first:
+      213: 3239571606457218959
+    second: btn_istatistik_46
+  - first:
+      213: -4048862957255944838
+    second: btn_istatistik_47
+  - first:
+      213: -3902625251706407285
+    second: btn_istatistik_48
+  - first:
+      213: -2047247191752551009
+    second: btn_istatistik_49
+  - first:
+      213: -8280022169971226715
+    second: btn_istatistik_50
+  - first:
+      213: 1970594063826495951
+    second: btn_istatistik_51
+  - first:
+      213: -2320458245941432466
+    second: btn_istatistik_52
+  - first:
+      213: -3887732809166104751
+    second: btn_istatistik_53
+  - first:
+      213: 4631383372847935238
+    second: btn_istatistik_54
+  - first:
+      213: -2342721427027331336
+    second: btn_istatistik_55
+  - first:
+      213: -2522307317608581301
+    second: btn_istatistik_56
+  - first:
+      213: -3323868025252228858
+    second: btn_istatistik_57
+  - first:
+      213: -4227537668158117459
+    second: btn_istatistik_58
+  - first:
+      213: 5890813197830203805
+    second: btn_istatistik_59
+  - first:
+      213: 315874213459637294
+    second: btn_istatistik_60
+  - first:
+      213: -5831231058721619869
+    second: btn_istatistik_61
+  - first:
+      213: -8466913090548630292
+    second: btn_istatistik_62
+  - first:
+      213: 2125542391738166804
+    second: btn_istatistik_63
+  - first:
+      213: 3825915267269563204
+    second: btn_istatistik_64
+  - first:
+      213: 1355351908967057772
+    second: btn_istatistik_65
+  - first:
+      213: -1314022170793593235
+    second: btn_istatistik_66
+  - first:
+      213: -1312252960011561045
+    second: btn_istatistik_67
+  - first:
+      213: 1632268531693246284
+    second: btn_istatistik_68
+  - first:
+      213: -5854958507586868925
+    second: btn_istatistik_69
+  - first:
+      213: -3047021066897964558
+    second: btn_istatistik_70
+  - first:
+      213: -4202686629039608674
+    second: btn_istatistik_71
+  - first:
+      213: 851650363632527247
+    second: btn_istatistik_72
+  - first:
+      213: -2850487130875223673
+    second: btn_istatistik_73
+  - first:
+      213: -5714871873471094173
+    second: btn_istatistik_74
+  - first:
+      213: -7492112485431552038
+    second: btn_istatistik_75
+  - first:
+      213: -7473158508991980716
+    second: btn_istatistik_76
+  - first:
+      213: 5709384747177060771
+    second: btn_istatistik_77
+  - first:
+      213: -2332164287129559550
+    second: btn_istatistik_78
+  - first:
+      213: -3913414097451566041
+    second: btn_istatistik_79
+  - first:
+      213: -3404931615605008838
+    second: btn_istatistik_80
+  - first:
+      213: 1993041972377324573
+    second: btn_istatistik_81
+  - first:
+      213: -5127539303396618792
+    second: btn_istatistik_82
+  - first:
+      213: 607926473915113443
+    second: btn_istatistik_83
+  - first:
+      213: -5932599000184372269
+    second: btn_istatistik_84
+  - first:
+      213: 5024519808240976666
+    second: btn_istatistik_85
+  - first:
+      213: -8001078669877344732
+    second: btn_istatistik_86
+  - first:
+      213: 3421350403470202767
+    second: btn_istatistik_87
+  - first:
+      213: -5845545834204929606
+    second: btn_istatistik_88
+  - first:
+      213: 4835676521632518560
+    second: btn_istatistik_89
+  - first:
+      213: 4375081540844199898
+    second: btn_istatistik_90
+  - first:
+      213: 2213648888699792185
+    second: btn_istatistik_91
+  - first:
+      213: -1283642475070518167
+    second: btn_istatistik_92
+  - first:
+      213: 3489548579389686379
+    second: btn_istatistik_93
+  - first:
+      213: -7418792553420532365
+    second: btn_istatistik_94
+  - first:
+      213: -4015932909316638120
+    second: btn_istatistik_95
+  - first:
+      213: -6530730292195667470
+    second: btn_istatistik_96
+  - first:
+      213: -1413555870551921521
+    second: btn_istatistik_97
+  - first:
+      213: 8070458205661011769
+    second: btn_istatistik_98
+  - first:
+      213: 4587918048905509704
+    second: btn_istatistik_99
+  - first:
+      213: -3330588650893449707
+    second: btn_istatistik_100
+  - first:
+      213: -2505296273474338711
+    second: btn_istatistik_101
+  - first:
+      213: -4161371965952581913
+    second: btn_istatistik_102
+  - first:
+      213: -1234681321195732393
+    second: btn_istatistik_103
+  - first:
+      213: -7268001319139560771
+    second: btn_istatistik_104
+  - first:
+      213: -4977322236469767624
+    second: btn_istatistik_105
+  - first:
+      213: -7918349536630109221
+    second: btn_istatistik_106
+  - first:
+      213: 801540987346853122
+    second: btn_istatistik_107
+  - first:
+      213: 1393950564311153697
+    second: btn_istatistik_108
+  - first:
+      213: 2958650960660946688
+    second: btn_istatistik_109
+  - first:
+      213: -3270510685373693306
+    second: btn_istatistik_110
+  - first:
+      213: 2500942598918412205
+    second: btn_istatistik_111
+  - first:
+      213: 1560135351485067875
+    second: btn_istatistik_112
+  - first:
+      213: -6200468813989178531
+    second: btn_istatistik_113
+  - first:
+      213: 4808226024044525021
+    second: btn_istatistik_114
+  - first:
+      213: -7459512458900582732
+    second: btn_istatistik_115
+  - first:
+      213: -5266195472572083616
+    second: btn_istatistik_116
+  - first:
+      213: -112585043088989134
+    second: btn_istatistik_117
+  - first:
+      213: 5068435026771004218
+    second: btn_istatistik_118
+  - first:
+      213: -2221579245320658225
+    second: btn_istatistik_119
+  - first:
+      213: -4600388803812470197
+    second: btn_istatistik_120
+  - first:
+      213: -8396062887110835053
+    second: btn_istatistik_121
+  - first:
+      213: 8961134606400271511
+    second: btn_istatistik_122
+  - first:
+      213: -1212108786364155083
+    second: btn_istatistik_123
+  - first:
+      213: -5348808458901254687
+    second: btn_istatistik_124
+  - first:
+      213: 2004419483645350695
+    second: btn_istatistik_125
+  - first:
+      213: -4280528733374232254
+    second: btn_istatistik_126
+  - first:
+      213: -3705749490861718213
+    second: btn_istatistik_127
+  - first:
+      213: 4262042812833425480
+    second: btn_istatistik_128
+  - first:
+      213: -4364940246635693253
+    second: btn_istatistik_129
+  - first:
+      213: 7609721829690819244
+    second: btn_istatistik_130
+  - first:
+      213: 6692961098291601022
+    second: btn_istatistik_131
+  - first:
+      213: -3818235119898938344
+    second: btn_istatistik_132
+  - first:
+      213: 4114134362955952755
+    second: btn_istatistik_133
+  - first:
+      213: 8285235670899096631
+    second: btn_istatistik_134
+  - first:
+      213: -2011553000835605849
+    second: btn_istatistik_135
+  - first:
+      213: -4303148745343065252
+    second: btn_istatistik_136
+  - first:
+      213: 6486477757252546767
+    second: btn_istatistik_137
+  - first:
+      213: 232888638140457672
+    second: btn_istatistik_138
+  - first:
+      213: -360531159009646743
+    second: btn_istatistik_139
+  - first:
+      213: -5377915507777624282
+    second: btn_istatistik_140
+  - first:
+      213: 4927862690280067217
+    second: btn_istatistik_141
+  - first:
+      213: 3193092984598596445
+    second: btn_istatistik_142
+  - first:
+      213: -3799347403863055206
+    second: btn_istatistik_143
+  - first:
+      213: 3857808564015165722
+    second: btn_istatistik_144
+  - first:
+      213: -477049012106657466
+    second: btn_istatistik_145
+  - first:
+      213: -1669961605362744827
+    second: btn_istatistik_146
+  - first:
+      213: 4662805521792144994
+    second: btn_istatistik_147
+  - first:
+      213: 6699372106822915246
+    second: btn_istatistik_148
+  - first:
+      213: -145728241210405379
+    second: btn_istatistik_149
+  - first:
+      213: -4348830351747601891
+    second: btn_istatistik_150
+  - first:
+      213: 7706827296005606453
+    second: btn_istatistik_151
+  - first:
+      213: -6597037577646442056
+    second: btn_istatistik_152
+  - first:
+      213: -3591024549386799322
+    second: btn_istatistik_153
+  - first:
+      213: -7855342895057470967
+    second: btn_istatistik_154
+  - first:
+      213: 254551573110668517
+    second: btn_istatistik_155
+  - first:
+      213: -7047063483316237806
+    second: btn_istatistik_156
+  - first:
+      213: -7163878495096156206
+    second: btn_istatistik_157
+  - first:
+      213: -6960098099561265055
+    second: btn_istatistik_158
+  - first:
+      213: 5633763932948567776
+    second: btn_istatistik_159
+  - first:
+      213: -4887537554682143835
+    second: btn_istatistik_160
+  - first:
+      213: 8697217596971748096
+    second: btn_istatistik_161
+  - first:
+      213: 6624324429108213026
+    second: btn_istatistik_162
+  - first:
+      213: 1808662844172278639
+    second: btn_istatistik_163
+  - first:
+      213: -3821616850820393956
+    second: btn_istatistik_164
+  - first:
+      213: 13235366396718131
+    second: btn_istatistik_165
+  - first:
+      213: 9086627780397309764
+    second: btn_istatistik_166
+  - first:
+      213: -6998931067851289367
+    second: btn_istatistik_167
+  - first:
+      213: 536346102242741030
+    second: btn_istatistik_168
+  - first:
+      213: -8632542511746403264
+    second: btn_istatistik_169
+  - first:
+      213: -8256541472990900665
+    second: btn_istatistik_170
+  - first:
+      213: -7325868572472364730
+    second: btn_istatistik_171
+  - first:
+      213: -452503807608815022
+    second: btn_istatistik_172
+  - first:
+      213: 6802884077070833062
+    second: btn_istatistik_173
+  - first:
+      213: -3919601345089828750
+    second: btn_istatistik_174
+  - first:
+      213: -6857100747447232572
+    second: btn_istatistik_175
+  - first:
+      213: -4835554602136383037
+    second: btn_istatistik_176
+  - first:
+      213: 9182445938352833826
+    second: btn_istatistik_177
+  - first:
+      213: -6921748138347865749
+    second: btn_istatistik_178
+  - first:
+      213: 6740319714594610521
+    second: btn_istatistik_179
+  - first:
+      213: -7990574963685460384
+    second: btn_istatistik_180
+  - first:
+      213: 2827767879047464194
+    second: btn_istatistik_181
+  - first:
+      213: -8971689390294320083
+    second: btn_istatistik_182
+  - first:
+      213: 6578105746333755061
+    second: btn_istatistik_183
+  - first:
+      213: -7748929380837426592
+    second: btn_istatistik_184
+  - first:
+      213: -4901205849519274813
+    second: btn_istatistik_185
+  - first:
+      213: 2549230039788385554
+    second: btn_istatistik_186
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: btn_istatistik_0
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 759
+        width: 49
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c24f286e73155450800000000000000
+      internalID: 6076784705841087176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_1
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 826
+        width: 100
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf4eaaaa2f278c2c0800000000000000
+      internalID: -4411149448438422276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_2
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 826
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd53cd75a4f4767d0800000000000000
+      internalID: -2925282252233624099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_3
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 805
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27b11c2632de9dbb0800000000000000
+      internalID: -4910633182434354318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_4
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 831
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a285fa89580c9f6f0800000000000000
+      internalID: -650276991153514454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_5
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 804
+        width: 31
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6898dbc4e642fa50800000000000000
+      internalID: 6553378356263950443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_6
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 845
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6047e9bea28b041c0800000000000000
+      internalID: -4521411531398810618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_7
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 830
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31cb00a177cf28fa0800000000000000
+      internalID: -5799795781632213997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_8
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 820
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07805a1e6ff4f1000800000000000000
+      internalID: 8813646044268656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_9
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 831
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2a819c0e5ef727f0800000000000000
+      internalID: -637261142358390230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_10
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 425
+        width: 210
+        height: 413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b4e9d5d991dbd570800000000000000
+      internalID: 8492611980985230513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_11
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 676
+        width: 114
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9d97d6fe39e305d0800000000000000
+      internalID: -3097375662062199396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_12
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 662
+        width: 218
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f18deedf7b5052b0800000000000000
+      internalID: -5597873732062445063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_13
+      rect:
+        serializedVersion: 2
+        x: 1004
+        y: 822
+        width: 93
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a0020a2d740d3680800000000000000
+      internalID: -8773851563425660761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_14
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 675
+        width: 74
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa097c85e93c43ca0800000000000000
+      internalID: -6037986115535269713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_15
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 833
+        width: 28
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17ea2ab8cb8a9e810800000000000000
+      internalID: 1795151454233865841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_16
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 830
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d7ab7ee1da3b0210800000000000000
+      internalID: 1300197590750177240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_17
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 809
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2569e8ea56ae98850800000000000000
+      internalID: 6379888069588194898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_18
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 827
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de8b4314c7af363d0800000000000000
+      internalID: -3214450297435539219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_19
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 831
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef3f04390c68218f0800000000000000
+      internalID: -571246041060281346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_20
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 850
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5478c824aaba60500800000000000000
+      internalID: 362165567799199557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_21
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 840
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8789e039399cfcd50800000000000000
+      internalID: 6759843201370986616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_22
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 828
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66324a78ac16d09f0800000000000000
+      internalID: -500636461081287834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_23
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 817
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82565e7597ebb2dc0800000000000000
+      internalID: -3662624443560794840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_24
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 842
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d61dc58d7df037210800000000000000
+      internalID: 1329423734726775149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_25
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 733
+        width: 47
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0e9cb16d79f2c060800000000000000
+      internalID: 6972409490028928524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_26
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 755
+        width: 25
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fadc14a8a1ac3c440800000000000000
+      internalID: 4955026230375206319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_27
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 663
+        width: 49
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c832a1c33c94fc30800000000000000
+      internalID: 4392307282698975430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_28
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 753
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dac2d2bc6fc36c90800000000000000
+      internalID: -7177665315334862121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_29
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 735
+        width: 35
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01af7ee89276f4e40800000000000000
+      internalID: 5642842286307408400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_30
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 735
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e50dcfff9cf4c5a10800000000000000
+      internalID: 1899480871845285982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_31
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 665
+        width: 41
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1efd348bf8ca3f760800000000000000
+      internalID: 7490520338519023585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_32
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 743
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6b7342016c347d0800000000000000
+      internalID: -2935284759486023999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_33
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 770
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e451e6739fa2fb620800000000000000
+      internalID: 2791997543858181454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_34
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 685
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f6d6027e03507d10800000000000000
+      internalID: 2121286745999202032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_35
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 739
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 519efbf1caeaad8c0800000000000000
+      internalID: -3973671666910762731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_36
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 661
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2afa6c7a8784b7670800000000000000
+      internalID: 8537497201658998690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_37
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 665
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffe7c4817d7d04f20800000000000000
+      internalID: 3404958637117701887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_38
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 680
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05d4a3f3fbb3a040800000000000000
+      internalID: 4657773096070337804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_39
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 655
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b923cfa398052ba0800000000000000
+      internalID: -6114471488683562571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_40
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 743
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a28651dfc38f860800000000000000
+      internalID: 7563862631852288581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_41
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 665
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19f0e75ab79df1580800000000000000
+      internalID: -8854119217306398831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_42
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 699
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b636cca5963d38450800000000000000
+      internalID: 6089943570583413611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_43
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 646
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab75fdc3f9128da0800000000000000
+      internalID: -5944160023252468830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_44
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 708
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d49163430356a100800000000000000
+      internalID: 118873713652372692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_45
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 679
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99a2e37d4d14fade0800000000000000
+      internalID: -1319763783396218215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_46
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 718
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f87f25b463545fc20800000000000000
+      internalID: 3239571606457218959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_47
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 680
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a759588979c8fc7c0800000000000000
+      internalID: -4048862957255944838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_48
+      rect:
+        serializedVersion: 2
+        x: 839
+        y: 671
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b86f194b20717d9c0800000000000000
+      internalID: -3902625251706407285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_49
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 685
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f955c20a687b693e0800000000000000
+      internalID: -2047247191752551009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_50
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 692
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a78182b4b3771d80800000000000000
+      internalID: -8280022169971226715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_51
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 726
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc92fd24cd4f85b10800000000000000
+      internalID: 1970594063826495951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_52
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 691
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6fe88605831ccfd0800000000000000
+      internalID: -2320458245941432466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_53
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 663
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157d500bb9ffb0ac0800000000000000
+      internalID: -3887732809166104751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_54
+      rect:
+        serializedVersion: 2
+        x: 866
+        y: 739
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60f6045b3aaf54040800000000000000
+      internalID: 4631383372847935238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_55
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 712
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f6f65e364bfc7fd0800000000000000
+      internalID: -2342721427027331336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_56
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 748
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b47729fbbd6fefcd0800000000000000
+      internalID: -2522307317608581301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_57
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 705
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 601df8244af3fd1d0800000000000000
+      internalID: -3323868025252228858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_58
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 754
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da92ad6a3e4c455c0800000000000000
+      internalID: -4227537668158117459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_59
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 727
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d992ade746f50c150800000000000000
+      internalID: 5890813197830203805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_60
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 764
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e24b7fe6ce5326400800000000000000
+      internalID: 315874213459637294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_61
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 735
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3604cad4f3e431fa0800000000000000
+      internalID: -5831231058721619869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_62
+      rect:
+        serializedVersion: 2
+        x: 900
+        y: 724
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec7ebd576b7f7a80800000000000000
+      internalID: -8466913090548630292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_63
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 743
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41e669e2b817f7d10800000000000000
+      internalID: 2125542391738166804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_64
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 753
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 443985e3aa1681530800000000000000
+      internalID: 3825915267269563204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_65
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 755
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6901a7516d2fc210800000000000000
+      internalID: 1355351908967057772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_66
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 729
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d663cd23cc7a3cde0800000000000000
+      internalID: -1314022170793593235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_67
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 194
+        width: 214
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba75e0fa2e0f9cde0800000000000000
+      internalID: -1312252960011561045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_68
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 729
+        width: 12
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c47df99d49bf6a610800000000000000
+      internalID: 1632268531693246284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_69
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 700
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34922ac12420fbea0800000000000000
+      internalID: -5854958507586868925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_70
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 712
+        width: 11
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f14a64cb7ec6b5d0800000000000000
+      internalID: -3047021066897964558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_71
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 740
+        width: 15
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9c6fc517ce0da5c0800000000000000
+      internalID: -4202686629039608674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_72
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 774
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8726255e7ba1db00800000000000000
+      internalID: 851650363632527247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_73
+      rect:
+        serializedVersion: 2
+        x: 1058
+        y: 630
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7812c579e090178d0800000000000000
+      internalID: -2850487130875223673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_74
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 682
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36262ec4f42b0b0b0800000000000000
+      internalID: -5714871873471094173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_75
+      rect:
+        serializedVersion: 2
+        x: 1068
+        y: 754
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad75590b36ba60890800000000000000
+      internalID: -7492112485431552038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_76
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 801
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45b58593ee10a4890800000000000000
+      internalID: -7473158508991980716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_77
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 788
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a9a58d8d2fcb3f40800000000000000
+      internalID: 5709384747177060771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_78
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 790
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e5acbefec72afd0800000000000000
+      internalID: -2332164287129559550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_79
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 638
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72cb46ecc92c0b9c0800000000000000
+      internalID: -3913414097451566041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_80
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 653
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a36dd575cb04fb0d0800000000000000
+      internalID: -3404931615605008838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_81
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 613
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1c8ef14d15b8ab10800000000000000
+      internalID: 1993041972377324573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_82
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 640
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ddc031ab2257d8b0800000000000000
+      internalID: -5127539303396618792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_83
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 550
+        width: 53
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ef144738e9cf6800800000000000000
+      internalID: 607926473915113443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_84
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 637
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d34c2f34ac2bada0800000000000000
+      internalID: -5932599000184372269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_85
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 614
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a130e11052eaab540800000000000000
+      internalID: 5024519808240976666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_86
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 630
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 426810e575576f090800000000000000
+      internalID: -8001078669877344732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_87
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 619
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f871bfa90141b7f20800000000000000
+      internalID: 3421350403470202767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_88
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 633
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab163f9e80370eea0800000000000000
+      internalID: -5845545834204929606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_89
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 623
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a15a980d26cb1340800000000000000
+      internalID: 4835676521632518560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_90
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 617
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf13613b7967bc30800000000000000
+      internalID: 4375081540844199898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_91
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 615
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93ba3649fe578be10800000000000000
+      internalID: 2213648888699792185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_92
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 628
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96c81de48f59f2ee0800000000000000
+      internalID: -1283642475070518167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_93
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 637
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b62cdfcc1fd5d6030800000000000000
+      internalID: 3489548579389686379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_94
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 623
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3755e07aa772b0990800000000000000
+      internalID: -7418792553420532365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_95
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 601
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a716adb4a8448c0800000000000000
+      internalID: -4015932909316638120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_96
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 593
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f15bc9866f2e55a0800000000000000
+      internalID: -6530730292195667470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_97
+      rect:
+        serializedVersion: 2
+        x: 597
+        y: 560
+        width: 62
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8ca591dc6a026ce0800000000000000
+      internalID: -1413555870551921521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_98
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 611
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93f9f0b9af6000070800000000000000
+      internalID: 8070458205661011769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_99
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 599
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84bbd9b582f8baf30800000000000000
+      internalID: 4587918048905509704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_100
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 606
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5166c8aa44f57c1d0800000000000000
+      internalID: -3330588650893449707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_101
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 572
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 960c37a10566b3dd0800000000000000
+      internalID: -2505296273474338711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_102
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 582
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee902fae36df36c0800000000000000
+      internalID: -4161371965952581913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_103
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 571
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 752815741e78ddee0800000000000000
+      internalID: -1234681321195732393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_104
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 541
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db2bd99ce4fd22b90800000000000000
+      internalID: -7268001319139560771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_105
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 554
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83211920ccffceab0800000000000000
+      internalID: -4977322236469767624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_106
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 576
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb88c5bc0f5c1290800000000000000
+      internalID: -7918349536630109221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_107
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 588
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d99bff745af1b00800000000000000
+      internalID: 801540987346853122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_108
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 561
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12cb83c17ae485310800000000000000
+      internalID: 1393950564311153697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_109
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 596
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00f50948f5d3f0920800000000000000
+      internalID: 2958650960660946688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_110
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 571
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6828e2c0cdfcc92d0800000000000000
+      internalID: -3270510685373693306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_111
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 571
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da79c2c0b0225b220800000000000000
+      internalID: 2500942598918412205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_112
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 592
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 362fbc216d6b6a510800000000000000
+      internalID: 1560135351485067875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_113
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 557
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d539945177283f9a0800000000000000
+      internalID: -6200468813989178531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_114
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 560
+        width: 55
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd576f208104ab240800000000000000
+      internalID: 4808226024044525021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_115
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 521
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4be41a9d0fc7a7890800000000000000
+      internalID: -7459512458900582732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_116
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 536
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06212938e17bae6b0800000000000000
+      internalID: -5266195472572083616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_117
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 540
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 234a8a3ff74007ef0800000000000000
+      internalID: -112585043088989134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_118
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 536
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3b45d99dc2b65640800000000000000
+      internalID: 5068435026771004218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_119
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 531
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc22842627d5b21e0800000000000000
+      internalID: -2221579245320658225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_120
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 330
+        width: 87
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b42d210c1c22820c0800000000000000
+      internalID: -4600388803812470197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_121
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 406
+        width: 72
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3940be5d9413b7b80800000000000000
+      internalID: -8396062887110835053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_122
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 407
+        width: 11
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 794b2f642785c5c70800000000000000
+      internalID: 8961134606400271511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_123
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 423
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b72a71b79bd2fe0800000000000000
+      internalID: -1212108786364155083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_124
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 492
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ed069bbb0735c5b0800000000000000
+      internalID: -5348808458901254687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_125
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 430
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7239d8786e021db10800000000000000
+      internalID: 2004419483645350695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_126
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 504
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2494064dbc18894c0800000000000000
+      internalID: -4280528733374232254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_127
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 422
+        width: 182
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b354a92d878829cc0800000000000000
+      internalID: -3705749490861718213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_128
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 424
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84861746b51d52b30800000000000000
+      internalID: 4262042812833425480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_129
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 438
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3b397dd8fd9c63c0800000000000000
+      internalID: -4364940246635693253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_130
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 427
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca2c142afa92b9960800000000000000
+      internalID: 7609721829690819244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_131
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 472
+        width: 31
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7edd2778ac22ec50800000000000000
+      internalID: 6692961098291601022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_132
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 447
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 814b0896367e20bc0800000000000000
+      internalID: -3818235119898938344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_133
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 385
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 372b73ec767581930800000000000000
+      internalID: 4114134362955952755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_134
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 391
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73cf55412f11bf270800000000000000
+      internalID: 8285235670899096631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_135
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 246
+        width: 75
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa925214378514e0800000000000000
+      internalID: -2011553000835605849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_136
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 352
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c53a822e3052844c0800000000000000
+      internalID: -4303148745343065252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_137
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 349
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0b2844729940a50800000000000000
+      internalID: 6486477757252546767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_138
+      rect:
+        serializedVersion: 2
+        x: 1098
+        y: 335
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c226948bf26b3300800000000000000
+      internalID: 232888638140457672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_139
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 328
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96725c032d22ffaf0800000000000000
+      internalID: -360531159009646743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_140
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 327
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627a9dec65ecd55b0800000000000000
+      internalID: -5377915507777624282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_141
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 339
+        width: 13
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1905b040209436440800000000000000
+      internalID: 4927862690280067217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_142
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 327
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5b8ac9d625205c20800000000000000
+      internalID: 3193092984598596445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_143
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 317
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a94a07e7aa1064bc0800000000000000
+      internalID: -3799347403863055206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_144
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 317
+        width: 35
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a11759d0370b98530800000000000000
+      internalID: 3857808564015165722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_145
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 317
+        width: 26
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6418ee4737e2169f0800000000000000
+      internalID: -477049012106657466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_146
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 317
+        width: 36
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50200db84ca13d8e0800000000000000
+      internalID: -1669961605362744827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_147
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 332
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 266962fdaec95b040800000000000000
+      internalID: 4662805521792144994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_148
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 327
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea41755bf63f8fc50800000000000000
+      internalID: 6699372106822915246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_149
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 305
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfd49eccfe44afdf0800000000000000
+      internalID: -145728241210405379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_150
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 307
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1aa5af06d9d5a3c0800000000000000
+      internalID: -4348830351747601891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_151
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 289
+        width: 22
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53cc2bbd79624fa60800000000000000
+      internalID: 7706827296005606453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_152
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 323
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b9fa76964d9274a0800000000000000
+      internalID: -6597037577646442056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_153
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 313
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627b71ac23e1a2ec0800000000000000
+      internalID: -3591024549386799322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_154
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 315
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90af53f91473cf290800000000000000
+      internalID: -7855342895057470967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_155
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 299
+        width: 16
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ec374c9e49588300800000000000000
+      internalID: 254551573110668517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_156
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 250
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21a0f4f491dc33e90800000000000000
+      internalID: -7047063483316237806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_157
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 287
+        width: 7
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dfcbbde67ac49c90800000000000000
+      internalID: -7163878495096156206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_158
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 230
+        width: 57
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16887c597a3c86f90800000000000000
+      internalID: -6960098099561265055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_159
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 254
+        width: 47
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e69ec3b2762f2e40800000000000000
+      internalID: 5633763932948567776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_160
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 255
+        width: 50
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ab1ac24d7afb2cb0800000000000000
+      internalID: -4887537554682143835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_161
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 254
+        width: 62
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00b07c91359b2b870800000000000000
+      internalID: 8697217596971748096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_162
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 254
+        width: 52
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 225ffe998f35eeb50800000000000000
+      internalID: 6624324429108213026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_163
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 254
+        width: 21
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6b16592649a91910800000000000000
+      internalID: 1808662844172278639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_164
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 255
+        width: 47
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c141433d8b3e6fac0800000000000000
+      internalID: -3821616850820393956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_165
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 254
+        width: 53
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33c6c80ee750f2000800000000000000
+      internalID: 13235366396718131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_166
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 254
+        width: 20
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44f17c0c2df2a1e70800000000000000
+      internalID: 9086627780397309764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_167
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 254
+        width: 58
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec4745964dcede90800000000000000
+      internalID: -6998931067851289367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_168
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 259
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62b08d430fb717700800000000000000
+      internalID: 536346102242741030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_169
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 248
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 044b5ee925c033880800000000000000
+      internalID: -8632542511746403264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_170
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 258
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74ec81d764fda6d80800000000000000
+      internalID: -8256541472990900665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_171
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 218
+        width: 25
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6413692f859455a90800000000000000
+      internalID: -7325868572472364730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_172
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 172
+        width: 59
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25207f73f2268b9f0800000000000000
+      internalID: -452503807608815022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_173
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 242
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a5d7fd5603b86e50800000000000000
+      internalID: 6802884077070833062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_174
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 232
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27807c4f757ca99c0800000000000000
+      internalID: -3919601345089828750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_175
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 223
+        width: 25
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c7975f533fa6d0a0800000000000000
+      internalID: -6857100747447232572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_176
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 234
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c1d7af85b8a4ecb0800000000000000
+      internalID: -4835554602136383037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_177
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 219
+        width: 58
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 225cfb42ee99e6f70800000000000000
+      internalID: 9182445938352833826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_178
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 238
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69dd0dbdb201ff90800000000000000
+      internalID: -6921748138347865749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_179
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 235
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d59f4911d6a8d50800000000000000
+      internalID: 6740319714594610521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_180
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 241
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 066f56a0866cb1190800000000000000
+      internalID: -7990574963685460384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_181
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 222
+        width: 19
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20542e167ef3e3720800000000000000
+      internalID: 2827767879047464194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_182
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 231
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2cbd5898082e7380800000000000000
+      internalID: -8971689390294320083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_183
+      rect:
+        serializedVersion: 2
+        x: 1124
+        y: 222
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b6ed21f2502a4b50800000000000000
+      internalID: 6578105746333755061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_184
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 227
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06af891a8c5467490800000000000000
+      internalID: -7748929380837426592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_185
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 200
+        width: 26
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c446506f3b6bfbb0800000000000000
+      internalID: -4901205849519274813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_istatistik_186
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 192
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 215775cf63fa06320800000000000000
+      internalID: 2549230039788385554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      btn_istatistik_0: 6076784705841087176
+      btn_istatistik_1: -4411149448438422276
+      btn_istatistik_10: 8492611980985230513
+      btn_istatistik_100: -3330588650893449707
+      btn_istatistik_101: -2505296273474338711
+      btn_istatistik_102: -4161371965952581913
+      btn_istatistik_103: -1234681321195732393
+      btn_istatistik_104: -7268001319139560771
+      btn_istatistik_105: -4977322236469767624
+      btn_istatistik_106: -7918349536630109221
+      btn_istatistik_107: 801540987346853122
+      btn_istatistik_108: 1393950564311153697
+      btn_istatistik_109: 2958650960660946688
+      btn_istatistik_11: -3097375662062199396
+      btn_istatistik_110: -3270510685373693306
+      btn_istatistik_111: 2500942598918412205
+      btn_istatistik_112: 1560135351485067875
+      btn_istatistik_113: -6200468813989178531
+      btn_istatistik_114: 4808226024044525021
+      btn_istatistik_115: -7459512458900582732
+      btn_istatistik_116: -5266195472572083616
+      btn_istatistik_117: -112585043088989134
+      btn_istatistik_118: 5068435026771004218
+      btn_istatistik_119: -2221579245320658225
+      btn_istatistik_12: -5597873732062445063
+      btn_istatistik_120: -4600388803812470197
+      btn_istatistik_121: -8396062887110835053
+      btn_istatistik_122: 8961134606400271511
+      btn_istatistik_123: -1212108786364155083
+      btn_istatistik_124: -5348808458901254687
+      btn_istatistik_125: 2004419483645350695
+      btn_istatistik_126: -4280528733374232254
+      btn_istatistik_127: -3705749490861718213
+      btn_istatistik_128: 4262042812833425480
+      btn_istatistik_129: -4364940246635693253
+      btn_istatistik_13: -8773851563425660761
+      btn_istatistik_130: 7609721829690819244
+      btn_istatistik_131: 6692961098291601022
+      btn_istatistik_132: -3818235119898938344
+      btn_istatistik_133: 4114134362955952755
+      btn_istatistik_134: 8285235670899096631
+      btn_istatistik_135: -2011553000835605849
+      btn_istatistik_136: -4303148745343065252
+      btn_istatistik_137: 6486477757252546767
+      btn_istatistik_138: 232888638140457672
+      btn_istatistik_139: -360531159009646743
+      btn_istatistik_14: -6037986115535269713
+      btn_istatistik_140: -5377915507777624282
+      btn_istatistik_141: 4927862690280067217
+      btn_istatistik_142: 3193092984598596445
+      btn_istatistik_143: -3799347403863055206
+      btn_istatistik_144: 3857808564015165722
+      btn_istatistik_145: -477049012106657466
+      btn_istatistik_146: -1669961605362744827
+      btn_istatistik_147: 4662805521792144994
+      btn_istatistik_148: 6699372106822915246
+      btn_istatistik_149: -145728241210405379
+      btn_istatistik_15: 1795151454233865841
+      btn_istatistik_150: -4348830351747601891
+      btn_istatistik_151: 7706827296005606453
+      btn_istatistik_152: -6597037577646442056
+      btn_istatistik_153: -3591024549386799322
+      btn_istatistik_154: -7855342895057470967
+      btn_istatistik_155: 254551573110668517
+      btn_istatistik_156: -7047063483316237806
+      btn_istatistik_157: -7163878495096156206
+      btn_istatistik_158: -6960098099561265055
+      btn_istatistik_159: 5633763932948567776
+      btn_istatistik_16: 1300197590750177240
+      btn_istatistik_160: -4887537554682143835
+      btn_istatistik_161: 8697217596971748096
+      btn_istatistik_162: 6624324429108213026
+      btn_istatistik_163: 1808662844172278639
+      btn_istatistik_164: -3821616850820393956
+      btn_istatistik_165: 13235366396718131
+      btn_istatistik_166: 9086627780397309764
+      btn_istatistik_167: -6998931067851289367
+      btn_istatistik_168: 536346102242741030
+      btn_istatistik_169: -8632542511746403264
+      btn_istatistik_17: 6379888069588194898
+      btn_istatistik_170: -8256541472990900665
+      btn_istatistik_171: -7325868572472364730
+      btn_istatistik_172: -452503807608815022
+      btn_istatistik_173: 6802884077070833062
+      btn_istatistik_174: -3919601345089828750
+      btn_istatistik_175: -6857100747447232572
+      btn_istatistik_176: -4835554602136383037
+      btn_istatistik_177: 9182445938352833826
+      btn_istatistik_178: -6921748138347865749
+      btn_istatistik_179: 6740319714594610521
+      btn_istatistik_18: -3214450297435539219
+      btn_istatistik_180: -7990574963685460384
+      btn_istatistik_181: 2827767879047464194
+      btn_istatistik_182: -8971689390294320083
+      btn_istatistik_183: 6578105746333755061
+      btn_istatistik_184: -7748929380837426592
+      btn_istatistik_185: -4901205849519274813
+      btn_istatistik_186: 2549230039788385554
+      btn_istatistik_19: -571246041060281346
+      btn_istatistik_2: -2925282252233624099
+      btn_istatistik_20: 362165567799199557
+      btn_istatistik_21: 6759843201370986616
+      btn_istatistik_22: -500636461081287834
+      btn_istatistik_23: -3662624443560794840
+      btn_istatistik_24: 1329423734726775149
+      btn_istatistik_25: 6972409490028928524
+      btn_istatistik_26: 4955026230375206319
+      btn_istatistik_27: 4392307282698975430
+      btn_istatistik_28: -7177665315334862121
+      btn_istatistik_29: 5642842286307408400
+      btn_istatistik_3: -4910633182434354318
+      btn_istatistik_30: 1899480871845285982
+      btn_istatistik_31: 7490520338519023585
+      btn_istatistik_32: -2935284759486023999
+      btn_istatistik_33: 2791997543858181454
+      btn_istatistik_34: 2121286745999202032
+      btn_istatistik_35: -3973671666910762731
+      btn_istatistik_36: 8537497201658998690
+      btn_istatistik_37: 3404958637117701887
+      btn_istatistik_38: 4657773096070337804
+      btn_istatistik_39: -6114471488683562571
+      btn_istatistik_4: -650276991153514454
+      btn_istatistik_40: 7563862631852288581
+      btn_istatistik_41: -8854119217306398831
+      btn_istatistik_42: 6089943570583413611
+      btn_istatistik_43: -5944160023252468830
+      btn_istatistik_44: 118873713652372692
+      btn_istatistik_45: -1319763783396218215
+      btn_istatistik_46: 3239571606457218959
+      btn_istatistik_47: -4048862957255944838
+      btn_istatistik_48: -3902625251706407285
+      btn_istatistik_49: -2047247191752551009
+      btn_istatistik_5: 6553378356263950443
+      btn_istatistik_50: -8280022169971226715
+      btn_istatistik_51: 1970594063826495951
+      btn_istatistik_52: -2320458245941432466
+      btn_istatistik_53: -3887732809166104751
+      btn_istatistik_54: 4631383372847935238
+      btn_istatistik_55: -2342721427027331336
+      btn_istatistik_56: -2522307317608581301
+      btn_istatistik_57: -3323868025252228858
+      btn_istatistik_58: -4227537668158117459
+      btn_istatistik_59: 5890813197830203805
+      btn_istatistik_6: -4521411531398810618
+      btn_istatistik_60: 315874213459637294
+      btn_istatistik_61: -5831231058721619869
+      btn_istatistik_62: -8466913090548630292
+      btn_istatistik_63: 2125542391738166804
+      btn_istatistik_64: 3825915267269563204
+      btn_istatistik_65: 1355351908967057772
+      btn_istatistik_66: -1314022170793593235
+      btn_istatistik_67: -1312252960011561045
+      btn_istatistik_68: 1632268531693246284
+      btn_istatistik_69: -5854958507586868925
+      btn_istatistik_7: -5799795781632213997
+      btn_istatistik_70: -3047021066897964558
+      btn_istatistik_71: -4202686629039608674
+      btn_istatistik_72: 851650363632527247
+      btn_istatistik_73: -2850487130875223673
+      btn_istatistik_74: -5714871873471094173
+      btn_istatistik_75: -7492112485431552038
+      btn_istatistik_76: -7473158508991980716
+      btn_istatistik_77: 5709384747177060771
+      btn_istatistik_78: -2332164287129559550
+      btn_istatistik_79: -3913414097451566041
+      btn_istatistik_8: 8813646044268656
+      btn_istatistik_80: -3404931615605008838
+      btn_istatistik_81: 1993041972377324573
+      btn_istatistik_82: -5127539303396618792
+      btn_istatistik_83: 607926473915113443
+      btn_istatistik_84: -5932599000184372269
+      btn_istatistik_85: 5024519808240976666
+      btn_istatistik_86: -8001078669877344732
+      btn_istatistik_87: 3421350403470202767
+      btn_istatistik_88: -5845545834204929606
+      btn_istatistik_89: 4835676521632518560
+      btn_istatistik_9: -637261142358390230
+      btn_istatistik_90: 4375081540844199898
+      btn_istatistik_91: 2213648888699792185
+      btn_istatistik_92: -1283642475070518167
+      btn_istatistik_93: 3489548579389686379
+      btn_istatistik_94: -7418792553420532365
+      btn_istatistik_95: -4015932909316638120
+      btn_istatistik_96: -6530730292195667470
+      btn_istatistik_97: -1413555870551921521
+      btn_istatistik_98: 8070458205661011769
+      btn_istatistik_99: 4587918048905509704
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

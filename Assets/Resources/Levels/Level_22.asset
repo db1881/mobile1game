@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_22
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 22
+  LevelName: Level 22
+  Width: 8
+  Height: 10
+  ColorVariety: 5
+  MaxMoves: 26
+  Goals:
+  - Type: 0
+    Color: 3
+    Amount: 47
+  - Type: 0
+    Color: 4
+    Amount: 51
+  - Type: 0
+    Color: 5
+    Amount: 55
+  StarOneScore: 4560
+  StarTwoScore: 10840
+  StarThreeScore: 20800
+  BlockedCells:
+  - {x: 4, y: 5}
+  - {x: 0, y: 2}
+  - {x: 1, y: 3}
+  - {x: 3, y: 7}
+  - {x: 5, y: 4}
+  - {x: 0, y: 7}
+  - {x: 7, y: 3}
+  - {x: 5, y: 6}
+  IceCells:
+  - Position: {x: 4, y: 7}
+    Layers: 1
+  - Position: {x: 5, y: 6}
+    Layers: 1
+  - Position: {x: 7, y: 5}
+    Layers: 2
+  WorldIndex: 1

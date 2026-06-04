@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_13
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 13
+  LevelName: Level 13
+  Width: 7
+  Height: 9
+  ColorVariety: 4
+  MaxMoves: 28
+  Goals:
+  - Type: 0
+    Color: 2
+    Amount: 33
+  - Type: 0
+    Color: 3
+    Amount: 37
+  StarOneScore: 2940
+  StarTwoScore: 7060
+  StarThreeScore: 13600
+  BlockedCells:
+  - {x: 5, y: 3}
+  - {x: 3, y: 6}
+  - {x: 2, y: 5}
+  - {x: 6, y: 3}
+  IceCells: []
+  WorldIndex: 1

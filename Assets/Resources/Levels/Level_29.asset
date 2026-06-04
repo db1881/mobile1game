@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_29
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 29
+  LevelName: Level 29
+  Width: 8
+  Height: 10
+  ColorVariety: 5
+  MaxMoves: 25
+  Goals:
+  - Type: 0
+    Color: 5
+    Amount: 58
+  - Type: 0
+    Color: 1
+    Amount: 62
+  - Type: 0
+    Color: 2
+    Amount: 66
+  StarOneScore: 5820
+  StarTwoScore: 13780
+  StarThreeScore: 26400
+  BlockedCells:
+  - {x: 1, y: 6}
+  - {x: 0, y: 7}
+  - {x: 2, y: 2}
+  - {x: 4, y: 6}
+  - {x: 5, y: 3}
+  - {x: 1, y: 3}
+  - {x: 3, y: 5}
+  - {x: 1, y: 7}
+  IceCells:
+  - Position: {x: 6, y: 8}
+    Layers: 2
+  - Position: {x: 5, y: 7}
+    Layers: 1
+  - Position: {x: 1, y: 4}
+    Layers: 2
+  - Position: {x: 4, y: 1}
+    Layers: 2
+  - Position: {x: 3, y: 8}
+    Layers: 1
+  WorldIndex: 2

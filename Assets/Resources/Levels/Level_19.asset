@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_19
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 19
+  LevelName: Level 19
+  Width: 7
+  Height: 9
+  ColorVariety: 5
+  MaxMoves: 27
+  Goals:
+  - Type: 0
+    Color: 5
+    Amount: 42
+  - Type: 0
+    Color: 1
+    Amount: 46
+  - Type: 0
+    Color: 2
+    Amount: 50
+  StarOneScore: 4020
+  StarTwoScore: 9580
+  StarThreeScore: 18400
+  BlockedCells:
+  - {x: 2, y: 6}
+  - {x: 1, y: 3}
+  - {x: 1, y: 2}
+  - {x: 6, y: 3}
+  - {x: 3, y: 6}
+  - {x: 3, y: 4}
+  - {x: 1, y: 4}
+  IceCells:
+  - Position: {x: 4, y: 1}
+    Layers: 1
+  - Position: {x: 0, y: 5}
+    Layers: 1
+  WorldIndex: 1

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88cbe27728891deeecd25239b5b7a82, type: 3}
+  m_Name: Level_57
+  m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Data.LevelData
+  LevelNumber: 57
+  LevelName: Level 57
+  Width: 9
+  Height: 11
+  ColorVariety: 7
+  MaxMoves: 19
+  Goals:
+  - Type: 0
+    Color: 2
+    Amount: 103
+  - Type: 0
+    Color: 3
+    Amount: 107
+  - Type: 0
+    Color: 4
+    Amount: 111
+  StarOneScore: 10860
+  StarTwoScore: 25540
+  StarThreeScore: 48800
+  BlockedCells:
+  - {x: 5, y: 8}
+  - {x: 0, y: 2}
+  - {x: 1, y: 3}
+  - {x: 0, y: 3}
+  - {x: 5, y: 3}
+  - {x: 8, y: 6}
+  - {x: 3, y: 7}
+  - {x: 3, y: 3}
+  IceCells:
+  - Position: {x: 5, y: 4}
+    Layers: 2
+  - Position: {x: 0, y: 5}
+    Layers: 2
+  - Position: {x: 0, y: 3}
+    Layers: 2
+  - Position: {x: 2, y: 2}
+    Layers: 1
+  - Position: {x: 5, y: 8}
+    Layers: 2
+  - Position: {x: 4, y: 7}
+    Layers: 2
+  - Position: {x: 7, y: 2}
+    Layers: 2
+  - Position: {x: 0, y: 8}
+    Layers: 1
+  - Position: {x: 8, y: 9}
+    Layers: 1
+  WorldIndex: 3
