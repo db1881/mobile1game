@@ -1214,6 +1214,7 @@ namespace BalloonPop.EditorTools
             var crt = (RectTransform)contentGO.transform;
             crt.anchorMin = new Vector2(0, 1); crt.anchorMax = new Vector2(1, 1);
             crt.pivot = new Vector2(0.5f, 1);
+            crt.offsetMin = crt.offsetMax = Vector2.zero;
             var vlg = contentGO.GetComponent<VerticalLayoutGroup>();
             vlg.padding = new RectOffset(15, 15, 15, 15);
             vlg.spacing = 15;
@@ -2159,7 +2160,7 @@ namespace BalloonPop.EditorTools
             crt.anchorMin = new Vector2(0, 1);
             crt.anchorMax = new Vector2(1, 1);
             crt.pivot = new Vector2(0.5f, 1);
-            crt.anchoredPosition = Vector2.zero;
+            crt.offsetMin = crt.offsetMax = Vector2.zero;
             var glg = contentGO.GetComponent<GridLayoutGroup>();
             glg.cellSize = new Vector2(230, 230);
             glg.spacing = new Vector2(28, 36);

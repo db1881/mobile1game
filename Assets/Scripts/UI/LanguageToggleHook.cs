@@ -29,7 +29,7 @@ namespace BalloonPop.UI
         {
             if (label == null) label = GetComponentInChildren<TMP_Text>();
             if (label == null) return;
-            label.text = LocalizationManager.Current == LocalizationManager.Lang.TR ? "TR ▶ EN" : "EN ▶ TR";
+            label.text = LocalizationManager.Current == LocalizationManager.Lang.TR ? "TR / EN" : "EN / TR";
         }
     }
 }

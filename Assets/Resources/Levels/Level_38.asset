@@ -17,17 +17,17 @@ MonoBehaviour:
   Width: 9
   Height: 11
   ColorVariety: 6
-  MaxMoves: 23
+  MaxMoves: 29
   Goals:
   - Type: 0
     Color: 3
-    Amount: 73
+    Amount: 33
   - Type: 0
     Color: 4
-    Amount: 77
+    Amount: 37
   - Type: 0
     Color: 5
-    Amount: 81
+    Amount: 41
   StarOneScore: 7440
   StarTwoScore: 17560
   StarThreeScore: 33600
