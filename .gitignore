@@ -11,6 +11,11 @@
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
+# The [Bb]uild/ rule above accidentally ignores a source folder inside the unity-mcp
+# package (Editor/Tools/Build). Re-include it so its scripts are committed.
+!/Packages/com.coplaydev.unity-mcp/Editor/Tools/Build/
+!/Packages/com.coplaydev.unity-mcp/Editor/Tools/Build/**
+
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
 
@@ -67,3 +72,6 @@ crashlytics-build.properties
 /Assets/Screenshots/
 # Accidental nested blank Unity project
 /My project/
+
+# macOS
+.DS_Store
