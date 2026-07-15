@@ -62,3 +62,8 @@ crashlytics-build.properties
 
 # Visual Studio Code
 .vscode/
+
+# AI-assisted iteration screenshots
+/Assets/Screenshots/
+# Accidental nested blank Unity project
+/My project/

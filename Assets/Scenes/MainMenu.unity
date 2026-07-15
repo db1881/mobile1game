@@ -5985,7 +5985,7 @@ MonoBehaviour:
   m_text: "\xC7IKI\u015E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 2115275929}
   m_fontMaterials: []
@@ -7076,7 +7076,7 @@ MonoBehaviour:
   m_text: "HAYATIN B\u0130TT\u0130!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9710,7 +9710,7 @@ MonoBehaviour:
   m_text: OYNA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 1467334476}
   m_fontMaterials: []
@@ -9877,7 +9877,7 @@ MonoBehaviour:
   m_text: "BA\u015EARIM"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 1140932267}
   m_fontMaterials: []
@@ -11051,7 +11051,7 @@ MonoBehaviour:
   m_text: "MA\u011EAZA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 263927370}
   m_fontMaterials: []
@@ -14961,7 +14961,7 @@ MonoBehaviour:
   m_text: "G\xDCNL\xDCK"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 836132563}
   m_fontMaterials: []
@@ -15628,7 +15628,7 @@ MonoBehaviour:
   m_text: "BA\u015EARIMLAR"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 263105892}
   m_fontMaterials: []
@@ -15845,7 +15845,7 @@ MonoBehaviour:
   m_text: "LEVEL SE\xC7"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 748307875}
   m_fontMaterials: []
@@ -17184,7 +17184,7 @@ MonoBehaviour:
   m_text: "G\xDCNL\xDCK \xD6D\xDCL"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20471,7 +20471,7 @@ MonoBehaviour:
   m_text: AYARLAR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 484901861}
   m_fontMaterials: []
@@ -21942,7 +21942,7 @@ MonoBehaviour:
   m_text: "SEV\u0130YE SE\xC7"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 143251131}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 143251131}
   m_fontMaterials: []
@@ -23278,7 +23278,7 @@ MonoBehaviour:
   m_text: "MA\u011EAZA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 905666722}
   m_fontMaterials: []
@@ -23571,7 +23571,7 @@ MonoBehaviour:
   m_text: "\u0130STAT\u0130ST\u0130KLER"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -25850,7 +25850,7 @@ MonoBehaviour:
   m_text: AYARLAR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 601464537}
   m_fontMaterials: []
@@ -26167,7 +26167,7 @@ MonoBehaviour:
   m_text: "\u0130STAT\u0130ST\u0130K"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 1563311401}
   m_fontMaterials: []
@@ -26285,7 +26285,7 @@ MonoBehaviour:
   m_text: "BA\u015EARIM"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 683a86929bbe4bb45ad56e6e097dc1a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

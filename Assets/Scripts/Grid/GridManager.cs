@@ -31,6 +31,7 @@ namespace BalloonPop.Grid
         [SerializeField] private GameObject scorePopupPrefab;
         [SerializeField] private GameObject flashPrefab;
         [SerializeField] private GameObject shockwavePrefab;
+        [SerializeField] private Sprite[] flameRibbonFrames;   // boyalı alev şeridi (4 kare flipbook) — her çizgi patlamasında
         [SerializeField] private float bombShakeAmount = 0.55f;
         [SerializeField] private float popShakeAmount = 0.05f;
 
@@ -326,6 +327,7 @@ namespace BalloonPop.Grid
 
             SpawnParticlesForPopped(toPop);
             SpawnScorePopups(matches, toPop);
+            SpawnFlameRibbons(matches);
 
             var coroutines = new List<Coroutine>();
             foreach (var b in toPop)
@@ -363,6 +365,24 @@ namespace BalloonPop.Grid
             var first = matches[0].Cells.Count > 0 ? matches[0].Cells[0] : null;
             if (first == null) return;
             ScorePopup.Spawn(scorePopupPrefab, GridToWorld(first.X, first.Y) + Vector3.up * 0.5f, $"+{amount}");
+        }
+
+        // Her eşleşme MatchFinder tarafından zaten düz bir yatay/dikey dizi olarak bulunur;
+        // grubun ilk ve son hücresi çizginin iki ucudur. Her çizgi için üzerinden alevli bir
+        // şerit geçiririz (start -> end). Renk boyalı sprite'tan gelir (tint = beyaz).
+        private void SpawnFlameRibbons(List<MatchGroup> matches)
+        {
+            if (flameRibbonFrames == null || flameRibbonFrames.Length == 0 || matches == null) return;
+            foreach (var group in matches)
+            {
+                if (group.Cells == null || group.Cells.Count < 3) continue;
+                var startCell = group.Cells[0];
+                var endCell = group.Cells[group.Cells.Count - 1];
+                Vector3 a = GridToWorld(startCell.X, startCell.Y);
+                Vector3 b = GridToWorld(endCell.X, endCell.Y);
+                // uzunluk = patlayan balon sayısı: span=(N-1)*cellSize, +cellSize taşma => tam N hücre kapanır
+                FlameRibbonEffect.Spawn(flameRibbonFrames, a, b, cellSize * 2.4f, cellSize);
+            }
         }
 
         private static readonly Color[] BalloonColorPalette = {

@@ -4141,6 +4141,11 @@ MonoBehaviour:
   scorePopupPrefab: {fileID: 4119746240350415964, guid: 7fb2b54c409709d4abd92be429a91fd8, type: 3}
   flashPrefab: {fileID: 6041654835452674323, guid: c80807d3c20b0074a8b9a74212b291da, type: 3}
   shockwavePrefab: {fileID: 2404723976827142421, guid: 75b15d543e73f574abd851c771d7c548, type: 3}
+  flameRibbonFrames:
+  - {fileID: 4987901684691990599, guid: 3eb2a5f861cbc7e49887fda730e31eb0, type: 3}
+  - {fileID: 7090429627734957284, guid: 3eb2a5f861cbc7e49887fda730e31eb0, type: 3}
+  - {fileID: -5377001312778991831, guid: 3eb2a5f861cbc7e49887fda730e31eb0, type: 3}
+  - {fileID: 4301927831921020331, guid: 3eb2a5f861cbc7e49887fda730e31eb0, type: 3}
   bombShakeAmount: 0.55
   popShakeAmount: 0.05
 --- !u!4 &420907434
