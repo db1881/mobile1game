@@ -22106,7 +22106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae952550d11fa64986242058b9a41cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.UI.TMPArcText
-  arcHeight: 0
+  arcHeight: 14
 --- !u!1 &1775895298
 GameObject:
   m_ObjectHideFlags: 0
