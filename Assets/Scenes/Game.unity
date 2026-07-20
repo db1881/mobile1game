@@ -4300,15 +4300,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: COMBO 2x!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
-  m_sharedMaterial: {fileID: 3266471513366474951, guid: 61e6045c44ef7574b9cfab93a17c568a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7bab52bb142954bfca2523b61ecad692, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 1ae4c5e42804e412da6fc9f3d5b04207, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 62441034}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282242303
-  m_fontColor: {r: 1, g: 0.83, b: 0.24, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8479,7 +8479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.03, y: 0.03}
   m_AnchorMax: {x: 0.97, y: 0.17}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.000030517578, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &851978111

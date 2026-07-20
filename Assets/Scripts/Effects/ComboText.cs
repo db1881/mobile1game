@@ -33,17 +33,25 @@ namespace BalloonPop.Effects
 
         private IEnumerator Show(int chain)
         {
+            // Neon: bright white face, tier-colored glow that escalates cyan -> lime -> orange -> magenta.
             string label;
-            Color color;
-            if (chain >= 5)      { label = $"INANILMAZ! {chain}x"; color = new Color(1f, 0.3f, 0.7f); }
-            else if (chain >= 4) { label = $"SÜPER! {chain}x"; color = new Color(1f, 0.5f, 0.2f); }
-            else if (chain >= 3) { label = $"HARIKA! {chain}x"; color = new Color(1f, 0.83f, 0.24f); }
-            else                 { label = $"COMBO! {chain}x"; color = new Color(0.31f, 0.80f, 0.92f); }
+            Color glow;
+            if (chain >= 5)      { label = $"INANILMAZ! {chain}x"; glow = new Color(1f, 0.18f, 0.61f); }   // magenta
+            else if (chain >= 4) { label = $"SÜPER! {chain}x";     glow = new Color(1f, 0.54f, 0.24f); }   // orange
+            else if (chain >= 3) { label = $"HARIKA! {chain}x";    glow = new Color(0.30f, 1f, 0.64f); }   // lime
+            else                 { label = $"COMBO! {chain}x";     glow = new Color(0.20f, 0.88f, 1f); }   // cyan
 
             if (text != null)
             {
                 text.text = label;
-                text.color = color;
+                text.color = Color.white;
+                var mat = text.fontMaterial; // per-instance material
+                if (mat != null && mat.HasProperty(ShaderUtilities.ID_GlowColor))
+                {
+                    mat.SetColor(ShaderUtilities.ID_GlowColor, glow);
+                    // stronger glow for higher chains
+                    mat.SetFloat(ShaderUtilities.ID_GlowPower, Mathf.Clamp01(0.8f + (chain - 2) * 0.08f));
+                }
             }
 
             float t = 0f;
