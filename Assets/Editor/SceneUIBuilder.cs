@@ -1011,9 +1011,9 @@ namespace BalloonPop.EditorTools
             ctShadow.effectDistance = new Vector2(1, 1);
 
             // İyileştirilmiş fiyatlar — booster'lar daha erişilebilir (%40 ucuz)
-            var hammer = BuildShopRow(card.transform, "Hammer",  "Çekiç",     "icon_hammer",  150, 0.58f, new Color(0.95f, 0.55f, 0.25f));
-            var shuffle = BuildShopRow(card.transform, "Shuffle", "Karıştır",  "icon_shuffle", 250, 0.40f, new Color(0.30f, 0.78f, 0.86f));
-            var move = BuildShopRow(card.transform, "Move",       "+5 Hamle",  "icon_plus",    300, 0.22f, new Color(0.62f, 0.42f, 0.95f));
+            var hammer = BuildShopRow(card.transform, "Hammer",  "Çekiç",     "booster_hammer",  150, 0.58f, new Color(0.95f, 0.55f, 0.25f));
+            var shuffle = BuildShopRow(card.transform, "Shuffle", "Karıştır",  "booster_shuffle", 250, 0.40f, new Color(0.30f, 0.78f, 0.86f));
+            var move = BuildShopRow(card.transform, "Move",       "+5 Hamle",  "booster_plus",    300, 0.22f, new Color(0.62f, 0.42f, 0.95f));
 
             // Modern glossy X kapatma butonu
             BuildCloseXButton(card.transform, new Vector2(0.84f, 0.86f), new Vector2(0.98f, 0.98f), overlay);
@@ -1085,6 +1085,7 @@ namespace BalloonPop.EditorTools
             igImg.sprite = circle;
             igImg.color = new Color(accentColor.r, accentColor.g, accentColor.b, 0.30f);
             igImg.raycastTarget = false;
+            iconGlow.SetActive(false);
 
             var iconSprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Sprites/{iconName}.png");
             if (iconSprite != null)
@@ -1093,7 +1094,7 @@ namespace BalloonPop.EditorTools
                 iconGO.transform.SetParent(row.transform, false);
                 var iRT = (RectTransform)iconGO.transform;
                 iRT.anchorMin = new Vector2(0, 0.5f); iRT.anchorMax = new Vector2(0, 0.5f);
-                iRT.sizeDelta = new Vector2(72, 72);
+                iRT.sizeDelta = new Vector2(120, 120);
                 iRT.anchoredPosition = new Vector2(70, 0);
                 var iImg = iconGO.GetComponent<Image>();
                 iImg.sprite = iconSprite;

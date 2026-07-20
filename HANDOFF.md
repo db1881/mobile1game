@@ -324,6 +324,8 @@ Günlük Ödülün hediye ikonu ile yeşil alma butonu, istatistik satırları v
 başarım kartları yeni krem/altın görsel dile uyarlandı. Beş açma bağlantısı (alt bardaki dört
 buton + coin kapsülündeki mağaza alanı) yeni panel örneklerine yönlendirildi. Dört ekran da
 1080×1920 Play görünümünde doğrulandı; mevcut satın alma, ödül, sayaç ve başarım işlevleri korundu.
+Mağaza ürün görselleri oyun HUD'uyla aynı güncel `booster_hammer`, `booster_shuffle` ve
+`booster_plus` sprite'larını kullanıyor; eski `icon_*` görselleri mağazada kullanılmıyor.
 `SceneUIBuilder.RebuildSecondaryMenuPanels()` yalnızca bu dört paneli güvenli biçimde yeniden
 üretmek ve mevcut açma bağlantılarını taşımak için eklendi.
 
