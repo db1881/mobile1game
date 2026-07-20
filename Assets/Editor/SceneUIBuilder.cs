@@ -24,6 +24,10 @@ namespace BalloonPop.EditorTools
         private static readonly Color C_TextDim    = new Color(1f, 1f, 1f, 0.7f);
         private static readonly Color C_StarOn     = new Color(1.00f, 0.85f, 0.24f);
         private static readonly Color C_StarOff    = new Color(1f, 1f, 1f, 0.15f);
+        private static readonly Color CandyTitleColor  = new Color(0.92f, 0.60f, 0.10f, 1f);
+        private static readonly Color CandyTextColor   = new Color(0.34f, 0.20f, 0.10f, 1f);
+        private static readonly Color CandyDimColor    = new Color(0.48f, 0.31f, 0.19f, 1f);
+        private static readonly Color CandyAccentColor = new Color(0.88f, 0.40f, 0.12f, 1f);
 
         private static Sprite roundedXs;
         private static Sprite roundedSm;
@@ -233,8 +237,6 @@ namespace BalloonPop.EditorTools
                 bgImg.raycastTarget = false;
             }
 
-            BuildHeaderHUD(canvasGO.transform);
-
             var logoSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/logo_balloonpop.png");
             if (logoSprite != null)
             {
@@ -302,6 +304,9 @@ namespace BalloonPop.EditorTools
             var statsPanel = BuildStatsPanel(canvasGO.transform);
             var achievementsPanel = BuildAchievementListPanel(canvasGO.transform);
 
+            // Shop panel is available now, so the coin capsule's embedded + hit area can target it.
+            BuildHeaderHUD(canvasGO.transform, shopPanel);
+
             var shopIcon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_shop.png");
             var dailyIcon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_daily.png");
             var statsIcon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_stats.png");
@@ -356,6 +361,83 @@ namespace BalloonPop.EditorTools
             so.FindProperty("levelSelectPanel").objectReferenceValue = levelSelectPanel;
             so.FindProperty("noHeartsPanel").objectReferenceValue = noHeartsPanel;
             so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>
+        /// Rebuilds only the four secondary Main Menu popups without touching the rest of the scene.
+        /// Existing navigation buttons are redirected to the newly created panel instances.
+        /// </summary>
+        public static void RebuildSecondaryMenuPanels()
+        {
+            LoadSprites();
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            MainMenuUI menu = null;
+            foreach (var candidate in Resources.FindObjectsOfTypeAll<MainMenuUI>())
+            {
+                if (candidate.gameObject.scene == scene)
+                {
+                    menu = candidate;
+                    break;
+                }
+            }
+
+            if (menu == null)
+            {
+                Debug.LogError("MainMenuUI was not found in the active scene.");
+                return;
+            }
+
+            var canvas = menu.GetComponentInParent<Canvas>();
+            var parent = canvas.transform;
+            var panelNames = new System.Collections.Generic.HashSet<string>
+            {
+                "CoinShopPanel", "DailyRewardPanel", "StatsPanel_Menu", "AchievementListPanel"
+            };
+            var redirects = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<ButtonOpenTarget, string>>();
+            foreach (var opener in canvas.GetComponentsInChildren<ButtonOpenTarget>(true))
+            {
+                if (opener.Target != null && panelNames.Contains(opener.Target.name))
+                    redirects.Add(new System.Collections.Generic.KeyValuePair<ButtonOpenTarget, string>(opener, opener.Target.name));
+            }
+
+            foreach (var panelName in panelNames)
+            {
+                var oldPanel = parent.Find(panelName);
+                if (oldPanel != null)
+                    Object.DestroyImmediate(oldPanel.gameObject);
+            }
+
+            var shop = BuildCoinShopPanel(parent);
+            var daily = BuildDailyRewardPanel(parent);
+            var stats = BuildStatsPanel(parent);
+            var achievements = BuildAchievementListPanel(parent);
+            var replacements = new System.Collections.Generic.Dictionary<string, GameObject>
+            {
+                { "CoinShopPanel", shop },
+                { "DailyRewardPanel", daily },
+                { "StatsPanel_Menu", stats },
+                { "AchievementListPanel", achievements }
+            };
+
+            foreach (var redirect in redirects)
+            {
+                if (redirect.Key != null && replacements.TryGetValue(redirect.Value, out var replacement))
+                {
+                    redirect.Key.Target = replacement;
+                    EditorUtility.SetDirty(redirect.Key);
+                }
+            }
+
+            shop.transform.SetAsLastSibling();
+            daily.transform.SetAsLastSibling();
+            stats.transform.SetAsLastSibling();
+            achievements.transform.SetAsLastSibling();
+            var noHearts = parent.Find("NoHeartsPanel");
+            if (noHearts != null) noHearts.SetAsLastSibling();
+
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+            UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+            Debug.Log("Secondary Main Menu panels rebuilt with Candy UI v2.");
         }
 
         private static void BuildStarProgressBar(Transform parent)
@@ -713,10 +795,13 @@ namespace BalloonPop.EditorTools
             shineImg.raycastTarget = false;
 
             // X label
-            var xText = CreateText(body.transform, "X", "✕",
+            var xText = CreateText(body.transform, "X", "X",
                 Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
-                TMPro.TextAlignmentOptions.Center, 70, Color.white);
+                TMPro.TextAlignmentOptions.Center, 58, Color.white);
             xText.fontStyle = TMPro.FontStyles.Bold;
+            xText.enableAutoSizing = true;
+            xText.fontSizeMin = 34f;
+            xText.fontSizeMax = 62f;
             xText.outlineWidth = 0.30f;
             xText.outlineColor = new Color(0.40f, 0.05f, 0.08f, 1f);
             xText.raycastTarget = false;
@@ -837,31 +922,55 @@ namespace BalloonPop.EditorTools
             img.raycastTarget = false;
         }
 
+        private static GameObject CreateCandyPanelCard(Transform parent, string name,
+            Vector2 anchorMin, Vector2 anchorMax, bool preserveAspect = true)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+            go.transform.SetParent(parent, false);
+            var rt = (RectTransform)go.transform;
+            rt.anchorMin = anchorMin;
+            rt.anchorMax = anchorMax;
+            rt.offsetMin = rt.offsetMax = Vector2.zero;
+
+            var image = go.GetComponent<Image>();
+            image.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/panel_pause_v2.png");
+            image.type = Image.Type.Simple;
+            image.preserveAspect = preserveAspect;
+            image.color = Color.white;
+            image.raycastTarget = false;
+            return go;
+        }
+
+        private static void StyleCandyTitle(TMP_Text title)
+        {
+            title.fontStyle = FontStyles.Bold;
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 30f;
+            title.fontSizeMax = 56f;
+            title.outlineWidth = 0f;
+            title.raycastTarget = false;
+        }
+
         private static GameObject BuildCoinShopPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "CoinShopPanel", tapOutsideToClose: true);
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.05f, 0.10f), new Vector2(0.95f, 0.90f), C_PanelBg);
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.07f, 0.19f), new Vector2(0.93f, 0.81f));
 
             var title = CreateText(card.transform, "Title", "MAĞAZA",
-                new Vector2(0.05f, 0.88f), new Vector2(0.85f, 0.97f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 78, C_Accent);
-            title.fontStyle = FontStyles.Bold;
-            title.outlineWidth = 0.28f;
-            title.outlineColor = new Color(0.18f, 0.10f, 0.40f, 1f);
-            var shopTitleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            shopTitleShadow.effectColor = new Color(0, 0, 0, 0.5f);
-            shopTitleShadow.effectDistance = new Vector2(2, -4);
+                new Vector2(0.18f, 0.86f), new Vector2(0.82f, 0.97f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 52, CandyTitleColor);
+            StyleCandyTitle(title);
 
             // Coin balance pill — glossy gradient
             var coinCard = new GameObject("CoinBalance", typeof(RectTransform), typeof(Image));
             coinCard.transform.SetParent(card.transform, false);
             var ccrt = (RectTransform)coinCard.transform;
-            ccrt.anchorMin = new Vector2(0.08f, 0.78f); ccrt.anchorMax = new Vector2(0.55f, 0.86f);
+            ccrt.anchorMin = new Vector2(0.24f, 0.70f); ccrt.anchorMax = new Vector2(0.76f, 0.79f);
             ccrt.offsetMin = ccrt.offsetMax = Vector2.zero;
             var coinBgImg = coinCard.GetComponent<Image>();
             coinBgImg.sprite = roundedMd; coinBgImg.type = Image.Type.Sliced;
-            coinBgImg.color = new Color(0.10f, 0.06f, 0.22f, 0.85f);
+            coinBgImg.color = new Color(1f, 0.88f, 0.50f, 0.92f);
 
             // Coin pill shine
             var coinShine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -871,7 +980,7 @@ namespace BalloonPop.EditorTools
             csRT.offsetMin = csRT.offsetMax = Vector2.zero;
             var csImg = coinShine.GetComponent<Image>();
             csImg.sprite = roundedMd; csImg.type = Image.Type.Sliced;
-            csImg.color = new Color(1f, 1f, 1f, 0.12f);
+            csImg.color = new Color(1f, 1f, 1f, 0.30f);
             csImg.raycastTarget = false;
 
             // Coin icon (sarı yuvarlak)
@@ -885,7 +994,7 @@ namespace BalloonPop.EditorTools
             ciImg.sprite = circle;
             ciImg.color = new Color(1f, 0.85f, 0.20f, 1f);
             ciImg.raycastTarget = false;
-            var coinIconText = CreateText(coinIcon.transform, "C", "₺",
+            var coinIconText = CreateText(coinIcon.transform, "C", "C",
                 Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
                 TextAlignmentOptions.Center, 36, new Color(0.50f, 0.30f, 0f));
             coinIconText.fontStyle = FontStyles.Bold;
@@ -893,22 +1002,21 @@ namespace BalloonPop.EditorTools
 
             var coinText = CreateText(coinCard.transform, "Coins", "0",
                 new Vector2(0.30f, 0), new Vector2(1, 1), new Vector2(0, 0), new Vector2(-20, 0),
-                TextAlignmentOptions.Left, 48, Color.white);
+                TextAlignmentOptions.Center, 42, CandyTextColor);
             coinText.fontStyle = FontStyles.Bold;
-            coinText.outlineWidth = 0.25f;
-            coinText.outlineColor = new Color(0.30f, 0.18f, 0f, 1f);
+            coinText.outlineWidth = 0f;
             coinText.raycastTarget = false;
             var ctShadow = coinText.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            ctShadow.effectColor = new Color(0, 0, 0, 0.5f);
-            ctShadow.effectDistance = new Vector2(1, -2);
+            ctShadow.effectColor = new Color(1f, 1f, 1f, 0.35f);
+            ctShadow.effectDistance = new Vector2(1, 1);
 
             // İyileştirilmiş fiyatlar — booster'lar daha erişilebilir (%40 ucuz)
-            var hammer = BuildShopRow(card.transform, "Hammer",  "Çekiç",     "icon_hammer",  150, 0.62f, new Color(0.95f, 0.55f, 0.25f));
-            var shuffle = BuildShopRow(card.transform, "Shuffle", "Karıştır",  "icon_shuffle", 250, 0.46f, new Color(0.30f, 0.78f, 0.86f));
-            var move = BuildShopRow(card.transform, "Move",       "+5 Hamle",  "icon_plus",    300, 0.30f, new Color(0.62f, 0.42f, 0.95f));
+            var hammer = BuildShopRow(card.transform, "Hammer",  "Çekiç",     "icon_hammer",  150, 0.58f, new Color(0.95f, 0.55f, 0.25f));
+            var shuffle = BuildShopRow(card.transform, "Shuffle", "Karıştır",  "icon_shuffle", 250, 0.40f, new Color(0.30f, 0.78f, 0.86f));
+            var move = BuildShopRow(card.transform, "Move",       "+5 Hamle",  "icon_plus",    300, 0.22f, new Color(0.62f, 0.42f, 0.95f));
 
             // Modern glossy X kapatma butonu
-            BuildCloseXButton(card.transform, new Vector2(0.85f, 0.89f), new Vector2(0.96f, 0.97f), overlay);
+            BuildCloseXButton(card.transform, new Vector2(0.84f, 0.86f), new Vector2(0.98f, 0.98f), overlay);
 
             var shop = overlay.AddComponent<CoinShopPanel>();
             var so = new SerializedObject(shop);
@@ -944,7 +1052,7 @@ namespace BalloonPop.EditorTools
 
         private static ShopRow BuildShopRow(Transform parent, string name, string label, string iconName, int price, float yCenter, Color accentColor)
         {
-            // Row root — glossy gradient card
+            // Warm candy card that sits naturally on the cream panel.
             var row = new GameObject($"Row_{name}", typeof(RectTransform), typeof(Image));
             row.transform.SetParent(parent, false);
             var rrt = (RectTransform)row.transform;
@@ -953,7 +1061,7 @@ namespace BalloonPop.EditorTools
             rrt.offsetMin = rrt.offsetMax = Vector2.zero;
             var rowBg = row.GetComponent<Image>();
             rowBg.sprite = roundedMd; rowBg.type = Image.Type.Sliced;
-            rowBg.color = new Color(0.12f, 0.10f, 0.22f, 0.88f);
+            rowBg.color = new Color(1f, 0.93f, 0.74f, 0.78f);
 
             // Row shine üstte
             var rowShine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -963,7 +1071,7 @@ namespace BalloonPop.EditorTools
             rsRT.offsetMin = rsRT.offsetMax = Vector2.zero;
             var rsImg = rowShine.GetComponent<Image>();
             rsImg.sprite = roundedMd; rsImg.type = Image.Type.Sliced;
-            rsImg.color = new Color(1f, 1f, 1f, 0.10f);
+            rsImg.color = new Color(1f, 1f, 1f, 0.24f);
             rsImg.raycastTarget = false;
 
             // Item icon + colored glow disk
@@ -1000,31 +1108,29 @@ namespace BalloonPop.EditorTools
             var labelTxt = CreateText(row.transform, "Label", label,
                 new Vector2(0, 0.50f), new Vector2(0.55f, 1f),
                 new Vector2(140, 0), new Vector2(0, 0),
-                TextAlignmentOptions.Left, 44, Color.white);
+                 TextAlignmentOptions.Left, 38, CandyTextColor);
             labelTxt.fontStyle = FontStyles.Bold;
-            labelTxt.outlineWidth = 0.22f;
-            labelTxt.outlineColor = new Color(0.12f, 0.08f, 0.20f, 1f);
+            labelTxt.outlineWidth = 0f;
             labelTxt.raycastTarget = false;
             var labelShadow = labelTxt.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            labelShadow.effectColor = new Color(0, 0, 0, 0.55f);
-            labelShadow.effectDistance = new Vector2(1, -2);
+            labelShadow.effectColor = new Color(1f, 1f, 1f, 0.40f);
+            labelShadow.effectDistance = new Vector2(1, 1);
 
             // Price text — ikon yanında, alt yarıda
             var priceText = CreateText(row.transform, "Price", price.ToString(),
                 new Vector2(0, 0f), new Vector2(0.55f, 0.50f),
                 new Vector2(140, 0), new Vector2(0, 0),
-                TextAlignmentOptions.Left, 38, C_Accent);
+                TextAlignmentOptions.Left, 34, CandyAccentColor);
             priceText.fontStyle = FontStyles.Bold;
-            priceText.outlineWidth = 0.22f;
-            priceText.outlineColor = new Color(0.30f, 0.18f, 0f, 1f);
+            priceText.outlineWidth = 0f;
             priceText.raycastTarget = false;
             priceText.text = price + " ₺";
 
-            // BUY button — glossy multi-layer 3D
+            // BUY button — same green candy asset used by the new pause/settings UI.
             var btnWrap = new GameObject($"BuyWrap", typeof(RectTransform));
             btnWrap.transform.SetParent(row.transform, false);
             var bwRT = (RectTransform)btnWrap.transform;
-            bwRT.anchorMin = new Vector2(0.66f, 0.12f); bwRT.anchorMax = new Vector2(0.96f, 0.88f);
+            bwRT.anchorMin = new Vector2(0.62f, 0.10f); bwRT.anchorMax = new Vector2(0.98f, 0.90f);
             bwRT.offsetMin = bwRT.offsetMax = Vector2.zero;
 
             // Shadow
@@ -1035,7 +1141,7 @@ namespace BalloonPop.EditorTools
             bsRT.offsetMin = new Vector2(0, -8); bsRT.offsetMax = new Vector2(0, -2);
             var bsImg = btnSh.GetComponent<Image>();
             bsImg.sprite = roundedMd; bsImg.type = Image.Type.Sliced;
-            bsImg.color = new Color(0, 0, 0, 0.45f);
+            bsImg.color = new Color(0.45f, 0.22f, 0.07f, 0.22f);
             bsImg.raycastTarget = false;
 
             // Border (dark green)
@@ -1046,7 +1152,7 @@ namespace BalloonPop.EditorTools
             bbRT.offsetMin = bbRT.offsetMax = Vector2.zero;
             var bbImg = btnBd.GetComponent<Image>();
             bbImg.sprite = roundedMd; bbImg.type = Image.Type.Sliced;
-            bbImg.color = new Color(0.05f, 0.42f, 0.18f, 1f);
+            bbImg.color = Color.clear;
             bbImg.raycastTarget = false;
 
             // Body (bright green) — button is here
@@ -1056,8 +1162,10 @@ namespace BalloonPop.EditorTools
             brt.anchorMin = Vector2.zero; brt.anchorMax = Vector2.one;
             brt.offsetMin = new Vector2(5, 5); brt.offsetMax = new Vector2(-5, -5);
             var btnImg = btnGO.GetComponent<Image>();
-            btnImg.sprite = roundedMd; btnImg.type = Image.Type.Sliced;
-            btnImg.color = new Color(0.22f, 0.84f, 0.36f, 1f);
+            btnImg.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+            btnImg.type = Image.Type.Simple;
+            btnImg.preserveAspect = true;
+            btnImg.color = Color.white;
 
             // Body shine (top)
             var btnShine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -1067,18 +1175,17 @@ namespace BalloonPop.EditorTools
             bsh.offsetMin = bsh.offsetMax = Vector2.zero;
             var btnShineImg = btnShine.GetComponent<Image>();
             btnShineImg.sprite = roundedMd; btnShineImg.type = Image.Type.Sliced;
-            btnShineImg.color = new Color(1f, 1f, 1f, 0.35f);
+            btnShineImg.color = Color.clear;
             btnShineImg.raycastTarget = false;
 
             var buyTxt = CreateText(btnGO.transform, "Label", "AL",
                 Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
-                TextAlignmentOptions.Center, 44, Color.white);
+                TextAlignmentOptions.Center, 34, Color.white);
             buyTxt.fontStyle = FontStyles.Bold;
-            buyTxt.outlineWidth = 0.30f;
-            buyTxt.outlineColor = new Color(0.05f, 0.30f, 0.10f, 1f);
+            buyTxt.outlineWidth = 0f;
             buyTxt.raycastTarget = false;
             var buyShadow = buyTxt.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            buyShadow.effectColor = new Color(0, 0, 0, 0.6f);
+            buyShadow.effectColor = new Color(0.18f, 0.30f, 0.05f, 0.55f);
             buyShadow.effectDistance = new Vector2(1, -2);
 
             return new ShopRow { btn = btnGO.GetComponent<Button>(), priceText = priceText };
@@ -1087,29 +1194,43 @@ namespace BalloonPop.EditorTools
         private static GameObject BuildDailyRewardPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "DailyRewardPanel", tapOutsideToClose: true);
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.08f, 0.20f), new Vector2(0.92f, 0.80f), C_PanelBg);
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.14f, 0.24f), new Vector2(0.86f, 0.76f));
 
             var title = CreateText(card.transform, "Title", "GÜNLÜK ÖDÜL",
-                new Vector2(0, 0.83f), new Vector2(1, 0.95f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 70, C_TextLight);
-            title.fontStyle = FontStyles.Bold;
+                new Vector2(0.16f, 0.84f), new Vector2(0.84f, 0.96f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 50, CandyTitleColor);
+            StyleCandyTitle(title);
+
+            var gift = new GameObject("GiftDeco", typeof(RectTransform), typeof(Image));
+            gift.transform.SetParent(card.transform, false);
+            var giftRT = (RectTransform)gift.transform;
+            giftRT.anchorMin = giftRT.anchorMax = new Vector2(0.5f, 0.41f);
+            giftRT.sizeDelta = new Vector2(160f, 160f);
+            giftRT.anchoredPosition = Vector2.zero;
+            var giftImage = gift.GetComponent<Image>();
+            giftImage.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_daily.png");
+            giftImage.preserveAspect = true;
+            giftImage.raycastTarget = false;
 
             var statusText = CreateText(card.transform, "Status", "Ödülün hazır!",
-                new Vector2(0, 0.65f), new Vector2(1, 0.78f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 50, C_Accent);
+                new Vector2(0.10f, 0.60f), new Vector2(0.90f, 0.70f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 38, CandyAccentColor);
             statusText.fontStyle = FontStyles.Bold;
+            statusText.enableAutoSizing = true;
+            statusText.fontSizeMin = 24f;
+            statusText.fontSizeMax = 40f;
 
             var streakText = CreateText(card.transform, "Streak", "Streak: 0 gün",
-                new Vector2(0, 0.52f), new Vector2(1, 0.62f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 42, C_TextDim);
+                new Vector2(0.10f, 0.50f), new Vector2(0.90f, 0.58f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 30, CandyDimColor);
 
-            var claimBtn = CreatePrimaryButton(card.transform, "ClaimButton", "ÖDÜLÜ AL",
-                new Vector2(0.25f, 0.20f), new Vector2(0.75f, 0.32f));
+            var claimBtn = CreateModernPanelButton(card.transform, "ClaimButton", "ÖDÜLÜ AL",
+                new Vector2(0.23f, 0.16f), new Vector2(0.77f, 0.30f),
+                new Color(0.30f, 0.78f, 0.36f, 1f),
+                AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png"));
 
-            var closeBtn = CreateCircleButton(card.transform, "Close", "✕",
-                new Vector2(0.86f, 0.86f), new Vector2(0.96f, 0.96f));
-            closeBtn.gameObject.AddComponent<ButtonCloseTarget>().Target = overlay;
+            BuildCloseXButton(card.transform, new Vector2(0.80f, 0.86f), new Vector2(0.97f, 0.98f), overlay);
 
             var daily = overlay.AddComponent<DailyRewardPanel>();
             var so = new SerializedObject(daily);
@@ -1124,25 +1245,23 @@ namespace BalloonPop.EditorTools
         private static GameObject BuildStatsPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "StatsPanel_Menu", tapOutsideToClose: true);
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.05f, 0.10f), new Vector2(0.95f, 0.90f), C_PanelBg);
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.13f, 0.23f), new Vector2(0.87f, 0.77f));
 
             var title = CreateText(card.transform, "Title", "İSTATİSTİKLER",
-                new Vector2(0, 0.88f), new Vector2(1, 0.97f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 65, C_TextLight);
-            title.fontStyle = FontStyles.Bold;
+                new Vector2(0.16f, 0.84f), new Vector2(0.84f, 0.96f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 50, CandyTitleColor);
+            StyleCandyTitle(title);
 
-            var balloonsText = AddStatRow(card.transform, "Patlatılan Balon", 0.78f);
-            var bombsText = AddStatRow(card.transform, "Patlayan Bomba", 0.69f);
-            var comboText = AddStatRow(card.transform, "En Uzun Combo", 0.60f);
-            var gamesText = AddStatRow(card.transform, "Oynanan Oyun", 0.51f);
-            var winsText = AddStatRow(card.transform, "Kazanılan Seviye", 0.42f);
-            var starsText = AddStatRow(card.transform, "Toplam Yıldız", 0.33f);
-            var endlessText = AddStatRow(card.transform, "Endless Skor", 0.24f);
+            var balloonsText = AddStatRow(card.transform, "Patlatılan Balon", 0.72f);
+            var bombsText = AddStatRow(card.transform, "Patlayan Bomba", 0.63f);
+            var comboText = AddStatRow(card.transform, "En Uzun Combo", 0.54f);
+            var gamesText = AddStatRow(card.transform, "Oynanan Oyun", 0.45f);
+            var winsText = AddStatRow(card.transform, "Kazanılan Seviye", 0.36f);
+            var starsText = AddStatRow(card.transform, "Toplam Yıldız", 0.27f);
+            var endlessText = AddStatRow(card.transform, "Endless Skor", 0.18f);
 
-            var closeBtn = CreateCircleButton(card.transform, "Close", "✕",
-                new Vector2(0.86f, 0.89f), new Vector2(0.96f, 0.97f));
-            closeBtn.gameObject.AddComponent<ButtonCloseTarget>().Target = overlay;
+            BuildCloseXButton(card.transform, new Vector2(0.80f, 0.86f), new Vector2(0.97f, 0.98f), overlay);
 
             var stats = overlay.AddComponent<StatsPanel>();
             var so = new SerializedObject(stats);
@@ -1160,45 +1279,49 @@ namespace BalloonPop.EditorTools
 
         private static TMP_Text AddStatRow(Transform parent, string label, float yCenter)
         {
-            var row = new GameObject($"Row_{label}", typeof(RectTransform));
+            var row = new GameObject($"Row_{label}", typeof(RectTransform), typeof(Image));
             row.transform.SetParent(parent, false);
             var rt = (RectTransform)row.transform;
-            rt.anchorMin = new Vector2(0.08f, yCenter - 0.04f);
-            rt.anchorMax = new Vector2(0.92f, yCenter + 0.04f);
+            rt.anchorMin = new Vector2(0.14f, yCenter - 0.036f);
+            rt.anchorMax = new Vector2(0.86f, yCenter + 0.036f);
             rt.offsetMin = rt.offsetMax = Vector2.zero;
 
+            var bg = row.GetComponent<Image>();
+            bg.sprite = roundedSm;
+            bg.type = Image.Type.Sliced;
+            bg.color = new Color(1f, 0.92f, 0.72f, 0.56f);
+            bg.raycastTarget = false;
+
             CreateText(row.transform, "Label", label,
-                new Vector2(0, 0), new Vector2(0.65f, 1), Vector2.zero, Vector2.zero,
-                TextAlignmentOptions.Left, 36, C_TextDim);
+                new Vector2(0.04f, 0), new Vector2(0.68f, 1), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Left, 30, CandyDimColor);
 
             return CreateText(row.transform, "Value", "0",
-                new Vector2(0.65f, 0), new Vector2(1, 1), Vector2.zero, Vector2.zero,
-                TextAlignmentOptions.Right, 40, C_TextLight);
+                new Vector2(0.68f, 0), new Vector2(0.95f, 1), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Right, 34, CandyAccentColor);
         }
 
         private static GameObject BuildAchievementListPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "AchievementListPanel", tapOutsideToClose: true);
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.05f, 0.06f), new Vector2(0.95f, 0.94f), C_PanelBg);
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.03f, 0.14f), new Vector2(0.97f, 0.86f), preserveAspect: false);
 
             var title = CreateText(card.transform, "Title", "BAŞARIMLAR",
-                new Vector2(0.05f, 0.91f), new Vector2(0.85f, 0.98f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 78, C_Accent);
-            title.fontStyle = FontStyles.Bold;
-            title.outlineWidth = 0.28f;
-            title.outlineColor = new Color(0.18f, 0.10f, 0.40f, 1f);
-            var achTitleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            achTitleShadow.effectColor = new Color(0, 0, 0, 0.5f);
-            achTitleShadow.effectDistance = new Vector2(2, -4);
+                new Vector2(0.18f, 0.88f), new Vector2(0.82f, 0.97f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 52, CandyTitleColor);
+            StyleCandyTitle(title);
 
             var scrollGO = new GameObject("Scroll", typeof(RectTransform), typeof(ScrollRect), typeof(Image), typeof(RectMask2D));
             scrollGO.transform.SetParent(card.transform, false);
             var srt = (RectTransform)scrollGO.transform;
-            srt.anchorMin = new Vector2(0.05f, 0.05f);
-            srt.anchorMax = new Vector2(0.95f, 0.88f);
+            srt.anchorMin = new Vector2(0.09f, 0.06f);
+            srt.anchorMax = new Vector2(0.91f, 0.82f);
             srt.offsetMin = srt.offsetMax = Vector2.zero;
-            scrollGO.GetComponent<Image>().color = new Color(0, 0, 0, 0.2f);
+            var scrollBg = scrollGO.GetComponent<Image>();
+            scrollBg.sprite = roundedMd;
+            scrollBg.type = Image.Type.Sliced;
+            scrollBg.color = new Color(0.76f, 0.48f, 0.22f, 0.10f);
             var scroll = scrollGO.GetComponent<ScrollRect>();
             scroll.horizontal = false;
 
@@ -1229,7 +1352,7 @@ namespace BalloonPop.EditorTools
             var achItemPrefab = CreateAchievementItemPrefab();
 
             // Modern glossy X kapatma butonu — geniş hit area (mobil dokunma payı)
-            BuildCloseXButton(card.transform, new Vector2(0.80f, 0.89f), new Vector2(0.97f, 0.99f), overlay);
+            BuildCloseXButton(card.transform, new Vector2(0.84f, 0.87f), new Vector2(0.98f, 0.98f), overlay);
 
             var list = overlay.AddComponent<AchievementListPanel>();
             var so = new SerializedObject(list);
@@ -1252,7 +1375,7 @@ namespace BalloonPop.EditorTools
             le.preferredHeight = 160;
             var img = go.GetComponent<Image>();
             img.sprite = roundedMd; img.type = Image.Type.Sliced;
-            img.color = new Color(0.3f, 0.3f, 0.4f, 0.5f); // script tarafından unlocked'da altın'a değiştirilir
+            img.color = new Color(1f, 0.93f, 0.74f, 0.88f); // script unlocked durumunda sıcak altına çevirir
 
             // Shine (üst parlaklık - cam efekti)
             var shine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -1263,7 +1386,7 @@ namespace BalloonPop.EditorTools
             shrt.offsetMin = shrt.offsetMax = Vector2.zero;
             var shImg = shine.GetComponent<Image>();
             shImg.sprite = roundedMd; shImg.type = Image.Type.Sliced;
-            shImg.color = new Color(1f, 1f, 1f, 0.10f);
+            shImg.color = new Color(1f, 1f, 1f, 0.28f);
             shImg.raycastTarget = false;
 
             // İkon arkasındaki yuvarlak glow disk
@@ -1297,56 +1420,57 @@ namespace BalloonPop.EditorTools
             var titleText = CreateText(go.transform, "Title", "Title",
                 new Vector2(0, 0.50f), new Vector2(0.78f, 0.95f),
                 new Vector2(170, 0), new Vector2(0, 0),
-                TextAlignmentOptions.Left, 46, Color.white);
+                TextAlignmentOptions.Left, 38, CandyTextColor);
             titleText.fontStyle = FontStyles.Bold;
-            titleText.outlineWidth = 0.22f;
-            titleText.outlineColor = new Color(0.12f, 0.08f, 0.20f, 1f);
+            titleText.outlineWidth = 0f;
             titleText.raycastTarget = false;
             var titleShadow = titleText.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            titleShadow.effectColor = new Color(0, 0, 0, 0.55f);
-            titleShadow.effectDistance = new Vector2(2, -3);
+            titleShadow.effectColor = new Color(1f, 1f, 1f, 0.38f);
+            titleShadow.effectDistance = new Vector2(1, 1);
 
             // Description — daha açık, sub-text
             var descText = CreateText(go.transform, "Desc", "Desc",
                 new Vector2(0, 0.10f), new Vector2(0.78f, 0.50f),
                 new Vector2(170, 0), new Vector2(0, 0),
-                TextAlignmentOptions.Left, 32, new Color(1f, 1f, 1f, 0.78f));
+                TextAlignmentOptions.Left, 28, CandyDimColor);
             descText.raycastTarget = false;
 
             // Progress — sağ tarafta dikey ortalı, büyük accent renkte
             var progressText = CreateText(go.transform, "Progress", "0/0",
                 new Vector2(0.78f, 0), new Vector2(1, 1),
                 new Vector2(0, 0), new Vector2(-25, 0),
-                TextAlignmentOptions.Right, 42, C_Accent);
+                TextAlignmentOptions.Right, 34, CandyAccentColor);
             progressText.fontStyle = FontStyles.Bold;
-            progressText.outlineWidth = 0.22f;
-            progressText.outlineColor = new Color(0.30f, 0.18f, 0f, 1f);
+            progressText.outlineWidth = 0f;
             progressText.raycastTarget = false;
             var progShadow = progressText.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            progShadow.effectColor = new Color(0, 0, 0, 0.50f);
-            progShadow.effectDistance = new Vector2(1, -2);
+            progShadow.effectColor = new Color(1f, 1f, 1f, 0.35f);
+            progShadow.effectDistance = new Vector2(1, 1);
 
             var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
             return prefab;
         }
 
-        private static void BuildHeaderHUD(Transform parent)
+        private static void BuildHeaderHUD(Transform parent, GameObject shopPanel)
         {
             var bar = new GameObject("HeaderHUD", typeof(RectTransform));
             bar.transform.SetParent(parent, false);
             var brt = (RectTransform)bar.transform;
-            SetPixelRect(brt, new Vector2(0, 880), new Vector2(1040, 120));
+            brt.anchorMin = brt.anchorMax = new Vector2(0f, 1f);
+            brt.pivot = new Vector2(0f, 1f);
+            brt.anchoredPosition = new Vector2(22f, -22f);
+            brt.sizeDelta = new Vector2(10f, 10f);
 
-            // 3 glossy 3D modern HUD pill (Coin / Heart / Star)
-            var coinCard = BuildHudPill(bar.transform, "CoinCard",
-                new Vector2(0, 0), new Vector2(0.32f, 1),
-                new Color(0.28f, 0.62f, 0.96f, 1f),     // body: parlak mavi
-                new Color(0.08f, 0.32f, 0.55f, 1f),     // border: koyu mavi
-                new Color(1f, 0.83f, 0.24f, 1f),        // icon glow: altın sarısı
-                circle,                                  // icon sprite: yuvarlak coin
-                "0",
-                new Color(0.30f, 0.18f, 0f, 1f));        // text outline: koyu kahve
+            var coinSprite = LoadFirstSprite("Assets/Sprites/cap_coin.png");
+            var heartSprite = LoadFirstSprite("Assets/Sprites/cap_heart.png");
+            var starSprite = LoadFirstSprite("Assets/Sprites/cap_star.png");
+
+            // Keep each capsule at its source aspect ratio. Single-digit heart/star values use
+            // shorter capsules, while coin keeps room for the embedded green + badge.
+            var coinCard = BuildResourceCapsule(bar.transform, "CoinCard", coinSprite,
+                new Vector2(0f, 0f), new Vector2(235f, 83f),
+                new Vector2(0.34f, 0.16f), new Vector2(0.72f, 0.84f), "0");
             var coinText = coinCard.text;
 
             var coinDisplay = coinCard.root.AddComponent<CoinDisplay>();
@@ -1354,24 +1478,33 @@ namespace BalloonPop.EditorTools
             so.FindProperty("coinText").objectReferenceValue = coinText;
             so.ApplyModifiedPropertiesWithoutUndo();
 
-            // Heart card (orta) — kırmızı tema
-            var heartCard = BuildHudPill(bar.transform, "HeartCard",
-                new Vector2(0.34f, 0), new Vector2(0.66f, 1),
-                new Color(0.95f, 0.32f, 0.42f, 1f),
-                new Color(0.45f, 0.05f, 0.10f, 1f),
-                new Color(1f, 0.30f, 0.40f, 1f),
-                circle,
-                "5",
-                new Color(0.40f, 0.05f, 0.10f, 1f));
+            // The + badge is baked into cap_coin; this transparent hit area makes it functional.
+            var shopHitArea = new GameObject("ShopButton", typeof(RectTransform), typeof(Image), typeof(Button));
+            shopHitArea.transform.SetParent(coinCard.root.transform.Find("Body"), false);
+            var shopRT = (RectTransform)shopHitArea.transform;
+            shopRT.anchorMin = new Vector2(0.74f, 0.05f);
+            shopRT.anchorMax = new Vector2(0.995f, 0.95f);
+            shopRT.offsetMin = shopRT.offsetMax = Vector2.zero;
+            var shopImage = shopHitArea.GetComponent<Image>();
+            shopImage.color = new Color(1f, 1f, 1f, 0f);
+            shopImage.raycastTarget = true;
+            shopHitArea.GetComponent<Button>().transition = Selectable.Transition.None;
+            var shopHook = shopHitArea.AddComponent<ButtonOpenTarget>();
+            shopHook.Target = shopPanel;
+
+            var heartCard = BuildResourceCapsule(bar.transform, "HeartCard", heartSprite,
+                new Vector2(0f, -93f), new Vector2(170f, 78f),
+                new Vector2(0.43f, 0.16f), new Vector2(0.88f, 0.84f), "5");
             var heartCountText = heartCard.text;
-            // Timer text: 'TAM' küçük yazı, sayının altına
             var heartTimerText = CreateText(heartCard.root.transform, "Timer", "TAM",
-                new Vector2(0.36f, 0.05f), new Vector2(0.97f, 0.42f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 22, new Color(1f, 0.95f, 0.85f, 0.95f));
+                new Vector2(0.58f, 0.16f), new Vector2(0.88f, 0.84f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 20, new Color(0.60f, 0.45f, 0.28f, 1f));
+            heartTimerText.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/PaytoneOne SDF.asset");
+            heartTimerText.enableAutoSizing = true;
+            heartTimerText.fontSizeMin = 12f;
+            heartTimerText.fontSizeMax = 20f;
             heartTimerText.raycastTarget = false;
-            // Count text'i biraz yukarı çek
-            var hcRT = (RectTransform)heartCountText.transform;
-            hcRT.anchorMin = new Vector2(0.36f, 0.40f); hcRT.anchorMax = new Vector2(0.97f, 1.0f);
+            heartTimerText.gameObject.SetActive(false);
 
             var heartDisplay = heartCard.root.AddComponent<HeartDisplay>();
             var so3 = new SerializedObject(heartDisplay);
@@ -1379,15 +1512,9 @@ namespace BalloonPop.EditorTools
             so3.FindProperty("timerText").objectReferenceValue = heartTimerText;
             so3.ApplyModifiedPropertiesWithoutUndo();
 
-            // Star card (sağ) — mor tema, ikon yıldız
-            var starCard = BuildHudPill(bar.transform, "StarCard",
-                new Vector2(0.68f, 0), new Vector2(1, 1),
-                new Color(0.55f, 0.32f, 0.88f, 1f),
-                new Color(0.20f, 0.08f, 0.40f, 1f),
-                new Color(1f, 0.85f, 0.24f, 1f),
-                star,
-                "0",
-                new Color(0.30f, 0.18f, 0.05f, 1f));
+            var starCard = BuildResourceCapsule(bar.transform, "StarCard", starSprite,
+                new Vector2(0f, -181f), new Vector2(170f, 78.5f),
+                new Vector2(0.43f, 0.16f), new Vector2(0.88f, 0.84f), "0");
             var starText = starCard.text;
             var stars = starCard.root.AddComponent<TotalStarsDisplay>();
             var so2 = new SerializedObject(stars);
@@ -1397,98 +1524,53 @@ namespace BalloonPop.EditorTools
 
         private struct HudPill { public GameObject root; public TMP_Text text; }
 
-        /// <summary>
-        /// Glossy 3D HUD pill — shadow + border + body + shine + icon glow + outlined text.
-        /// </summary>
-        private static HudPill BuildHudPill(Transform parent, string name,
-            Vector2 anchorMin, Vector2 anchorMax,
-            Color bodyColor, Color borderColor, Color iconGlowColor, Sprite iconSprite,
-            string initialText, Color textOutlineColor)
+        private static Sprite LoadFirstSprite(string path)
+        {
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (sprite != null) return sprite;
+
+            var assets = AssetDatabase.LoadAllAssetsAtPath(path);
+            foreach (var asset in assets)
+            {
+                var subSprite = asset as Sprite;
+                if (subSprite != null) return subSprite;
+            }
+            return null;
+        }
+
+        private static HudPill BuildResourceCapsule(Transform parent, string name, Sprite sprite,
+            Vector2 anchoredPosition, Vector2 size, Vector2 textAnchorMin, Vector2 textAnchorMax,
+            string initialText)
         {
             var root = new GameObject(name, typeof(RectTransform));
             root.transform.SetParent(parent, false);
             var rt = (RectTransform)root.transform;
-            rt.anchorMin = anchorMin; rt.anchorMax = anchorMax;
-            rt.offsetMin = rt.offsetMax = Vector2.zero;
+            rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
+            rt.pivot = new Vector2(0f, 1f);
+            rt.anchoredPosition = anchoredPosition;
+            rt.sizeDelta = size;
 
-            // 1) Shadow
-            var sh = new GameObject("Shadow", typeof(RectTransform), typeof(Image));
-            sh.transform.SetParent(root.transform, false);
-            var shRT = (RectTransform)sh.transform;
-            shRT.anchorMin = Vector2.zero; shRT.anchorMax = Vector2.one;
-            shRT.offsetMin = new Vector2(0, -6); shRT.offsetMax = new Vector2(0, -2);
-            var shImg = sh.GetComponent<Image>();
-            shImg.sprite = roundedMd; shImg.type = Image.Type.Sliced;
-            shImg.color = new Color(0, 0, 0, 0.40f);
-            shImg.raycastTarget = false;
-
-            // 2) Border
-            var bd = new GameObject("Border", typeof(RectTransform), typeof(Image));
-            bd.transform.SetParent(root.transform, false);
-            var bdRT = (RectTransform)bd.transform;
-            bdRT.anchorMin = Vector2.zero; bdRT.anchorMax = Vector2.one;
-            bdRT.offsetMin = bdRT.offsetMax = Vector2.zero;
-            var bdImg = bd.GetComponent<Image>();
-            bdImg.sprite = roundedMd; bdImg.type = Image.Type.Sliced;
-            bdImg.color = borderColor;
-            bdImg.raycastTarget = false;
-
-            // 3) Body
             var body = new GameObject("Body", typeof(RectTransform), typeof(Image));
             body.transform.SetParent(root.transform, false);
             var bRT = (RectTransform)body.transform;
             bRT.anchorMin = Vector2.zero; bRT.anchorMax = Vector2.one;
-            bRT.offsetMin = new Vector2(4, 4); bRT.offsetMax = new Vector2(-4, -4);
+            bRT.offsetMin = bRT.offsetMax = Vector2.zero;
             var bImg = body.GetComponent<Image>();
-            bImg.sprite = roundedMd; bImg.type = Image.Type.Sliced;
-            bImg.color = bodyColor;
+            bImg.sprite = sprite;
+            bImg.type = Image.Type.Simple;
+            bImg.color = Color.white;
+            bImg.preserveAspect = false;
             bImg.raycastTarget = false;
 
-            // 4) Shine (üst parlaklık)
-            var shine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
-            shine.transform.SetParent(body.transform, false);
-            var snRT = (RectTransform)shine.transform;
-            snRT.anchorMin = new Vector2(0.08f, 0.52f); snRT.anchorMax = new Vector2(0.92f, 0.90f);
-            snRT.offsetMin = snRT.offsetMax = Vector2.zero;
-            var snImg = shine.GetComponent<Image>();
-            snImg.sprite = roundedMd; snImg.type = Image.Type.Sliced;
-            snImg.color = new Color(1f, 1f, 1f, 0.28f);
-            snImg.raycastTarget = false;
-
-            // 5) Icon glow disk (sol, renkli halo)
-            var glow = new GameObject("IconGlow", typeof(RectTransform), typeof(Image));
-            glow.transform.SetParent(body.transform, false);
-            var gRT = (RectTransform)glow.transform;
-            gRT.anchorMin = new Vector2(0, 0.5f); gRT.anchorMax = new Vector2(0, 0.5f);
-            gRT.sizeDelta = new Vector2(90, 90);
-            gRT.anchoredPosition = new Vector2(48, 0);
-            var gImg = glow.GetComponent<Image>();
-            gImg.sprite = circle;
-            gImg.color = new Color(iconGlowColor.r, iconGlowColor.g, iconGlowColor.b, 0.45f);
-            gImg.raycastTarget = false;
-
-            // 6) Icon (asıl ikon, parlak)
-            var icon = new GameObject("Icon", typeof(RectTransform), typeof(Image));
-            icon.transform.SetParent(body.transform, false);
-            var iRT = (RectTransform)icon.transform;
-            iRT.anchorMin = new Vector2(0, 0.5f); iRT.anchorMax = new Vector2(0, 0.5f);
-            iRT.sizeDelta = new Vector2(64, 64);
-            iRT.anchoredPosition = new Vector2(48, 0);
-            var iImg = icon.GetComponent<Image>();
-            iImg.sprite = iconSprite != null ? iconSprite : circle;
-            iImg.color = iconGlowColor;
-            iImg.raycastTarget = false;
-            var iconShadow = icon.AddComponent<UnityEngine.UI.Shadow>();
-            iconShadow.effectColor = new Color(0, 0, 0, 0.55f);
-            iconShadow.effectDistance = new Vector2(1, -2);
-
-            // 7) Text (outlined + drop shadow)
             var text = CreateText(body.transform, "Text", initialText,
-                new Vector2(0.30f, 0), new Vector2(0.97f, 1),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 44, Color.white);
+                textAnchorMin, textAnchorMax, Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Center, 24, new Color(0.45f, 0.30f, 0.15f, 1f));
+            text.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/PaytoneOne SDF.asset");
             text.fontStyle = FontStyles.Bold;
-            text.outlineWidth = 0.25f;
-            text.outlineColor = textOutlineColor;
+            text.enableAutoSizing = true;
+            text.fontSizeMin = 16f;
+            text.fontSizeMax = 34f;
+            text.outlineWidth = 0f;
             text.raycastTarget = false;
             var txShadow = text.gameObject.AddComponent<UnityEngine.UI.Shadow>();
             txShadow.effectColor = new Color(0, 0, 0, 0.55f);
@@ -1867,13 +1949,17 @@ namespace BalloonPop.EditorTools
         private static GameObject BuildPausePanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "PausePanel");
+            var pausePanelSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/panel_pause_v2.png");
+            var pauseGreen = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+            var pauseBlue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png");
+            var pauseRed = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_red_v2.png");
 
             // Card wrapper — glossy 3D katmanlı
             var cardWrap = new GameObject("CardWrap", typeof(RectTransform));
             cardWrap.transform.SetParent(overlay.transform, false);
             var cwrt = (RectTransform)cardWrap.transform;
-            cwrt.anchorMin = new Vector2(0.12f, 0.22f);
-            cwrt.anchorMax = new Vector2(0.88f, 0.78f);
+            cwrt.anchorMin = new Vector2(0.13f, 0.23f);
+            cwrt.anchorMax = new Vector2(0.87f, 0.77f);
             cwrt.offsetMin = cwrt.offsetMax = Vector2.zero;
 
             // Drop shadow
@@ -1887,6 +1973,7 @@ namespace BalloonPop.EditorTools
             psImg.sprite = roundedLg; psImg.type = Image.Type.Sliced;
             psImg.color = new Color(0, 0, 0, 0.5f);
             psImg.raycastTarget = false;
+            pShadow.SetActive(false);
 
             // Dark border
             var pBorder = new GameObject("Border", typeof(RectTransform), typeof(Image));
@@ -1898,16 +1985,19 @@ namespace BalloonPop.EditorTools
             pbImg.sprite = roundedLg; pbImg.type = Image.Type.Sliced;
             pbImg.color = new Color(0.05f, 0.10f, 0.22f, 1f);
             pbImg.raycastTarget = false;
+            pBorder.SetActive(false);
 
             // Body (deep navy/purple gradient look via Image + Inner shade)
             var card = new GameObject("Card", typeof(RectTransform), typeof(Image));
             card.transform.SetParent(cardWrap.transform, false);
             var cardRT = (RectTransform)card.transform;
             cardRT.anchorMin = Vector2.zero; cardRT.anchorMax = Vector2.one;
-            cardRT.offsetMin = new Vector2(10, 10); cardRT.offsetMax = new Vector2(-10, -10);
+            cardRT.offsetMin = cardRT.offsetMax = Vector2.zero;
             var cardImg = card.GetComponent<Image>();
-            cardImg.sprite = roundedLg; cardImg.type = Image.Type.Sliced;
-            cardImg.color = new Color(0.20f, 0.27f, 0.55f, 1f);
+            cardImg.sprite = pausePanelSprite != null ? pausePanelSprite : roundedLg;
+            cardImg.type = pausePanelSprite != null ? Image.Type.Simple : Image.Type.Sliced;
+            cardImg.preserveAspect = pausePanelSprite != null;
+            cardImg.color = pausePanelSprite != null ? Color.white : new Color(0.20f, 0.27f, 0.55f, 1f);
 
             // Üst parıltı
             var cardShine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -1919,12 +2009,16 @@ namespace BalloonPop.EditorTools
             csImg.sprite = roundedLg; csImg.type = Image.Type.Sliced;
             csImg.color = new Color(1f, 1f, 1f, 0.10f);
             csImg.raycastTarget = false;
+            cardShine.SetActive(false);
 
             // Title with strong outline + drop shadow
             var title = CreateText(card.transform, "Title", "DURDURULDU",
-                new Vector2(0.05f, 0.80f), new Vector2(0.95f, 0.96f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 88, C_Accent);
+                new Vector2(0.17f, 0.82f), new Vector2(0.83f, 0.96f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 56, new Color(0.66f, 0.43f, 0.10f));
             title.fontStyle = FontStyles.Bold;
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 30f;
+            title.fontSizeMax = 58f;
             title.outlineWidth = 0.30f;
             title.outlineColor = new Color(0.10f, 0.05f, 0.22f, 1f);
             var titleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
@@ -1933,19 +2027,19 @@ namespace BalloonPop.EditorTools
 
             // 3 buton — modern glossy 3D, score card stilinde
             var resumeBtn = CreateModernPanelButton(card.transform, "ResumeButton", "DEVAM ET",
-                new Vector2(0.10f, 0.55f), new Vector2(0.90f, 0.74f),
-                new Color(0.30f, 0.78f, 0.36f, 1f));
+                new Vector2(0.12f, 0.56f), new Vector2(0.88f, 0.75f),
+                new Color(0.30f, 0.78f, 0.36f, 1f), pauseGreen);
             var resumeHook = resumeBtn.gameObject.AddComponent<PauseResumeHook>();
             resumeHook.SetPanel(overlay);
 
             var replayBtn = CreateModernPanelButton(card.transform, "ReplayButton", "TEKRAR DENE",
-                new Vector2(0.10f, 0.32f), new Vector2(0.90f, 0.51f),
-                new Color(0.32f, 0.68f, 0.92f, 1f));
+                new Vector2(0.12f, 0.34f), new Vector2(0.88f, 0.53f),
+                new Color(0.32f, 0.68f, 0.92f, 1f), pauseBlue);
             replayBtn.gameObject.AddComponent<PauseReplayHook>();
 
             var menuBtn = CreateModernPanelButton(card.transform, "MenuButton", "ANA MENÜ",
-                new Vector2(0.10f, 0.10f), new Vector2(0.90f, 0.29f),
-                new Color(0.85f, 0.42f, 0.28f, 1f));
+                new Vector2(0.12f, 0.12f), new Vector2(0.88f, 0.31f),
+                new Color(0.85f, 0.42f, 0.28f, 1f), pauseRed);
             menuBtn.gameObject.AddComponent<PauseMenuHook>();
 
             overlay.SetActive(false);
@@ -1956,7 +2050,7 @@ namespace BalloonPop.EditorTools
         /// Glossy 3D modern buton (panel içlerinde kullanılır): shadow + border + body + shine + outline label.
         /// </summary>
         private static Button CreateModernPanelButton(Transform parent, string name, string label,
-            Vector2 anchorMin, Vector2 anchorMax, Color color)
+            Vector2 anchorMin, Vector2 anchorMax, Color color, Sprite customSprite = null)
         {
             var wrap = new GameObject(name + "Wrap", typeof(RectTransform));
             wrap.transform.SetParent(parent, false);
@@ -1975,6 +2069,7 @@ namespace BalloonPop.EditorTools
             shadowImg.type = Image.Type.Sliced;
             shadowImg.color = new Color(0, 0, 0, 0.55f);
             shadowImg.raycastTarget = false;
+            if (customSprite != null) shadow.SetActive(false);
 
             // Dark border
             var border = new GameObject("Border", typeof(RectTransform), typeof(Image));
@@ -1987,17 +2082,20 @@ namespace BalloonPop.EditorTools
             borderImg.type = Image.Type.Sliced;
             borderImg.color = Color.Lerp(color, Color.black, 0.55f);
             borderImg.raycastTarget = false;
+            if (customSprite != null) border.SetActive(false);
 
             // Body
             var body = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
             body.transform.SetParent(wrap.transform, false);
             var bodyRT = (RectTransform)body.transform;
             bodyRT.anchorMin = Vector2.zero; bodyRT.anchorMax = Vector2.one;
-            bodyRT.offsetMin = new Vector2(7, 7); bodyRT.offsetMax = new Vector2(-7, -7);
+            bodyRT.offsetMin = customSprite != null ? Vector2.zero : new Vector2(7, 7);
+            bodyRT.offsetMax = customSprite != null ? Vector2.zero : new Vector2(-7, -7);
             var bodyImg = body.GetComponent<Image>();
-            bodyImg.sprite = roundedMd != null ? roundedMd : roundedSm;
-            bodyImg.type = Image.Type.Sliced;
-            bodyImg.color = color;
+            bodyImg.sprite = customSprite != null ? customSprite : (roundedMd != null ? roundedMd : roundedSm);
+            bodyImg.type = customSprite != null ? Image.Type.Simple : Image.Type.Sliced;
+            bodyImg.preserveAspect = customSprite != null;
+            bodyImg.color = customSprite != null ? Color.white : color;
 
             // Üst parıltı
             var shine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
@@ -2009,6 +2107,7 @@ namespace BalloonPop.EditorTools
             shineImg.sprite = roundedSm; shineImg.type = Image.Type.Sliced;
             shineImg.color = new Color(1f, 1f, 1f, 0.30f);
             shineImg.raycastTarget = false;
+            if (customSprite != null) shine.SetActive(false);
 
             // Inner shade alt
             var innerShade = new GameObject("InnerShade", typeof(RectTransform), typeof(Image));
@@ -2020,12 +2119,21 @@ namespace BalloonPop.EditorTools
             innerImg.sprite = roundedSm; innerImg.type = Image.Type.Sliced;
             innerImg.color = new Color(0, 0, 0, 0.18f);
             innerImg.raycastTarget = false;
+            if (customSprite != null) innerShade.SetActive(false);
 
             // Label
             var labelTxt = CreateText(body.transform, "Label", label,
-                Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
-                TextAlignmentOptions.Center, 56, Color.white);
+                customSprite != null ? new Vector2(0.08f, 0.14f) : Vector2.zero,
+                customSprite != null ? new Vector2(0.92f, 0.86f) : Vector2.one,
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center,
+                customSprite != null ? 44 : 56, Color.white);
             labelTxt.fontStyle = FontStyles.Bold;
+            if (customSprite != null)
+            {
+                labelTxt.enableAutoSizing = true;
+                labelTxt.fontSizeMin = 24f;
+                labelTxt.fontSizeMax = 46f;
+            }
             labelTxt.outlineWidth = 0.30f;
             labelTxt.outlineColor = Color.Lerp(color, Color.black, 0.7f);
             labelTxt.raycastTarget = false; // tıklamayı bloke etmesin
@@ -2350,13 +2458,28 @@ namespace BalloonPop.EditorTools
         private static GameObject BuildSettingsPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "SettingsPanel", tapOutsideToClose: true);
+            var settingsPanelSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/panel_pause_v2.png");
+            var settingsBlue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png");
+            var settingsGreen = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+            var settingsRed = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_red_v2.png");
             var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.1f, 0.2f), new Vector2(0.9f, 0.8f), C_PanelBg);
+                new Vector2(0.11f, 0.22f), new Vector2(0.89f, 0.78f), C_PanelBg);
+            var cardImage = card.GetComponent<Image>();
+            if (settingsPanelSprite != null)
+            {
+                cardImage.sprite = settingsPanelSprite;
+                cardImage.type = Image.Type.Simple;
+                cardImage.preserveAspect = true;
+                cardImage.color = Color.white;
+            }
 
             var title = CreateText(card.transform, "Title", "AYARLAR",
-                new Vector2(0.05f, 0.85f), new Vector2(0.85f, 0.95f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 78, C_Accent);
+                new Vector2(0.17f, 0.82f), new Vector2(0.83f, 0.96f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 56, new Color(0.66f, 0.43f, 0.10f));
             title.fontStyle = FontStyles.Bold;
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 30f;
+            title.fontSizeMax = 58f;
             title.outlineWidth = 0.28f;
             title.outlineColor = new Color(0.18f, 0.10f, 0.40f, 1f);
             var settingsTitleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
@@ -2364,44 +2487,100 @@ namespace BalloonPop.EditorTools
             settingsTitleShadow.effectDistance = new Vector2(2, -4);
 
             // Modern X kapatma butonu (kırmızı glossy daire)
-            BuildCloseXButton(card.transform, new Vector2(0.86f, 0.88f), new Vector2(0.96f, 0.97f), overlay);
+            BuildCloseXButton(card.transform, new Vector2(0.82f, 0.88f), new Vector2(0.95f, 0.98f), overlay);
 
             CreateText(card.transform, "MusicLabel", "Müzik",
-                new Vector2(0.1f, 0.66f), new Vector2(0.4f, 0.74f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 40, C_TextLight);
+                new Vector2(0.12f, 0.68f), new Vector2(0.27f, 0.74f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 34, new Color(0.45f, 0.30f, 0.15f));
             var musicSlider = CreateSlider(card.transform, "MusicSlider",
-                new Vector2(0.4f, 0.66f), new Vector2(0.9f, 0.74f));
+                new Vector2(0.29f, 0.68f), new Vector2(0.82f, 0.74f));
 
             CreateText(card.transform, "SfxLabel", "Efektler",
-                new Vector2(0.1f, 0.54f), new Vector2(0.4f, 0.62f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 40, C_TextLight);
+                new Vector2(0.12f, 0.57f), new Vector2(0.27f, 0.63f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 34, new Color(0.45f, 0.30f, 0.15f));
             var sfxSlider = CreateSlider(card.transform, "SfxSlider",
-                new Vector2(0.4f, 0.54f), new Vector2(0.9f, 0.62f));
+                new Vector2(0.29f, 0.57f), new Vector2(0.82f, 0.63f));
 
             // Dil seçimi (TR / EN toggle) — modern glossy buton
-            CreateText(card.transform, "LangLabel", "Dil / Lang",
-                new Vector2(0.1f, 0.42f), new Vector2(0.4f, 0.50f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 40, C_TextLight);
+            CreateText(card.transform, "DilCaption", "Dil",
+                new Vector2(0.12f, 0.43f), new Vector2(0.25f, 0.49f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Left, 34, new Color(0.45f, 0.30f, 0.15f));
             var langBtn = CreateModernPanelButton(card.transform, "LangButton", "TR  ⇄  EN",
-                new Vector2(0.40f, 0.40f), new Vector2(0.92f, 0.51f),
-                new Color(0.32f, 0.68f, 0.92f, 1f));
+                new Vector2(0.29f, 0.39f), new Vector2(0.83f, 0.52f),
+                new Color(0.32f, 0.68f, 0.92f, 1f), settingsBlue);
             langBtn.gameObject.AddComponent<LanguageToggleHook>();
 
             // KAPAT (yeşil)
             var closeBtn = CreateModernPanelButton(card.transform, "CloseButton", "KAPAT",
-                new Vector2(0.18f, 0.20f), new Vector2(0.82f, 0.32f),
-                new Color(0.30f, 0.78f, 0.36f, 1f));
+                new Vector2(0.24f, 0.20f), new Vector2(0.77f, 0.35f),
+                new Color(0.30f, 0.78f, 0.36f, 1f), settingsGreen);
             var settingsCloser = closeBtn.gameObject.AddComponent<ButtonCloseTarget>();
             settingsCloser.Target = overlay;
 
-            // TÜM SEVİYELERİ AÇ — modern turuncu glossy
+            // GM/development shortcut: keep the label visible, but do not expose a clickable control.
             var unlockBtn = CreateModernPanelButton(card.transform, "UnlockAllButton", "TÜM SEVİYELERİ AÇ",
-                new Vector2(0.18f, 0.08f), new Vector2(0.82f, 0.18f),
-                new Color(0.95f, 0.55f, 0.25f, 1f));
+                new Vector2(0.24f, 0.10f), new Vector2(0.77f, 0.24f),
+                new Color(0.90f, 0.25f, 0.28f, 1f), settingsRed);
+            var unlockWrap = unlockBtn.transform.parent as RectTransform;
+            if (unlockWrap != null)
+            {
+                unlockWrap.gameObject.SetActive(true);
+                unlockWrap.anchorMin = new Vector2(0.24f, 0.145f);
+                unlockWrap.anchorMax = new Vector2(0.77f, 0.185f);
+                unlockWrap.offsetMin = Vector2.zero;
+                unlockWrap.offsetMax = Vector2.zero;
+            }
+
+            var unlockBody = unlockBtn.transform as RectTransform;
+            if (unlockBody != null)
+            {
+                unlockBody.anchorMin = Vector2.zero;
+                unlockBody.anchorMax = Vector2.one;
+                unlockBody.offsetMin = Vector2.zero;
+                unlockBody.offsetMax = Vector2.zero;
+            }
+
+            var unlockImage = unlockBtn.GetComponent<Image>();
+            if (unlockImage != null)
+            {
+                unlockImage.color = Color.clear;
+                unlockImage.preserveAspect = false;
+            }
+            unlockBtn.interactable = false;
+
+            var unlockLabel = unlockBtn.transform.Find("Label")?.GetComponent<TextMeshProUGUI>();
+            if (unlockLabel != null)
+            {
+                var labelRect = unlockLabel.rectTransform;
+                labelRect.anchorMin = Vector2.zero;
+                labelRect.anchorMax = Vector2.one;
+                labelRect.offsetMin = Vector2.zero;
+                labelRect.offsetMax = Vector2.zero;
+                unlockLabel.color = new Color(0.66f, 0.28f, 0.18f, 0.92f);
+                unlockLabel.fontSize = 24f;
+                unlockLabel.enableAutoSizing = true;
+                unlockLabel.fontSizeMin = 16f;
+                unlockLabel.fontSizeMax = 26f;
+            }
 
             // İLERLEMEYİ SIFIRLA — sade ghost (tehlikeli, küçük)
             var resetBtn = CreateGhostButton(card.transform, "ResetButton", "İLERLEMEYİ SIFIRLA",
-                new Vector2(0.2f, 0.02f), new Vector2(0.8f, 0.07f));
+                new Vector2(0.22f, 0.09f), new Vector2(0.78f, 0.13f));
+            var resetBody = resetBtn.transform;
+            if (resetBody != null)
+            {
+                var resetBodyImage = resetBody.GetComponent<Image>();
+                if (resetBodyImage != null) resetBodyImage.color = Color.clear;
+                var resetLabel = resetBody.Find("Label") != null ? resetBody.Find("Label").GetComponent<TMP_Text>() : null;
+                if (resetLabel != null)
+                {
+                    resetLabel.color = new Color(0.62f, 0.30f, 0.20f, 0.90f);
+                    resetLabel.fontSize = 24f;
+                    resetLabel.enableAutoSizing = true;
+                    resetLabel.fontSizeMin = 16f;
+                    resetLabel.fontSizeMax = 26f;
+                }
+            }
 
             var settings = overlay.AddComponent<SettingsPanel>();
             var so = new SerializedObject(settings);
@@ -2627,29 +2806,16 @@ namespace BalloonPop.EditorTools
             labelText.outlineWidth = 0.22f;
             labelText.outlineColor = new Color(0, 0, 0, 0.7f);
 
-            var badge = new GameObject("Badge", typeof(RectTransform), typeof(Image));
-            badge.transform.SetParent(go.transform, false);
-            var brt2 = (RectTransform)badge.transform;
-            brt2.anchorMin = new Vector2(0.78f, 0.78f);
-            brt2.anchorMax = new Vector2(1.02f, 1.10f);
-            brt2.offsetMin = brt2.offsetMax = Vector2.zero;
-            badge.GetComponent<Image>().sprite = circle;
-            badge.GetComponent<Image>().color = new Color(1f, 0.83f, 0.24f);
-
-            var badgeBorder = new GameObject("BadgeBorder", typeof(RectTransform), typeof(Image));
-            badgeBorder.transform.SetParent(badge.transform, false);
-            var bbrt = (RectTransform)badgeBorder.transform;
-            bbrt.anchorMin = new Vector2(-0.08f, -0.08f);
-            bbrt.anchorMax = new Vector2(1.08f, 1.08f);
-            bbrt.offsetMin = bbrt.offsetMax = Vector2.zero;
-            badgeBorder.GetComponent<Image>().sprite = circle;
-            badgeBorder.GetComponent<Image>().color = Color.white;
-            badgeBorder.transform.SetSiblingIndex(0);
-
-            countText = CreateText(badge.transform, "Count", "1",
-                Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero,
-                TextAlignmentOptions.Center, 42, new Color(0.20f, 0.10f, 0));
+            // Booster sprites already contain the translucent circle in their
+            // top-right corner. Only overlay the inventory count on that circle.
+            countText = CreateText(go.transform, "Count", "1",
+                new Vector2(0.695f, 0.762f), new Vector2(0.875f, 0.942f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 26,
+                new Color(0.24f, 0.16f, 0.28f));
             countText.fontStyle = FontStyles.Bold;
+            countText.enableAutoSizing = true;
+            countText.fontSizeMin = 12;
+            countText.fontSizeMax = 26;
 
             return go.GetComponent<UnityEngine.UI.Button>();
         }

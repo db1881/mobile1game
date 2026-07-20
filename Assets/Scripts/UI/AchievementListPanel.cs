@@ -35,8 +35,8 @@ namespace BalloonPop.UI
                 var images = item.GetComponentsInChildren<Image>(true);
                 if (images.Length > 0)
                     images[0].color = unlocked
-                        ? new Color(1f, 0.83f, 0.24f, 1f)
-                        : new Color(0.3f, 0.3f, 0.4f, 0.5f);
+                        ? new Color(1f, 0.84f, 0.34f, 0.96f)
+                        : new Color(1f, 0.93f, 0.74f, 0.88f);
             }
         }
     }

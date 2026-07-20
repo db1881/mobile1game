@@ -11,9 +11,19 @@ namespace BalloonPop.UI
         [SerializeField] private TMP_Text timerText;
 
         private float refreshAccumulator;
+        private RectTransform countRect;
+        private Vector2 countAnchorMin;
+        private Vector2 countAnchorMax;
+        private bool layoutCached;
+
+        private void Awake()
+        {
+            CacheLayout();
+        }
 
         private void OnEnable()
         {
+            CacheLayout();
             Refresh();
             refreshAccumulator = 0f;
         }
@@ -37,12 +47,42 @@ namespace BalloonPop.UI
                 if (hearts >= HeartSystem.MaxHearts)
                 {
                     timerText.text = "TAM";
+                    timerText.gameObject.SetActive(false);
+                    SetCompactLayout(false);
                 }
                 else
                 {
                     int sec = HeartSystem.SecondsToNextHeart();
                     timerText.text = HeartSystem.FormatSecondsAsClock(sec);
+                    timerText.gameObject.SetActive(true);
+                    SetCompactLayout(true);
                 }
+            }
+        }
+
+        private void CacheLayout()
+        {
+            if (layoutCached || countText == null) return;
+
+            countRect = countText.rectTransform;
+            countAnchorMin = countRect.anchorMin;
+            countAnchorMax = countRect.anchorMax;
+            layoutCached = true;
+        }
+
+        private void SetCompactLayout(bool showTimer)
+        {
+            if (!layoutCached || countRect == null) return;
+
+            if (showTimer)
+            {
+                countRect.anchorMin = countAnchorMin;
+                countRect.anchorMax = new Vector2(0.58f, countAnchorMax.y);
+            }
+            else
+            {
+                countRect.anchorMin = countAnchorMin;
+                countRect.anchorMax = countAnchorMax;
             }
         }
     }
