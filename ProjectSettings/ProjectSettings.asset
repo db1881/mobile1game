@@ -164,8 +164,8 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.balloonpop.game
-    Standalone: com.balloonpop.game
+    Android: com.triogames.balloonpop
+    Standalone: com.triogames.balloonpop
   buildNumber:
     Standalone: 0
     VisionOS: 0

@@ -306,6 +306,7 @@ namespace BalloonPop.EditorTools
 
             // Shop panel is available now, so the coin capsule's embedded + hit area can target it.
             BuildHeaderHUD(canvasGO.transform, shopPanel);
+            BuildGooglePlayGamesMenuUI(canvasGO.transform);
 
             var shopIcon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_shop.png");
             var dailyIcon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_daily.png");
@@ -361,6 +362,36 @@ namespace BalloonPop.EditorTools
             so.FindProperty("levelSelectPanel").objectReferenceValue = levelSelectPanel;
             so.FindProperty("noHeartsPanel").objectReferenceValue = noHeartsPanel;
             so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        [MenuItem("Balloon Pop/UI/Rebuild Google Play Games Menu")]
+        public static void RebuildGooglePlayGamesMenuUI()
+        {
+            LoadSprites();
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            Canvas menuCanvas = null;
+            foreach (var candidate in Resources.FindObjectsOfTypeAll<MainMenuUI>())
+            {
+                if (candidate.gameObject.scene == scene)
+                {
+                    menuCanvas = candidate.GetComponent<Canvas>();
+                    break;
+                }
+            }
+
+            if (menuCanvas == null)
+            {
+                Debug.LogError("MainMenuUI/Canvas was not found in the active scene.");
+                return;
+            }
+
+            var existing = menuCanvas.transform.Find("GooglePlayGamesPanel");
+            if (existing != null) Object.DestroyImmediate(existing.gameObject);
+
+            BuildGooglePlayGamesMenuUI(menuCanvas.transform);
+            EditorUtility.SetDirty(menuCanvas.gameObject);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+            Debug.Log("Google Play Games menu controls rebuilt.");
         }
 
         /// <summary>
@@ -1451,6 +1482,94 @@ namespace BalloonPop.EditorTools
             var prefab = PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
             return prefab;
+        }
+
+        private static void BuildGooglePlayGamesMenuUI(Transform parent)
+        {
+            var panel = new GameObject("GooglePlayGamesPanel", typeof(RectTransform));
+            panel.transform.SetParent(parent, false);
+            var panelRT = (RectTransform)panel.transform;
+            panelRT.anchorMin = panelRT.anchorMax = new Vector2(1f, 1f);
+            panelRT.pivot = new Vector2(1f, 1f);
+            panelRT.anchoredPosition = new Vector2(-22f, -22f);
+            panelRT.sizeDelta = new Vector2(350f, 255f);
+
+            var blue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png");
+            var green = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+
+            var signIn = CreateGooglePlayMenuButton(panel.transform, "GoogleSignInButton",
+                "GOOGLE İLE GİRİŞ", blue, new Vector2(0f, 0f));
+            var leaderboard = CreateGooglePlayMenuButton(panel.transform, "LeaderboardButton",
+                "LİDERLİK", green, new Vector2(0f, -105f));
+
+            var status = CreateText(panel.transform, "Status", "Play Console liderlik kimliği bekleniyor",
+                new Vector2(0f, 1f), new Vector2(1f, 1f),
+                new Vector2(10f, -247f), new Vector2(-10f, -211f),
+                TextAlignmentOptions.Center, 18, Color.white);
+            status.enableAutoSizing = true;
+            status.fontSizeMin = 13f;
+            status.fontSizeMax = 18f;
+            status.raycastTarget = false;
+            var statusShadow = status.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            statusShadow.effectColor = new Color(0.25f, 0.12f, 0.04f, 0.8f);
+            statusShadow.effectDistance = new Vector2(1f, -2f);
+
+            var controller = panel.AddComponent<GooglePlayGamesMenuUI>();
+            var so = new SerializedObject(controller);
+            so.FindProperty("signInButton").objectReferenceValue = signIn.button;
+            so.FindProperty("leaderboardButton").objectReferenceValue = leaderboard.button;
+            so.FindProperty("signInLabel").objectReferenceValue = signIn.label;
+            so.FindProperty("leaderboardLabel").objectReferenceValue = leaderboard.label;
+            so.FindProperty("statusLabel").objectReferenceValue = status;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private struct GooglePlayMenuButton
+        {
+            public Button button;
+            public TMP_Text label;
+        }
+
+        private static GooglePlayMenuButton CreateGooglePlayMenuButton(Transform parent, string name,
+            string label, Sprite sprite, Vector2 anchoredPosition)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
+            go.transform.SetParent(parent, false);
+            var rt = (RectTransform)go.transform;
+            rt.anchorMin = rt.anchorMax = new Vector2(1f, 1f);
+            rt.pivot = new Vector2(1f, 1f);
+            rt.anchoredPosition = anchoredPosition;
+            rt.sizeDelta = new Vector2(350f, 110f);
+
+            var image = go.GetComponent<Image>();
+            image.sprite = sprite != null ? sprite : roundedLg;
+            image.type = Image.Type.Simple;
+            image.preserveAspect = false;
+            image.color = Color.white;
+
+            var text = CreateText(go.transform, "Label", label,
+                new Vector2(0.08f, 0.24f), new Vector2(0.92f, 0.83f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 30, Color.white);
+            text.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/PaytoneOne SDF.asset");
+            text.fontStyle = FontStyles.Bold;
+            text.enableAutoSizing = true;
+            text.fontSizeMin = 18f;
+            text.fontSizeMax = 30f;
+            text.raycastTarget = false;
+            var textShadow = text.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            textShadow.effectColor = new Color(0.18f, 0.08f, 0.03f, 0.85f);
+            textShadow.effectDistance = new Vector2(2f, -3f);
+
+            var button = go.GetComponent<Button>();
+            var colors = button.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(1.06f, 1.06f, 1.06f, 1f);
+            colors.pressedColor = new Color(0.84f, 0.84f, 0.84f, 1f);
+            colors.disabledColor = new Color(0.70f, 0.70f, 0.70f, 0.80f);
+            colors.fadeDuration = 0.08f;
+            button.colors = colors;
+
+            return new GooglePlayMenuButton { button = button, label = text };
         }
 
         private static void BuildHeaderHUD(Transform parent, GameObject shopPanel)

@@ -12,7 +12,7 @@ namespace BalloonPop.EditorTools
     {
         private const string OutputDir  = "Build";
         private const string OutputName = "BalloonPop.apk";
-        private const string PackageId  = "com.balloonpop.game";
+        private const string PackageId  = "com.triogames.balloonpop";
 
         [MenuItem("BalloonPop/Build APK")]
         public static void BuildAPK_Menu() => DoBuild();
