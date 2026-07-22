@@ -385,6 +385,28 @@ namespace BalloonPop.Grid
             }
         }
 
+        // Aynı alevli şeridi rastgele bir hücre kümesine (bomba 3x3, özel patlama) uygular:
+        // hücreleri satıra göre gruplar, her satırın en sol–en sağ hücresi arası bir şerit çıkar.
+        private void SpawnFlameRibbonsForCells(ICollection<Cell> cellSet)
+        {
+            if (flameRibbonFrames == null || flameRibbonFrames.Length == 0 || cellSet == null) return;
+            var minX = new Dictionary<int, int>();
+            var maxX = new Dictionary<int, int>();
+            foreach (var c in cellSet)
+            {
+                if (c == null) continue;
+                if (!minX.ContainsKey(c.Y)) { minX[c.Y] = c.X; maxX[c.Y] = c.X; }
+                else { if (c.X < minX[c.Y]) minX[c.Y] = c.X; if (c.X > maxX[c.Y]) maxX[c.Y] = c.X; }
+            }
+            foreach (var kv in minX)
+            {
+                int y = kv.Key;
+                Vector3 a = GridToWorld(minX[y], y);
+                Vector3 b = GridToWorld(maxX[y], y);
+                FlameRibbonEffect.Spawn(flameRibbonFrames, a, b, cellSize * 2.4f, cellSize);
+            }
+        }
+
         private static readonly Color[] BalloonColorPalette = {
             Color.clear,
             new Color(1.00f, 0.28f, 0.34f),
@@ -674,6 +696,13 @@ namespace BalloonPop.Grid
 
             var affected = SpecialBalloonResolver.CollectAffectedCells(this, trigger);
             var set = new HashSet<Cell>(affected) { cells[trigger.X, trigger.Y] };
+
+            // Satır match'leriyle AYNI görsel efektler: patlayan balonlarda partikül + alevli şerit.
+            var popBalloons = new HashSet<Balloon>();
+            foreach (var c in set) if (c.HasBalloon) popBalloons.Add(c.CurrentBalloon);
+            SpawnParticlesForPopped(popBalloons);
+            SpawnFlameRibbonsForCells(set);
+
             yield return PopCells(set);
             yield return CollapseColumns();
             yield return RefillTop();
@@ -739,6 +768,10 @@ namespace BalloonPop.Grid
         {
             yield return b.PopRoutine();
             ReturnToPool(b);
+            // Çekiç tek balon patlatır (match oluşmaz) → boşluğu yine de doldur:
+            // önce sütunu aşağı kaydır + üstten yeni balon ekle, sonra oluşan match'leri çöz.
+            yield return CollapseColumns();
+            yield return RefillTop();
             yield return ResolveMatchesLoop(null);
         }
 
@@ -770,6 +803,15 @@ namespace BalloonPop.Grid
                     b.MoveTo(GridToWorld(x, y));
                 }
             }
+
+            // Karıştırma sonucu oluşan 3+ eşleşmeler oyuncu müdahale etmeden patlasın.
+            StartCoroutine(ResolveAfterShuffle());
+        }
+
+        private System.Collections.IEnumerator ResolveAfterShuffle()
+        {
+            yield return new WaitForSeconds(0.30f);   // balonlar yeni yerlerine otursun
+            yield return ResolveMatchesLoop(null);
         }
 
         public bool AreAdjacent(int ax, int ay, int bx, int by)

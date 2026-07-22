@@ -33,25 +33,40 @@ namespace BalloonPop.Gameplay
 
             yield return grid.SwapBalloons(ax, ay, bx, by);
 
-            // Klasik match-3: swap sadece düz çizgi match oluşturursa kabul edilir.
-            // Bomba/rainbow/line swap özel mantığı KAPATILDI — bombaya değil,
-            // bombanın yanındaki match'i çözmek gerekiyor.
-            var preChain = new MatchFinder(grid);
-            var matches = preChain.FindAllMatches();
-            bool isValid = matches.Count > 0;
+            // Bir özel balonu (bomba/rainbow/çizgi) bir komşunun üstüne atınca ANINDA patlar —
+            // match aramaya gerek yok. (Bu "swap ile patlat" mekaniği önceden kapalıydı, geri açıldı.)
+            var ba = grid.Cells[ax, ay].CurrentBalloon;
+            var bb = grid.Cells[bx, by].CurrentBalloon;
+            bool special = (ba != null && ba.Special != SpecialType.Normal && ba.Special != SpecialType.Gold)
+                        || (bb != null && bb.Special != SpecialType.Normal && bb.Special != SpecialType.Gold);
 
-            if (!isValid)
+            if (special)
             {
-                // Geri al
-                yield return grid.SwapBalloons(ax, ay, bx, by);
+                GameManager.Instance?.ConsumeMove();
+                yield return grid.ActivateSingleSpecial(ax, ay, bx, by);
+                int chain = 0;
+                yield return grid.ResolveMatchesLoop(c => chain = c);
+                if (chain > 1) GameEvents.RaiseComboChain(chain);
+                GameManager.Instance?.CheckLevelCompletion();
             }
             else
             {
-                GameManager.Instance?.ConsumeMove();
-                int totalChain = 0;
-                yield return grid.ResolveMatchesLoop(c => totalChain = c);
-                if (totalChain > 1) GameEvents.RaiseComboChain(totalChain);
-                GameManager.Instance?.CheckLevelCompletion();
+                // Klasik match-3: swap sadece düz çizgi match oluşturursa kabul edilir.
+                var preChain = new MatchFinder(grid);
+                var matches = preChain.FindAllMatches();
+                if (matches.Count == 0)
+                {
+                    // Geri al
+                    yield return grid.SwapBalloons(ax, ay, bx, by);
+                }
+                else
+                {
+                    GameManager.Instance?.ConsumeMove();
+                    int totalChain = 0;
+                    yield return grid.ResolveMatchesLoop(c => totalChain = c);
+                    if (totalChain > 1) GameEvents.RaiseComboChain(totalChain);
+                    GameManager.Instance?.CheckLevelCompletion();
+                }
             }
 
             InputManager.Instance.InputEnabled = true;
