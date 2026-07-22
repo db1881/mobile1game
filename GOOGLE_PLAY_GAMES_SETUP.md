@@ -1,7 +1,7 @@
 # Google Play Games yapılandırması
 
 Google Play Games Services kurulumu 21 Temmuz 2026 tarihinde tamamlandı. Projede eklenti
-`v2.1.0`; otomatik/manuel Google girişi, ana menü giriş ve liderlik düğmeleri, bölüm
+`v2.1.0`; otomatik/manuel Google girişi, ana menü giriş ve oyun içi liderlik düğmeleri, bölüm
 zaferlerinde skor gönderimi ve yerel en iyi skorun girişten sonra senkronlanması hazırdır.
 
 ## Canlı yapılandırma
@@ -48,8 +48,9 @@ liderlik tablosu ID değerlerini kullanır. Temel giriş ve leaderboard için we
 - `Assets/Editor/AndroidBuildScript.cs`: APK ve Play için imzalı AAB üretimi
 
 Unity Play Mode doğrulamasında servis yapılandırılmış (`configured=True`) ve ana menüdeki
-`GooglePlayGamesMenuUI` bulunur durumda doğrulandı. Gerçek hesap seçme ve Google'ın yerel
-liderlik ekranı yalnızca eşleşen SHA-1 ile imzalanmış Android cihaz derlemesinde açılır.
+`GooglePlayGamesMenuUI` bulunur durumda doğrulandı. Liderlik düğmesi Google'ın harici ekranını
+açmaz; `LoadScores` ve `LoadUsers` sonuçlarını `LeaderboardPanel` içinde gösterir. Gerçek hesap ve
+çevrimiçi skor verileri yalnızca eşleşen SHA-1 ile imzalanmış Android cihaz derlemesinde yüklenir.
 
 21 Temmuz 2026 Android IL2CPP/ARM64 doğrulama derlemesi başarıyla tamamlandı:
 `Build/BalloonPop.apk` (45.008.292 bayt). APK imzası `Android Debug`; SHA-1 değeri

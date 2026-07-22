@@ -13,6 +13,7 @@ namespace BalloonPop.UI
         [SerializeField] private TMP_Text signInLabel;
         [SerializeField] private TMP_Text leaderboardLabel;
         [SerializeField] private TMP_Text statusLabel;
+        [SerializeField] private LeaderboardPanel leaderboardPanel;
 
         private GooglePlayGamesService service;
 
@@ -43,7 +44,7 @@ namespace BalloonPop.UI
 
         private void ShowLeaderboard()
         {
-            service?.ShowLeaderboard();
+            leaderboardPanel?.Open();
         }
 
         private void Refresh()

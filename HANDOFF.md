@@ -347,6 +347,14 @@ hesabı test davetini kabul etti. Katılım bağlantısı:
 `https://play.google.com/apps/internaltest/4701107718413357996`. Ayrıntılar:
 `GOOGLE_PLAY_GAMES_SETUP.md`.
 
+2026-07-21'de liderlik butonunun Google Play Games'in harici ekranını açması kaldırıldı. Buton artık
+`LeaderboardPanel` adlı oyun içi Candy UI panelini açıyor. `GooglePlayGamesService.LoadLeaderboard()`
+Google Play Games'ten herkese açık, tüm zamanların ilk 10 skorunu `LoadScores` ile alıyor; oyuncu
+adları `LoadUsers` ile tamamlanıyor. Panel sıra, oyuncu adı, skor ve kullanıcının kendi sırasını oyun
+içinde gösteriyor; yenileme ve yeniden giriş akışları destekleniyor. Builder tarafındaki
+`Rebuild Google Play Games Menu` komutu paneli ve tek satırlık runtime şablonunu da yeniden üretir.
+Android APK derlemesi ve Unity Play Mode panel önizlemesi başarılıdır.
+
 ### 📋 Diğer açık işler
 1. **10'lu avatar seti** — prompt hazırlandı, üretilmedi. Avatar barı kaldırıldığı için şu an gereksiz.
 2. **`topbar_user.png`** — artık kullanılmıyor, silinebilir.

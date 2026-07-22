@@ -15,6 +15,8 @@ namespace BalloonPop.EditorTools
         private const string AabOutputName = "BalloonPop.aab";
         private const string PackageId = "com.triogames.balloonpop";
         private const string UploadKeyAlias = "balloonpop";
+        private const string VersionName = "0.1.1";
+        private const int VersionCode = 2;
 
         [MenuItem("BalloonPop/Build APK")]
         public static void BuildAPK_Menu() => DoBuild(false);
@@ -49,9 +51,9 @@ namespace BalloonPop.EditorTools
             // Player settings
             PlayerSettings.companyName  = "BalloonPop";
             PlayerSettings.productName  = "Balloon Pop";
-            PlayerSettings.bundleVersion = "0.1.0";
+            PlayerSettings.bundleVersion = VersionName;
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, PackageId);
-            PlayerSettings.Android.bundleVersionCode = 1;
+            PlayerSettings.Android.bundleVersionCode = VersionCode;
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
             PlayerSettings.allowedAutorotateToPortrait = true;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;

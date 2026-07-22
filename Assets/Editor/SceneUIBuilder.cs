@@ -387,6 +387,8 @@ namespace BalloonPop.EditorTools
 
             var existing = menuCanvas.transform.Find("GooglePlayGamesPanel");
             if (existing != null) Object.DestroyImmediate(existing.gameObject);
+            var existingLeaderboard = menuCanvas.transform.Find("LeaderboardPanel");
+            if (existingLeaderboard != null) Object.DestroyImmediate(existingLeaderboard.gameObject);
 
             BuildGooglePlayGamesMenuUI(menuCanvas.transform);
             EditorUtility.SetDirty(menuCanvas.gameObject);
@@ -1486,6 +1488,8 @@ namespace BalloonPop.EditorTools
 
         private static void BuildGooglePlayGamesMenuUI(Transform parent)
         {
+            var inGameLeaderboard = BuildLeaderboardPanel(parent);
+
             var panel = new GameObject("GooglePlayGamesPanel", typeof(RectTransform));
             panel.transform.SetParent(parent, false);
             var panelRT = (RectTransform)panel.transform;
@@ -1521,7 +1525,146 @@ namespace BalloonPop.EditorTools
             so.FindProperty("signInLabel").objectReferenceValue = signIn.label;
             so.FindProperty("leaderboardLabel").objectReferenceValue = leaderboard.label;
             so.FindProperty("statusLabel").objectReferenceValue = status;
+            so.FindProperty("leaderboardPanel").objectReferenceValue = inGameLeaderboard.GetComponent<LeaderboardPanel>();
             so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static GameObject BuildLeaderboardPanel(Transform parent)
+        {
+            var overlay = CreateOverlay(parent, "LeaderboardPanel");
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.07f, 0.10f), new Vector2(0.93f, 0.90f), preserveAspect: false);
+
+            var title = CreateText(card.transform, "Title", "LİDERLİK",
+                new Vector2(0.17f, 0.88f), new Vector2(0.83f, 0.97f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 52, CandyTitleColor);
+            StyleCandyTitle(title);
+
+            var subtitle = CreateText(card.transform, "Subtitle", "TÜM ZAMANLAR • EN YÜKSEK SKOR",
+                new Vector2(0.12f, 0.815f), new Vector2(0.88f, 0.865f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 24, CandyDimColor);
+            subtitle.fontStyle = FontStyles.Bold;
+            subtitle.enableAutoSizing = true;
+            subtitle.fontSizeMin = 17f;
+            subtitle.fontSizeMax = 25f;
+
+            var header = new GameObject("Header", typeof(RectTransform), typeof(Image));
+            header.transform.SetParent(card.transform, false);
+            var headerRT = (RectTransform)header.transform;
+            headerRT.anchorMin = new Vector2(0.09f, 0.758f);
+            headerRT.anchorMax = new Vector2(0.91f, 0.805f);
+            headerRT.offsetMin = headerRT.offsetMax = Vector2.zero;
+            var headerImage = header.GetComponent<Image>();
+            headerImage.sprite = roundedSm;
+            headerImage.type = Image.Type.Sliced;
+            headerImage.color = new Color(0.96f, 0.63f, 0.16f, 0.92f);
+            headerImage.raycastTarget = false;
+
+            var rankHeader = CreateText(header.transform, "Rank", "SIRA",
+                new Vector2(0.02f, 0f), new Vector2(0.18f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Center, 23, Color.white);
+            var playerHeader = CreateText(header.transform, "Player", "OYUNCU",
+                new Vector2(0.19f, 0f), new Vector2(0.70f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Left, 23, Color.white);
+            var scoreHeader = CreateText(header.transform, "Score", "SKOR",
+                new Vector2(0.70f, 0f), new Vector2(0.97f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Right, 23, Color.white);
+            rankHeader.fontStyle = playerHeader.fontStyle = scoreHeader.fontStyle = FontStyles.Bold;
+
+            var rowsRoot = new GameObject("Rows", typeof(RectTransform));
+            rowsRoot.transform.SetParent(card.transform, false);
+            var rowsRT = (RectTransform)rowsRoot.transform;
+            rowsRT.anchorMin = Vector2.zero;
+            rowsRT.anchorMax = Vector2.one;
+            rowsRT.offsetMin = rowsRT.offsetMax = Vector2.zero;
+
+            var rowTemplate = BuildLeaderboardRow(rowsRoot.transform, 0, 0.727f);
+            rowTemplate.gameObject.name = "ScoreRowTemplate";
+            rowTemplate.gameObject.SetActive(false);
+
+            var status = CreateText(card.transform, "Status", "Skorlar yükleniyor...",
+                new Vector2(0.14f, 0.36f), new Vector2(0.86f, 0.54f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 32, CandyDimColor);
+            status.fontStyle = FontStyles.Bold;
+            status.enableAutoSizing = true;
+            status.fontSizeMin = 20f;
+            status.fontSizeMax = 34f;
+
+            var playerSummary = CreateText(card.transform, "PlayerSummary", "SENİN SIRAN  -     SKOR  0",
+                new Vector2(0.13f, 0.125f), new Vector2(0.87f, 0.175f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 27,
+                new Color(0.05f, 0.48f, 0.60f, 1f));
+            playerSummary.fontStyle = FontStyles.Bold;
+            playerSummary.enableAutoSizing = true;
+            playerSummary.fontSizeMin = 19f;
+            playerSummary.fontSizeMax = 29f;
+
+            var refreshButton = CreateModernPanelButton(card.transform, "RefreshButton", "YENİLE",
+                new Vector2(0.31f, 0.035f), new Vector2(0.69f, 0.115f),
+                new Color(0.20f, 0.68f, 0.86f, 1f),
+                AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png"));
+            var refreshLabel = refreshButton.GetComponentInChildren<TMP_Text>(true);
+
+            BuildCloseXButton(card.transform, new Vector2(0.84f, 0.885f), new Vector2(0.98f, 0.985f), overlay);
+
+            var controller = overlay.AddComponent<LeaderboardPanel>();
+            var so = new SerializedObject(controller);
+            so.FindProperty("titleText").objectReferenceValue = title;
+            so.FindProperty("subtitleText").objectReferenceValue = subtitle;
+            so.FindProperty("rankHeaderText").objectReferenceValue = rankHeader;
+            so.FindProperty("playerHeaderText").objectReferenceValue = playerHeader;
+            so.FindProperty("scoreHeaderText").objectReferenceValue = scoreHeader;
+            so.FindProperty("statusText").objectReferenceValue = status;
+            so.FindProperty("playerSummaryText").objectReferenceValue = playerSummary;
+            so.FindProperty("refreshButton").objectReferenceValue = refreshButton;
+            so.FindProperty("refreshLabel").objectReferenceValue = refreshLabel;
+            so.FindProperty("rowsRoot").objectReferenceValue = rowsRoot.transform;
+            so.FindProperty("rowTemplate").objectReferenceValue = rowTemplate;
+            so.ApplyModifiedPropertiesWithoutUndo();
+
+            overlay.SetActive(false);
+            return overlay;
+        }
+
+        private static LeaderboardRowUI BuildLeaderboardRow(Transform parent, int index, float yCenter)
+        {
+            var row = new GameObject("ScoreRow_" + (index + 1), typeof(RectTransform), typeof(Image));
+            row.transform.SetParent(parent, false);
+            var rt = (RectTransform)row.transform;
+            rt.anchorMin = new Vector2(0.09f, yCenter - 0.024f);
+            rt.anchorMax = new Vector2(0.91f, yCenter + 0.024f);
+            rt.offsetMin = rt.offsetMax = Vector2.zero;
+
+            var background = row.GetComponent<Image>();
+            background.sprite = roundedSm;
+            background.type = Image.Type.Sliced;
+            background.color = index % 2 == 0
+                ? new Color(1f, 0.94f, 0.76f, 0.78f)
+                : new Color(1f, 0.86f, 0.62f, 0.58f);
+            background.raycastTarget = false;
+
+            var rank = CreateText(row.transform, "Rank", "#" + (index + 1),
+                new Vector2(0.02f, 0f), new Vector2(0.18f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Center, 25, CandyAccentColor);
+            var player = CreateText(row.transform, "Player", "Oyuncu",
+                new Vector2(0.19f, 0f), new Vector2(0.70f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Left, 25, CandyTextColor);
+            var score = CreateText(row.transform, "Score", "0",
+                new Vector2(0.70f, 0f), new Vector2(0.97f, 1f), Vector2.zero, Vector2.zero,
+                TextAlignmentOptions.Right, 25, CandyAccentColor);
+            rank.fontStyle = score.fontStyle = FontStyles.Bold;
+            player.enableAutoSizing = true;
+            player.fontSizeMin = 16f;
+            player.fontSizeMax = 25f;
+
+            var view = row.AddComponent<LeaderboardRowUI>();
+            var so = new SerializedObject(view);
+            so.FindProperty("background").objectReferenceValue = background;
+            so.FindProperty("rankText").objectReferenceValue = rank;
+            so.FindProperty("playerText").objectReferenceValue = player;
+            so.FindProperty("scoreText").objectReferenceValue = score;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return view;
         }
 
         private struct GooglePlayMenuButton
