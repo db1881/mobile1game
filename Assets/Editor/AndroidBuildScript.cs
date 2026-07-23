@@ -10,19 +10,29 @@ namespace BalloonPop.EditorTools
 {
     public static class AndroidBuildScript
     {
-        private const string OutputDir  = "Build";
-        private const string OutputName = "BalloonPop.apk";
-        private const string PackageId  = "com.balloonpop.game";
+        private const string OutputDir = "Build";
+        private const string ApkOutputName = "BalloonPop.apk";
+        private const string AabOutputName = "BalloonPop.aab";
+        private const string PackageId = "com.triogames.balloonpop";
+        private const string UploadKeyAlias = "balloonpop";
+        private const string VersionName = "0.1.5";
+        private const int VersionCode = 6;
 
         [MenuItem("BalloonPop/Build APK")]
-        public static void BuildAPK_Menu() => DoBuild();
+        public static void BuildAPK_Menu() => DoBuild(false);
+
+        [MenuItem("BalloonPop/Build AAB for Play")]
+        public static void BuildAAB_Menu() => DoBuild(true);
 
         // Batch mode entry-point
-        public static void BatchBuildAPK() => DoBuild();
+        public static void BatchBuildAPK() => DoBuild(false);
 
-        private static void DoBuild()
+        // Batch mode entry-point for Google Play uploads.
+        public static void BatchBuildAAB() => DoBuild(true);
+
+        private static void DoBuild(bool appBundle)
         {
-            Debug.Log("[BalloonPop] APK build başlıyor...");
+            Debug.Log($"[BalloonPop] {(appBundle ? "AAB" : "APK")} build başlıyor...");
 
             // Önce sahnelerin kurulu olduğundan emin ol
             if (!File.Exists("Assets/Scenes/MainMenu.unity") || !File.Exists("Assets/Scenes/Game.unity"))
@@ -41,9 +51,9 @@ namespace BalloonPop.EditorTools
             // Player settings
             PlayerSettings.companyName  = "BalloonPop";
             PlayerSettings.productName  = "Balloon Pop";
-            PlayerSettings.bundleVersion = "0.1.0";
+            PlayerSettings.bundleVersion = VersionName;
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, PackageId);
-            PlayerSettings.Android.bundleVersionCode = 1;
+            PlayerSettings.Android.bundleVersionCode = VersionCode;
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
             PlayerSettings.allowedAutorotateToPortrait = true;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
@@ -60,7 +70,9 @@ namespace BalloonPop.EditorTools
 
             // Output path
             Directory.CreateDirectory(OutputDir);
-            string outPath = Path.Combine(OutputDir, OutputName);
+            if (appBundle) ConfigureUploadSigning();
+
+            string outPath = Path.Combine(OutputDir, appBundle ? AabOutputName : ApkOutputName);
 
             var scenes = new[] {
                 "Assets/Scenes/MainMenu.unity",
@@ -68,7 +80,7 @@ namespace BalloonPop.EditorTools
             };
 
             EditorUserBuildSettings.development = false;
-            EditorUserBuildSettings.buildAppBundle = false; // .aab değil .apk
+            EditorUserBuildSettings.buildAppBundle = appBundle;
 
             var opts = new BuildPlayerOptions
             {
@@ -86,13 +98,48 @@ namespace BalloonPop.EditorTools
             if (summary.result == BuildResult.Succeeded)
             {
                 double mb = summary.totalSize / 1024.0 / 1024.0;
-                Debug.Log($"[BalloonPop] APK build BAŞARILI: {outPath} ({mb:F1} MB, {summary.totalTime})");
+                Debug.Log($"[BalloonPop] {(appBundle ? "AAB" : "APK")} build BAŞARILI: {outPath} ({mb:F1} MB, {summary.totalTime})");
             }
             else
             {
-                Debug.LogError($"[BalloonPop] APK build BAŞARISIZ: {summary.result} • {summary.totalErrors} hata, {summary.totalWarnings} uyarı");
+                Debug.LogError($"[BalloonPop] {(appBundle ? "AAB" : "APK")} build BAŞARISIZ: {summary.result} • {summary.totalErrors} hata, {summary.totalWarnings} uyarı");
                 if (Application.isBatchMode) EditorApplication.Exit(1);
             }
+        }
+
+        private static void ConfigureUploadSigning()
+        {
+            string androidDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".android");
+            string credentialsPath = Environment.GetEnvironmentVariable("BALLOON_POP_UPLOAD_CREDENTIALS");
+            if (string.IsNullOrWhiteSpace(credentialsPath))
+                credentialsPath = Path.Combine(androidDir, "balloon-pop-upload-credentials.txt");
+
+            if (!File.Exists(credentialsPath))
+                throw new FileNotFoundException("Balloon Pop upload key credentials file bulunamadı.", credentialsPath);
+
+            string keystorePath = null;
+            string keystorePassword = null;
+            string keyAliasPassword = null;
+            foreach (string rawLine in File.ReadAllLines(credentialsPath))
+            {
+                int separator = rawLine.IndexOf('=');
+                if (separator <= 0) continue;
+                string key = rawLine.Substring(0, separator).Trim();
+                string value = rawLine.Substring(separator + 1).Trim();
+                if (key == "KEYSTORE_PATH") keystorePath = value;
+                else if (key == "KEYSTORE_PASSWORD") keystorePassword = value;
+                else if (key == "KEY_ALIAS_PASSWORD") keyAliasPassword = value;
+            }
+
+            if (string.IsNullOrWhiteSpace(keystorePath) || !File.Exists(keystorePath) ||
+                string.IsNullOrWhiteSpace(keystorePassword) || string.IsNullOrWhiteSpace(keyAliasPassword))
+                throw new InvalidDataException("Balloon Pop upload key bilgileri eksik veya geçersiz.");
+
+            PlayerSettings.Android.useCustomKeystore = true;
+            PlayerSettings.Android.keystoreName = keystorePath;
+            PlayerSettings.Android.keystorePass = keystorePassword;
+            PlayerSettings.Android.keyaliasName = UploadKeyAlias;
+            PlayerSettings.Android.keyaliasPass = keyAliasPassword;
         }
     }
 }

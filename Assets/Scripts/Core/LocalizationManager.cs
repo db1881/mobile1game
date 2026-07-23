@@ -24,6 +24,8 @@ namespace BalloonPop.Core
             { "menu.daily",        new[] { "GÜNLÜK",        "DAILY" } },
             { "menu.stats",        new[] { "İSTATİSTİK",    "STATS" } },
             { "menu.achievements", new[] { "BAŞARIM",       "AWARDS" } },
+            { "menu.google_signin",new[] { "GOOGLE İLE GİRİŞ", "SIGN IN WITH GOOGLE" } },
+            { "menu.leaderboard",  new[] { "LİDERLİK",      "LEADERBOARD" } },
 
             // HUD
             { "hud.score",         new[] { "SKOR",          "SCORE" } },
