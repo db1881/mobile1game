@@ -393,7 +393,14 @@ namespace BalloonPop.EditorTools
             BuildGooglePlayGamesMenuUI(menuCanvas.transform);
             EditorUtility.SetDirty(menuCanvas.gameObject);
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+            UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
             Debug.Log("Google Play Games menu controls rebuilt.");
+        }
+
+        public static void RebuildGooglePlayGamesMenuUIBatch()
+        {
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
+            RebuildGooglePlayGamesMenuUI();
         }
 
         /// <summary>
@@ -1500,11 +1507,12 @@ namespace BalloonPop.EditorTools
 
             var blue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png");
             var green = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+            var trophy = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_trophy.png");
 
             var signIn = CreateGooglePlayMenuButton(panel.transform, "GoogleSignInButton",
-                "GOOGLE İLE GİRİŞ", blue, new Vector2(0f, 0f));
+                "GOOGLE İLE GİRİŞ", blue, new Vector2(0f, 0f), null, true);
             var leaderboard = CreateGooglePlayMenuButton(panel.transform, "LeaderboardButton",
-                "LİDERLİK", green, new Vector2(0f, -105f));
+                "YILDIZ LİGİ", green, new Vector2(0f, -105f), trophy, false);
 
             var status = CreateText(panel.transform, "Status", "Play Console liderlik kimliği bekleniyor",
                 new Vector2(0f, 1f), new Vector2(1f, 1f),
@@ -1535,12 +1543,23 @@ namespace BalloonPop.EditorTools
             var card = CreateCandyPanelCard(overlay.transform, "Card",
                 new Vector2(0.07f, 0.10f), new Vector2(0.93f, 0.90f), preserveAspect: false);
 
-            var title = CreateText(card.transform, "Title", "LİDERLİK",
+            var title = CreateText(card.transform, "Title", "YILDIZ LİGİ",
                 new Vector2(0.17f, 0.88f), new Vector2(0.83f, 0.97f),
                 Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 52, CandyTitleColor);
             StyleCandyTitle(title);
 
-            var subtitle = CreateText(card.transform, "Subtitle", "TÜM ZAMANLAR • EN YÜKSEK SKOR",
+            var titleTrophy = new GameObject("Trophy", typeof(RectTransform), typeof(Image));
+            titleTrophy.transform.SetParent(card.transform, false);
+            var titleTrophyRT = (RectTransform)titleTrophy.transform;
+            titleTrophyRT.anchorMin = new Vector2(0.105f, 0.875f);
+            titleTrophyRT.anchorMax = new Vector2(0.215f, 0.975f);
+            titleTrophyRT.offsetMin = titleTrophyRT.offsetMax = Vector2.zero;
+            var titleTrophyImage = titleTrophy.GetComponent<Image>();
+            titleTrophyImage.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/menu_trophy.png");
+            titleTrophyImage.preserveAspect = true;
+            titleTrophyImage.raycastTarget = false;
+
+            var subtitle = CreateText(card.transform, "Subtitle", "TÜM OYUNCULAR • TOPLAM YILDIZ",
                 new Vector2(0.12f, 0.815f), new Vector2(0.88f, 0.865f),
                 Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 24, CandyDimColor);
             subtitle.fontStyle = FontStyles.Bold;
@@ -1566,23 +1585,50 @@ namespace BalloonPop.EditorTools
             var playerHeader = CreateText(header.transform, "Player", "OYUNCU",
                 new Vector2(0.19f, 0f), new Vector2(0.70f, 1f), Vector2.zero, Vector2.zero,
                 TextAlignmentOptions.Left, 23, Color.white);
-            var scoreHeader = CreateText(header.transform, "Score", "SKOR",
+            var scoreHeader = CreateText(header.transform, "Score", "YILDIZ",
                 new Vector2(0.70f, 0f), new Vector2(0.97f, 1f), Vector2.zero, Vector2.zero,
                 TextAlignmentOptions.Right, 23, Color.white);
             rankHeader.fontStyle = playerHeader.fontStyle = scoreHeader.fontStyle = FontStyles.Bold;
 
-            var rowsRoot = new GameObject("Rows", typeof(RectTransform));
-            rowsRoot.transform.SetParent(card.transform, false);
+            var viewport = new GameObject("RowsViewport", typeof(RectTransform), typeof(Image), typeof(RectMask2D));
+            viewport.transform.SetParent(card.transform, false);
+            var viewportRT = (RectTransform)viewport.transform;
+            viewportRT.anchorMin = new Vector2(0.09f, 0.19f);
+            viewportRT.anchorMax = new Vector2(0.91f, 0.748f);
+            viewportRT.offsetMin = viewportRT.offsetMax = Vector2.zero;
+            viewport.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.015f);
+
+            var rowsRoot = new GameObject("Rows", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
+            rowsRoot.transform.SetParent(viewport.transform, false);
             var rowsRT = (RectTransform)rowsRoot.transform;
-            rowsRT.anchorMin = Vector2.zero;
-            rowsRT.anchorMax = Vector2.one;
-            rowsRT.offsetMin = rowsRT.offsetMax = Vector2.zero;
+            rowsRT.anchorMin = new Vector2(0f, 1f);
+            rowsRT.anchorMax = new Vector2(1f, 1f);
+            rowsRT.pivot = new Vector2(0.5f, 1f);
+            rowsRT.anchoredPosition = Vector2.zero;
+            rowsRT.sizeDelta = Vector2.zero;
+            var layout = rowsRoot.GetComponent<VerticalLayoutGroup>();
+            layout.padding = new RectOffset(0, 0, 0, 8);
+            layout.spacing = 6f;
+            layout.childAlignment = TextAnchor.UpperCenter;
+            layout.childControlWidth = true;
+            layout.childControlHeight = true;
+            layout.childForceExpandWidth = true;
+            layout.childForceExpandHeight = false;
+            rowsRoot.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            var scroll = viewport.AddComponent<ScrollRect>();
+            scroll.viewport = viewportRT;
+            scroll.content = rowsRT;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Elastic;
+            scroll.scrollSensitivity = 36f;
 
             var rowTemplate = BuildLeaderboardRow(rowsRoot.transform, 0, 0.727f);
             rowTemplate.gameObject.name = "ScoreRowTemplate";
             rowTemplate.gameObject.SetActive(false);
 
-            var status = CreateText(card.transform, "Status", "Skorlar yükleniyor...",
+            var status = CreateText(card.transform, "Status", "Yıldız sıralaması yükleniyor...",
                 new Vector2(0.14f, 0.36f), new Vector2(0.86f, 0.54f),
                 Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 32, CandyDimColor);
             status.fontStyle = FontStyles.Bold;
@@ -1590,7 +1636,7 @@ namespace BalloonPop.EditorTools
             status.fontSizeMin = 20f;
             status.fontSizeMax = 34f;
 
-            var playerSummary = CreateText(card.transform, "PlayerSummary", "SENİN SIRAN  -     SKOR  0",
+            var playerSummary = CreateText(card.transform, "PlayerSummary", "SENİN SIRAN  -     YILDIZ  0",
                 new Vector2(0.13f, 0.125f), new Vector2(0.87f, 0.175f),
                 Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 27,
                 new Color(0.05f, 0.48f, 0.60f, 1f));
@@ -1628,12 +1674,14 @@ namespace BalloonPop.EditorTools
 
         private static LeaderboardRowUI BuildLeaderboardRow(Transform parent, int index, float yCenter)
         {
-            var row = new GameObject("ScoreRow_" + (index + 1), typeof(RectTransform), typeof(Image));
+            var row = new GameObject("StarRow_" + (index + 1), typeof(RectTransform), typeof(Image), typeof(LayoutElement));
             row.transform.SetParent(parent, false);
             var rt = (RectTransform)row.transform;
-            rt.anchorMin = new Vector2(0.09f, yCenter - 0.024f);
-            rt.anchorMax = new Vector2(0.91f, yCenter + 0.024f);
-            rt.offsetMin = rt.offsetMax = Vector2.zero;
+            rt.anchorMin = new Vector2(0f, 1f);
+            rt.anchorMax = new Vector2(1f, 1f);
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.sizeDelta = new Vector2(0f, 54f);
+            row.GetComponent<LayoutElement>().preferredHeight = 54f;
 
             var background = row.GetComponent<Image>();
             background.sprite = roundedSm;
@@ -1674,7 +1722,7 @@ namespace BalloonPop.EditorTools
         }
 
         private static GooglePlayMenuButton CreateGooglePlayMenuButton(Transform parent, string name,
-            string label, Sprite sprite, Vector2 anchoredPosition)
+            string label, Sprite sprite, Vector2 anchoredPosition, Sprite icon, bool googleIcon)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
             go.transform.SetParent(parent, false);
@@ -1690,8 +1738,41 @@ namespace BalloonPop.EditorTools
             image.preserveAspect = false;
             image.color = Color.white;
 
+            if (googleIcon)
+            {
+                var badge = new GameObject("GoogleBadge", typeof(RectTransform), typeof(Image));
+                badge.transform.SetParent(go.transform, false);
+                var badgeRT = (RectTransform)badge.transform;
+                badgeRT.anchorMin = new Vector2(0.055f, 0.22f);
+                badgeRT.anchorMax = new Vector2(0.255f, 0.82f);
+                badgeRT.offsetMin = badgeRT.offsetMax = Vector2.zero;
+                var badgeImage = badge.GetComponent<Image>();
+                badgeImage.sprite = roundedLg;
+                badgeImage.type = Image.Type.Sliced;
+                badgeImage.color = Color.white;
+                badgeImage.raycastTarget = false;
+                var g = CreateText(badge.transform, "G", "G", Vector2.zero, Vector2.one,
+                    Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 43,
+                    new Color(0.26f, 0.52f, 0.96f, 1f));
+                g.fontStyle = FontStyles.Bold;
+                g.raycastTarget = false;
+            }
+            else if (icon != null)
+            {
+                var iconGO = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+                iconGO.transform.SetParent(go.transform, false);
+                var iconRT = (RectTransform)iconGO.transform;
+                iconRT.anchorMin = new Vector2(0.045f, 0.12f);
+                iconRT.anchorMax = new Vector2(0.275f, 0.90f);
+                iconRT.offsetMin = iconRT.offsetMax = Vector2.zero;
+                var iconImage = iconGO.GetComponent<Image>();
+                iconImage.sprite = icon;
+                iconImage.preserveAspect = true;
+                iconImage.raycastTarget = false;
+            }
+
             var text = CreateText(go.transform, "Label", label,
-                new Vector2(0.08f, 0.24f), new Vector2(0.92f, 0.83f),
+                new Vector2(0.27f, 0.24f), new Vector2(0.94f, 0.83f),
                 Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 30, Color.white);
             text.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Fonts/PaytoneOne SDF.asset");
             text.fontStyle = FontStyles.Bold;

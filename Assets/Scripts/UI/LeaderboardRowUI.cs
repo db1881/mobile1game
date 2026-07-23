@@ -39,7 +39,7 @@ namespace BalloonPop.UI
             }
 
             if (scoreText != null)
-                scoreText.text = entry.Score.ToString("N0");
+                scoreText.text = "★ " + entry.TotalStars.ToString("N0");
 
             if (background != null)
             {

@@ -65,7 +65,7 @@ namespace BalloonPop.UI
             }
 
             if (leaderboardLabel != null)
-                leaderboardLabel.text = turkish ? "LİDERLİK" : "LEADERBOARD";
+                leaderboardLabel.text = turkish ? "YILDIZ LİGİ" : "STAR LEAGUE";
 
             if (statusLabel != null)
             {

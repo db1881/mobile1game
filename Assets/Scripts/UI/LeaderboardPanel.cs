@@ -8,7 +8,7 @@ namespace BalloonPop.UI
 {
     public sealed class LeaderboardPanel : MonoBehaviour
     {
-        private const int ScoreRowCount = 10;
+        private const int ScoreRowCount = 50;
 
         [SerializeField] private TMP_Text titleText;
         [SerializeField] private TMP_Text subtitleText;
@@ -78,7 +78,7 @@ namespace BalloonPop.UI
             if (statusText != null)
             {
                 statusText.gameObject.SetActive(true);
-                statusText.text = turkish ? "Skorlar yükleniyor..." : "Loading scores...";
+                statusText.text = turkish ? "Yıldız sıralaması yükleniyor..." : "Loading star ranking...";
             }
             if (playerSummaryText != null) playerSummaryText.gameObject.SetActive(false);
             if (rows == null) return;
@@ -109,12 +109,16 @@ namespace BalloonPop.UI
 
             if (statusText != null)
             {
-                bool showStatus = snapshot.IsPreview || shown == 0;
+                bool showStatus = snapshot.IsPreview || snapshot.IsCached || shown == 0;
                 statusText.gameObject.SetActive(showStatus);
                 if (snapshot.IsPreview)
                     statusText.text = turkish ? "Editör önizlemesi" : "Editor preview";
+                else if (snapshot.IsCached)
+                    statusText.text = turkish
+                        ? "Çevrimdışı • son kaydedilen sıralama"
+                        : "Offline • last saved ranking";
                 else if (shown == 0)
-                    statusText.text = turkish ? "Henüz skor yok. İlk sırayı sen al!" : "No scores yet. Take first place!";
+                    statusText.text = turkish ? "Henüz yıldız kaydı yok. İlk sırayı sen al!" : "No stars yet. Take first place!";
             }
 
             if (playerSummaryText != null)
@@ -125,8 +129,8 @@ namespace BalloonPop.UI
                 {
                     string rank = player.Rank > 0 ? "#" + player.Rank : "-";
                     playerSummaryText.text = turkish
-                        ? "SENİN SIRAN  " + rank + "     SKOR  " + player.Score.ToString("N0")
-                        : "YOUR RANK  " + rank + "     SCORE  " + player.Score.ToString("N0");
+                        ? "SENİN SIRAN  " + rank + "     YILDIZ  " + player.TotalStars.ToString("N0")
+                        : "YOUR RANK  " + rank + "     STARS  " + player.TotalStars.ToString("N0");
                 }
             }
         }
@@ -134,11 +138,11 @@ namespace BalloonPop.UI
         private void RefreshLanguage()
         {
             bool turkish = LocalizationManager.Current == LocalizationManager.Lang.TR;
-            if (titleText != null) titleText.text = turkish ? "LİDERLİK" : "LEADERBOARD";
-            if (subtitleText != null) subtitleText.text = turkish ? "TÜM ZAMANLAR • EN YÜKSEK SKOR" : "ALL TIME • HIGHEST SCORE";
+            if (titleText != null) titleText.text = turkish ? "YILDIZ LİGİ" : "STAR LEAGUE";
+            if (subtitleText != null) subtitleText.text = turkish ? "TÜM OYUNCULAR • TOPLAM YILDIZ" : "ALL PLAYERS • TOTAL STARS";
             if (rankHeaderText != null) rankHeaderText.text = turkish ? "SIRA" : "RANK";
             if (playerHeaderText != null) playerHeaderText.text = turkish ? "OYUNCU" : "PLAYER";
-            if (scoreHeaderText != null) scoreHeaderText.text = turkish ? "SKOR" : "SCORE";
+            if (scoreHeaderText != null) scoreHeaderText.text = turkish ? "YILDIZ" : "STARS";
             if (refreshLabel != null) refreshLabel.text = turkish ? "YENİLE" : "REFRESH";
 
             if (isLoading)
@@ -161,12 +165,12 @@ namespace BalloonPop.UI
             for (int i = 0; i < rows.Length; i++)
             {
                 LeaderboardRowUI row = Instantiate(rowTemplate, rowsRoot);
-                row.name = "ScoreRow_" + (i + 1);
+                row.name = "StarRow_" + (i + 1);
                 RectTransform rt = (RectTransform)row.transform;
-                float yCenter = 0.727f - i * 0.057f;
-                rt.anchorMin = new Vector2(0.09f, yCenter - 0.024f);
-                rt.anchorMax = new Vector2(0.91f, yCenter + 0.024f);
-                rt.offsetMin = rt.offsetMax = Vector2.zero;
+                rt.anchorMin = new Vector2(0f, 1f);
+                rt.anchorMax = new Vector2(1f, 1f);
+                rt.pivot = new Vector2(0.5f, 1f);
+                rt.sizeDelta = new Vector2(0f, 54f);
                 row.Hide();
                 rows[i] = row;
             }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4907251c148a72e4e869e82866645835, type: 3}
   m_Name: GooglePlayGamesConfig
   m_EditorClassIdentifier: Assembly-CSharp::BalloonPop.Services.GooglePlayGamesConfig
-  highScoreLeaderboardId: CgkI__bSw58ZEAIQAQ
+  totalStarsLeaderboardId: CgkI__bSw58ZEAIQAw
