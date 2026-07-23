@@ -31,7 +31,7 @@ namespace BalloonPop.Services
     public sealed class LeaderboardSnapshot
     {
         private LeaderboardSnapshot(bool success, string error, LeaderboardEntry[] entries,
-            LeaderboardEntry playerEntry, bool isPreview, bool isCached)
+            LeaderboardEntry playerEntry, bool isPreview, bool isCached, bool isLocalFallback)
         {
             Success = success;
             Error = error;
@@ -39,6 +39,7 @@ namespace BalloonPop.Services
             PlayerEntry = playerEntry;
             IsPreview = isPreview;
             IsCached = isCached;
+            IsLocalFallback = isLocalFallback;
         }
 
         public bool Success { get; }
@@ -47,16 +48,19 @@ namespace BalloonPop.Services
         public LeaderboardEntry PlayerEntry { get; }
         public bool IsPreview { get; }
         public bool IsCached { get; }
+        public bool IsLocalFallback { get; }
 
         public static LeaderboardSnapshot Loaded(LeaderboardEntry[] entries, LeaderboardEntry playerEntry,
-            bool isPreview = false, bool isCached = false)
+            bool isPreview = false, bool isCached = false, bool isLocalFallback = false)
         {
-            return new LeaderboardSnapshot(true, string.Empty, entries, playerEntry, isPreview, isCached);
+            return new LeaderboardSnapshot(true, string.Empty, entries, playerEntry, isPreview, isCached,
+                isLocalFallback);
         }
 
         public static LeaderboardSnapshot Failed(string error)
         {
-            return new LeaderboardSnapshot(false, error, Array.Empty<LeaderboardEntry>(), null, false, false);
+            return new LeaderboardSnapshot(false, error, Array.Empty<LeaderboardEntry>(), null, false, false,
+                false);
         }
     }
 
@@ -73,7 +77,9 @@ namespace BalloonPop.Services
         private static GooglePlayGamesService instance;
         private GooglePlayGamesConfig config;
         private bool authenticationInProgress;
-        private long pendingTotalStars;
+        private long pendingTotalStars = -1;
+        private bool totalStarsSubmissionInProgress;
+        private readonly List<Action> totalStarsSubmissionContinuations = new List<Action>();
 #if UNITY_ANDROID && !UNITY_EDITOR
         private Action authenticationContinuation;
         private Action authenticationFailure;
@@ -234,12 +240,12 @@ namespace BalloonPop.Services
             if (!IsAuthenticated)
             {
                 SignInAndThen(
-                    () => LoadLeaderboardInternal(requestedRows, callback),
+                    () => SyncTotalStarsThenLoad(requestedRows, callback),
                     () => callback(LoadCachedOrLocalSnapshot()));
                 return;
             }
 
-            LoadLeaderboardInternal(requestedRows, callback);
+            SyncTotalStarsThenLoad(requestedRows, callback);
 #elif UNITY_EDITOR
             callback(CreateEditorPreview());
 #else
@@ -252,26 +258,65 @@ namespace BalloonPop.Services
         {
             if (totalStars < 0) return;
             pendingTotalStars = Math.Max(pendingTotalStars, totalStars);
-            if (!IsConfigured || !IsAuthenticated) return;
+            TrySubmitTotalStars();
+        }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
+        private void SyncTotalStarsThenLoad(int rowCount, Action<LeaderboardSnapshot> callback)
+        {
+            pendingTotalStars = Math.Max(pendingTotalStars, SaveSystem.GetTotalStars());
+            totalStarsSubmissionContinuations.Add(() => LoadLeaderboardInternal(rowCount, callback));
+            TrySubmitTotalStars();
+        }
+
+        private void TrySubmitTotalStars()
+        {
+            if (totalStarsSubmissionInProgress || pendingTotalStars < 0 ||
+                !IsConfigured || !IsAuthenticated)
+                return;
+
             long starsToSubmit = pendingTotalStars;
+            pendingTotalStars = -1;
+            totalStarsSubmissionInProgress = true;
             PlayGamesPlatform.Instance.ReportScore(starsToSubmit, config.TotalStarsLeaderboardId, success =>
             {
+                totalStarsSubmissionInProgress = false;
                 if (success)
                 {
-                    pendingTotalStars = 0;
+                    if (pendingTotalStars <= starsToSubmit) pendingTotalStars = -1;
                     LastStatus = "Toplam yıldız gönderildi";
+                    PlayerPrefs.DeleteKey(LeaderboardCacheKey);
+                    Debug.Log("[GooglePlayGames] Total Stars submitted: " + starsToSubmit);
                 }
                 else
                 {
+                    pendingTotalStars = Math.Max(pendingTotalStars, starsToSubmit);
                     LastStatus = "Yıldızlar gönderilemedi; tekrar denenecek";
+                    Debug.LogWarning("[GooglePlayGames] Total Stars submission failed: " + starsToSubmit);
                 }
 
                 RaiseStateChanged();
+
+                if (success && pendingTotalStars > starsToSubmit)
+                {
+                    TrySubmitTotalStars();
+                    return;
+                }
+
+                FlushSubmissionContinuations();
             });
-#endif
         }
+
+        private void FlushSubmissionContinuations()
+        {
+            if (totalStarsSubmissionContinuations.Count == 0) return;
+            Action[] continuations = totalStarsSubmissionContinuations.ToArray();
+            totalStarsSubmissionContinuations.Clear();
+            for (int i = 0; i < continuations.Length; i++) continuations[i]?.Invoke();
+        }
+#else
+        private void TrySubmitTotalStars() { }
+#endif
 
         private void HandleLevelWon()
         {
@@ -420,11 +465,29 @@ namespace BalloonPop.Services
                 ? CreateLeaderboardEntry(scoreData.PlayerScore, names, localPlayerId)
                 : null;
 
-            LastStatus = "Liderlik tablosu hazır";
+            bool isLocalFallback = playerEntry == null;
+            if (isLocalFallback)
+            {
+                playerEntry = CreateLocalPlayerEntry();
+                if (entries.Length == 0)
+                    entries = new[] { playerEntry };
+            }
+
+            LastStatus = isLocalFallback
+                ? "Yıldızlar gönderildi; sıralama güncelleniyor"
+                : "Liderlik tablosu hazır";
             RaiseStateChanged();
-            var snapshot = LeaderboardSnapshot.Loaded(entries, playerEntry);
+            var snapshot = LeaderboardSnapshot.Loaded(entries, playerEntry,
+                isLocalFallback: isLocalFallback);
             SaveLeaderboardCache(snapshot);
             callback(snapshot);
+        }
+
+        private LeaderboardEntry CreateLocalPlayerEntry()
+        {
+            return new LeaderboardEntry(0,
+                string.IsNullOrWhiteSpace(PlayerName) ? "Sen" : PlayerName,
+                SaveSystem.GetTotalStars(), true);
         }
 
         private LeaderboardEntry CreateLeaderboardEntry(IScore score, Dictionary<string, string> names,
@@ -471,7 +534,7 @@ namespace BalloonPop.Services
 
         private void SaveLeaderboardCache(LeaderboardSnapshot snapshot)
         {
-            if (snapshot == null || !snapshot.Success || snapshot.IsPreview) return;
+            if (snapshot == null || !snapshot.Success || snapshot.IsPreview || snapshot.IsLocalFallback) return;
             var cache = new CachedLeaderboard
             {
                 entries = ToCachedEntries(snapshot.Entries),

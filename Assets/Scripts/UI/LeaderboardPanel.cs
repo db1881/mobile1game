@@ -109,10 +109,14 @@ namespace BalloonPop.UI
 
             if (statusText != null)
             {
-                bool showStatus = snapshot.IsPreview || snapshot.IsCached || shown == 0;
+                bool showStatus = snapshot.IsPreview || snapshot.IsCached || snapshot.IsLocalFallback || shown == 0;
                 statusText.gameObject.SetActive(showStatus);
                 if (snapshot.IsPreview)
                     statusText.text = turkish ? "Editör önizlemesi" : "Editor preview";
+                else if (snapshot.IsLocalFallback)
+                    statusText.text = turkish
+                        ? "Yıldızın gönderildi • sıralama güncelleniyor"
+                        : "Stars submitted • ranking is updating";
                 else if (snapshot.IsCached)
                     statusText.text = turkish
                         ? "Çevrimdışı • son kaydedilen sıralama"

@@ -321,17 +321,27 @@ mavi, Kapat için yeşil v2 buton kullanılıyor; slider assetleri korundu. `TÜ
 yazısı alt bölümde görünür bırakıldı ancak tıklanabilir bir kontrol değil; GM/geliştirme işlevi kodda tutuluyor.
 Sağ üst kapatma işareti font uyumu için düz `X` yapıldı. Builder aynı düzenle senkronlandı.
 
-### ✅ İkincil menü panelleri Candy UI v2 (tamamlandı / doğrulandı)
-`MainMenu.unity` içindeki Mağaza, Günlük Ödül, İstatistikler ve Başarımlar panelleri
+### ✅ İkincil menü panelleri Candy UI v2 + mobil hizalama (tamamlandı / doğrulandı)
+`MainMenu.unity` içindeki Ayarlar, Mağaza, Günlük Ödül, İstatistikler ve Başarımlar panelleri
 `panel_pause_v2.png` tabanına geçirildi. Mağaza satın alma satırları ve yeşil `AL` butonları,
 Günlük Ödülün hediye ikonu ile yeşil alma butonu, istatistik satırları ve kaydırılabilir
 başarım kartları yeni krem/altın görsel dile uyarlandı. Beş açma bağlantısı (alt bardaki dört
-buton + coin kapsülündeki mağaza alanı) yeni panel örneklerine yönlendirildi. Dört ekran da
+buton + coin kapsülündeki mağaza alanı) yeni panel örneklerine yönlendirildi. Panel görselinin
+uzun telefonlarda oran koruyarak letterbox oluşturması kapatıldı; üst başlıklar ve Ayarlar
+altındaki geliştirme yazıları artık görünür panel alanına sabit kalıyor. İlgili ekranlar
 1080×1920 Play görünümünde doğrulandı; mevcut satın alma, ödül, sayaç ve başarım işlevleri korundu.
 Mağaza ürün görselleri oyun HUD'uyla aynı güncel `booster_hammer`, `booster_shuffle` ve
 `booster_plus` sprite'larını kullanıyor; eski `icon_*` görselleri mağazada kullanılmıyor.
-`SceneUIBuilder.RebuildSecondaryMenuPanels()` yalnızca bu dört paneli güvenli biçimde yeniden
+`SceneUIBuilder.RebuildSecondaryMenuPanels()` bu beş paneli güvenli biçimde yeniden
 üretmek ve mevcut açma bağlantılarını taşımak için eklendi.
+
+### ✅ Zafer paneli Candy UI v2 (tamamlandı / doğrulandı)
+`Game.unity` içindeki `WinPanel`, kurdeleli eski karttan kurdelesiz `panel_pause_v2.png` tabanına
+geçirildi. Başlık üst plakaya, yıldızlar ve kısa skor kapsülü orta alana yerleştirildi; güncel
+`pausebtn_*_v2.png` setiyle yeşil **SONRAKİ** ana aksiyonu ve altta eşit **TEKRAR / MENÜ**
+butonları oluşturuldu. Maskot daha küçük bir başlık rozeti olarak korundu; skor etiketi ve tüm
+butonlar TR/EN yerelleştirmeye bağlandı. İşlevsel `WinPanel` referansları korunarak Unity Play Mode
+ve 1080×1920 sahne önizlemesinde doğrulandı.
 
 ### ✅ Google Play Games (tamamlandı / yayınlandı)
 Google Play Games Services `v2.1.0`, otomatik/manuel Google girişi, ana menüde giriş + liderlik
@@ -365,6 +375,15 @@ leaderboard `Total Stars` (`CgkI__bSw58ZEAIQAw`) oluşturuldu, kimliği
 `GooglePlayGamesConfig.asset` içindeki `totalStarsLeaderboardId` alanına yazıldı ve Play Games
 değişiklikleri yayınlandı. Eski
 `Highest Score` tablosu geçmiş büyük skorlar nedeniyle bu amaçla yeniden kullanılmamalıdır.
+
+### ✅ Dahili test 0.1.4-internal-5 (yayınlandı)
+23 Temmuz 2026'da güncel çalışma ağacından imzalı ARM64 AAB üretildi ve Google Play Console
+Dahili test kanalına `0.1.4-internal-5` (version code `5`) adıyla yayınlandı. Paket; Candy UI
+zafer panelini, Ayarlar/Mağaza/Günlük Ödül/İstatistik mobil hizalama düzeltmelerini ve o tarihteki
+güncel oyun sahnesini içeriyor. Kanal durumu **Etkin**, sürüm durumu **Dahili test kullanıcıları
+tarafından kullanılabilir**. Google Play güncellemesinin cihazlara yansıması genellikle bir saat
+içinde tamamlanır. Katılım bağlantısı değişmedi:
+`https://play.google.com/apps/internaltest/4701107718413357996`.
 
 ### 📋 Diğer açık işler
 1. **10'lu avatar seti** — prompt hazırlandı, üretilmedi. Avatar barı kaldırıldığı için şu an gereksiz.
@@ -406,3 +425,23 @@ git add -A && git commit -m "mesaj" && git push origin main
 # APK'yı Release'e yükle
 gh release create vX.Y.Z Build/BalloonPop.apk --repo db1881/mobile1game --title "..." --notes "..."
 ```
+
+### ✅ Seviye Seç Candy UI v2 + yıldız sıralaması senkronu
+
+23 Temmuz 2026'da eski kurdeleli `LevelSelectPanel`, `panel_pause_v2.png` tabanlı Candy UI paneline
+çevrildi. Seviye kartları güncel `leveltile_normal.png` ve `leveltile_locked.png` görsellerini kullanıyor;
+3 sütunlu, mobil uyumlu ve dikey kaydırılabilir grid Unity Play Mode'da doğrulandı.
+
+`GooglePlayGamesService.LoadLeaderboard()` artık listeyi okumadan önce
+`SaveSystem.GetTotalStars()` değerini Google Play Games'e göndermeyi tamamlıyor. Böylece skor gönderimi
+ile liste okuması arasındaki yarış kaldırıldı. Google sunucusu yeni skoru henüz sıralamaya yansıtmadıysa
+oyuncunun yerel yıldız sayısı geçici satır olarak gösteriliyor ve panel “sıralama güncelleniyor”
+durumunu belirtiyor; boş liste artık kullanıcıya “kimse yok” gibi görünmüyor. Android cihazda gerçek
+sunucu yansıma süresi, bu değişiklikleri içeren sonraki dahili test sürümünde yeniden doğrulanmalı.
+
+### 🚀 Dahili test 0.1.5-internal-6
+
+23 Temmuz 2026'da Android sürümü `0.1.5` / version code `6` olarak artırıldı. Bu paket; yeni Candy UI
+Seviye Seç panelini, seviye kartlarındaki ölçülmüş yıldız hizalamasını, mobil panel düzeltmelerini ve
+Google Play Games toplam yıldız sıralamasında gönderim tamamlanmadan listeyi okumayı engelleyen
+senkronizasyon düzeltmesini içerir.

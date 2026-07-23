@@ -403,8 +403,80 @@ namespace BalloonPop.EditorTools
             RebuildGooglePlayGamesMenuUI();
         }
 
+        [MenuItem("Balloon Pop/UI/Rebuild Win Panel Candy UI v2")]
+        public static void RebuildWinPanelCandyV2()
+        {
+            LoadSprites();
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            GameHUD hud = null;
+            foreach (var candidate in Resources.FindObjectsOfTypeAll<GameHUD>())
+            {
+                if (candidate.gameObject.scene == scene)
+                {
+                    hud = candidate;
+                    break;
+                }
+            }
+
+            if (hud == null)
+            {
+                Debug.LogError("GameHUD was not found in the active scene.");
+                return;
+            }
+
+            var canvas = hud.GetComponentInParent<Canvas>();
+            if (canvas == null)
+            {
+                Debug.LogError("GameHUD Canvas was not found in the active scene.");
+                return;
+            }
+
+            var existing = canvas.transform.Find("WinPanel");
+            if (existing != null)
+                Object.DestroyImmediate(existing.gameObject);
+
+            var winPanel = BuildWinPanel(canvas.transform);
+            winPanel.transform.SetAsLastSibling();
+
+            var hudSO = new SerializedObject(hud);
+            hudSO.FindProperty("winPanel").objectReferenceValue = winPanel.GetComponent<WinPanel>();
+            hudSO.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(hud);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+            UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+            Debug.Log("WinPanel rebuilt with Candy UI v2.");
+        }
+
+        public static void RebuildWinPanelCandyV2Batch()
+        {
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Game.unity");
+            RebuildWinPanelCandyV2();
+        }
+
+        [MenuItem("Balloon Pop/UI/Preview Win Panel")]
+        public static void PreviewWinPanel()
+        {
+            if (!EditorApplication.isPlaying)
+            {
+                Debug.LogWarning("Enter Play Mode before previewing WinPanel.");
+                return;
+            }
+
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            foreach (var candidate in Resources.FindObjectsOfTypeAll<WinPanel>())
+            {
+                if (candidate.gameObject.scene == scene)
+                {
+                    candidate.Show();
+                    return;
+                }
+            }
+
+            Debug.LogError("WinPanel was not found in the active scene.");
+        }
+
         /// <summary>
-        /// Rebuilds only the four secondary Main Menu popups without touching the rest of the scene.
+        /// Rebuilds the responsive Main Menu popups without touching the rest of the scene.
         /// Existing navigation buttons are redirected to the newly created panel instances.
         /// </summary>
         public static void RebuildSecondaryMenuPanels()
@@ -431,7 +503,7 @@ namespace BalloonPop.EditorTools
             var parent = canvas.transform;
             var panelNames = new System.Collections.Generic.HashSet<string>
             {
-                "CoinShopPanel", "DailyRewardPanel", "StatsPanel_Menu", "AchievementListPanel"
+                "SettingsPanel", "CoinShopPanel", "DailyRewardPanel", "StatsPanel_Menu", "AchievementListPanel"
             };
             var redirects = new System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<ButtonOpenTarget, string>>();
             foreach (var opener in canvas.GetComponentsInChildren<ButtonOpenTarget>(true))
@@ -447,12 +519,14 @@ namespace BalloonPop.EditorTools
                     Object.DestroyImmediate(oldPanel.gameObject);
             }
 
+            var settings = BuildSettingsPanel(parent);
             var shop = BuildCoinShopPanel(parent);
             var daily = BuildDailyRewardPanel(parent);
             var stats = BuildStatsPanel(parent);
             var achievements = BuildAchievementListPanel(parent);
             var replacements = new System.Collections.Generic.Dictionary<string, GameObject>
             {
+                { "SettingsPanel", settings },
                 { "CoinShopPanel", shop },
                 { "DailyRewardPanel", daily },
                 { "StatsPanel_Menu", stats },
@@ -468,6 +542,12 @@ namespace BalloonPop.EditorTools
                 }
             }
 
+            var menuSO = new SerializedObject(menu);
+            menuSO.FindProperty("settingsPanel").objectReferenceValue = settings;
+            menuSO.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(menu);
+
+            settings.transform.SetAsLastSibling();
             shop.transform.SetAsLastSibling();
             daily.transform.SetAsLastSibling();
             stats.transform.SetAsLastSibling();
@@ -477,7 +557,78 @@ namespace BalloonPop.EditorTools
 
             UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
             UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
-            Debug.Log("Secondary Main Menu panels rebuilt with Candy UI v2.");
+            Debug.Log("Responsive Main Menu panels rebuilt with Candy UI v2.");
+        }
+
+        public static void RebuildSecondaryMenuPanelsBatch()
+        {
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
+            RebuildSecondaryMenuPanels();
+        }
+
+        [MenuItem("Balloon Pop/UI/Rebuild Level Select Candy UI v2")]
+        public static void RebuildLevelSelectCandyV2()
+        {
+            LoadSprites();
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            MainMenuUI menu = null;
+            foreach (var candidate in Resources.FindObjectsOfTypeAll<MainMenuUI>())
+            {
+                if (candidate.gameObject.scene == scene)
+                {
+                    menu = candidate;
+                    break;
+                }
+            }
+
+            if (menu == null)
+            {
+                Debug.LogError("MainMenuUI was not found in the active scene.");
+                return;
+            }
+
+            var canvas = menu.GetComponentInParent<Canvas>();
+            if (canvas == null)
+            {
+                Debug.LogError("Main Menu Canvas was not found in the active scene.");
+                return;
+            }
+
+            var existing = canvas.transform.Find("LevelSelectPanel");
+            var redirects = new System.Collections.Generic.List<ButtonOpenTarget>();
+            if (existing != null)
+            {
+                foreach (var opener in canvas.GetComponentsInChildren<ButtonOpenTarget>(true))
+                {
+                    if (opener.Target == existing.gameObject)
+                        redirects.Add(opener);
+                }
+                Object.DestroyImmediate(existing.gameObject);
+            }
+
+            var replacement = BuildLevelSelectPanel(canvas.transform,
+                Resources.Load<LevelDatabase>("LevelDatabase"));
+            replacement.transform.SetAsLastSibling();
+
+            for (int i = 0; i < redirects.Count; i++)
+            {
+                redirects[i].Target = replacement;
+                EditorUtility.SetDirty(redirects[i]);
+            }
+
+            var menuSO = new SerializedObject(menu);
+            menuSO.FindProperty("levelSelectPanel").objectReferenceValue = replacement;
+            menuSO.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(menu);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+            UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+            Debug.Log("Level Select rebuilt with Candy UI v2.");
+        }
+
+        public static void RebuildLevelSelectCandyV2Batch()
+        {
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
+            RebuildLevelSelectCandyV2();
         }
 
         private static void BuildStarProgressBar(Transform parent)
@@ -963,7 +1114,7 @@ namespace BalloonPop.EditorTools
         }
 
         private static GameObject CreateCandyPanelCard(Transform parent, string name,
-            Vector2 anchorMin, Vector2 anchorMax, bool preserveAspect = true)
+            Vector2 anchorMin, Vector2 anchorMax, bool preserveAspect = false)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image));
             go.transform.SetParent(parent, false);
@@ -975,6 +1126,8 @@ namespace BalloonPop.EditorTools
             var image = go.GetComponent<Image>();
             image.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/panel_pause_v2.png");
             image.type = Image.Type.Simple;
+            // A fixed-aspect sprite is letterboxed on tall phones, while the child text remains
+            // anchored to the full RectTransform. Filling the rect keeps header/footer text inside.
             image.preserveAspect = preserveAspect;
             image.color = Color.white;
             image.raycastTarget = false;
@@ -1992,129 +2145,157 @@ namespace BalloonPop.EditorTools
         private static GameObject BuildWinPanel(Transform parent)
         {
             var overlay = CreateOverlay(parent, "WinPanel");
+            var panelSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/panel_pause_v2.png");
+            var greenButtonSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_green_v2.png");
+            var blueButtonSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_blue_v2.png");
+            var redButtonSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/pausebtn_red_v2.png");
 
-            var confettiGO = new GameObject("ConfettiRain", typeof(RectTransform));
-            confettiGO.transform.SetParent(overlay.transform, false);
-            var crt = (RectTransform)confettiGO.transform;
-            crt.anchorMin = Vector2.zero; crt.anchorMax = Vector2.one;
-            crt.offsetMin = crt.offsetMax = Vector2.zero;
-            var confetti = confettiGO.AddComponent<ConfettiRain>();
-            var cso = new SerializedObject(confetti);
-            cso.FindProperty("particleSprite").objectReferenceValue = circle;
-            cso.FindProperty("starSprite").objectReferenceValue = star;
-            cso.ApplyModifiedPropertiesWithoutUndo();
+            var cardWrap = new GameObject("CardWrap", typeof(RectTransform));
+            cardWrap.transform.SetParent(overlay.transform, false);
+            var cardWrapRT = (RectTransform)cardWrap.transform;
+            cardWrapRT.anchorMin = new Vector2(0.13f, 0.20f);
+            cardWrapRT.anchorMax = new Vector2(0.87f, 0.80f);
+            cardWrapRT.offsetMin = cardWrapRT.offsetMax = Vector2.zero;
 
-            // Maskot kutlama pozisyonu (eğer mascot sprite mevcutsa)
-            var mascotSp = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/moscot.png")
-                        ?? AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/mascot.png");
-            if (mascotSp != null)
-            {
-                var mascotGO = new GameObject("WinMascot", typeof(RectTransform), typeof(Image));
-                mascotGO.transform.SetParent(overlay.transform, false);
-                var mrt = (RectTransform)mascotGO.transform;
-                mrt.anchorMin = new Vector2(0.05f, 0.62f);
-                mrt.anchorMax = new Vector2(0.30f, 0.95f);
-                mrt.offsetMin = mrt.offsetMax = Vector2.zero;
-                var mImg = mascotGO.GetComponent<Image>();
-                mImg.sprite = mascotSp;
-                mImg.preserveAspect = true;
-                mImg.raycastTarget = false;
-                mascotGO.AddComponent<BalloonPop.Effects.LogoBob>();
-            }
+            var card = new GameObject("Card", typeof(RectTransform), typeof(Image));
+            card.transform.SetParent(cardWrap.transform, false);
+            var cardRT = (RectTransform)card.transform;
+            cardRT.anchorMin = Vector2.zero;
+            cardRT.anchorMax = Vector2.one;
+            cardRT.offsetMin = cardRT.offsetMax = Vector2.zero;
+            var cardImage = card.GetComponent<Image>();
+            cardImage.sprite = panelSprite != null ? panelSprite : roundedLg;
+            cardImage.type = panelSprite != null ? Image.Type.Simple : Image.Type.Sliced;
+            cardImage.preserveAspect = false;
+            cardImage.color = panelSprite != null ? Color.white : new Color(1f, 0.94f, 0.76f, 1f);
 
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.07f, 0.18f), new Vector2(0.93f, 0.82f), C_PanelBg);
-
-            // TEBRİKLER başlığı — büyük, outlined, drop shadow ile
             var title = CreateText(card.transform, "Title", "TEBRİKLER!",
-                new Vector2(0.05f, 0.82f), new Vector2(0.95f, 0.96f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 110, C_Accent);
+                new Vector2(0.16f, 0.835f), new Vector2(0.84f, 0.965f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 58, CandyTitleColor);
             title.fontStyle = FontStyles.Bold;
-            title.outlineWidth = 0.32f;
-            title.outlineColor = new Color(0.18f, 0.05f, 0.30f, 1f);
-            var winTitleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            winTitleShadow.effectColor = new Color(0, 0, 0, 0.6f);
-            winTitleShadow.effectDistance = new Vector2(3, -5);
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 36f;
+            title.fontSizeMax = 60f;
+            title.outlineWidth = 0.12f;
+            title.outlineColor = new Color(0.36f, 0.18f, 0.05f, 0.75f);
+            AttachLocalizedText(title, "win.title");
 
-            CreateText(card.transform, "Sub", "Seviye Tamamlandı",
-                new Vector2(0.05f, 0.74f), new Vector2(0.95f, 0.81f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 42, new Color(1, 1, 1, 0.85f)).fontStyle = FontStyles.Bold;
+            var sub = CreateText(card.transform, "Sub", "Seviye Tamamlandı",
+                new Vector2(0.12f, 0.705f), new Vector2(0.88f, 0.785f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 38, CandyTextColor);
+            sub.fontStyle = FontStyles.Bold;
+            AttachLocalizedText(sub, "win.sub");
 
-            // 3 yıldız — büyük + her birine glow disk + shadow
             var stars = new GameObject[3];
             for (int i = 0; i < 3; i++)
             {
-                // Glow disk
-                var glow = new GameObject($"StarGlow{i}", typeof(Image));
-                glow.transform.SetParent(card.transform, false);
-                var grt = (RectTransform)glow.transform;
-                grt.anchorMin = grt.anchorMax = new Vector2(0.5f, 0.58f);
-                grt.sizeDelta = new Vector2(170, 170);
-                grt.anchoredPosition = new Vector2((i - 1) * 160, 0);
-                var gImg = glow.GetComponent<Image>();
-                gImg.sprite = circle;
-                gImg.color = new Color(1f, 0.92f, 0.30f, 0.30f);
-                gImg.raycastTarget = false;
+                var starUnit = new GameObject($"Star{i + 1}", typeof(RectTransform));
+                starUnit.transform.SetParent(card.transform, false);
+                var starUnitRT = (RectTransform)starUnit.transform;
+                starUnitRT.anchorMin = starUnitRT.anchorMax = new Vector2(0.5f, 0.595f);
+                starUnitRT.sizeDelta = new Vector2(142, 142);
+                starUnitRT.anchoredPosition = new Vector2((i - 1) * 150, 0);
 
-                // Yıldız sprite
-                var s = new GameObject($"Star{i}", typeof(Image));
-                s.transform.SetParent(card.transform, false);
-                var srt = (RectTransform)s.transform;
-                srt.anchorMin = srt.anchorMax = new Vector2(0.5f, 0.58f);
-                srt.sizeDelta = new Vector2(135, 135);
-                srt.anchoredPosition = new Vector2((i - 1) * 160, 0);
-                var img = s.GetComponent<Image>();
-                img.sprite = star;
-                img.color = C_StarOn;
-                var sShadow = s.AddComponent<UnityEngine.UI.Shadow>();
-                sShadow.effectColor = new Color(0.40f, 0.20f, 0f, 0.65f);
-                sShadow.effectDistance = new Vector2(2, -4);
-                stars[i] = s;
+                var starGlow = new GameObject("Glow", typeof(RectTransform), typeof(Image));
+                starGlow.transform.SetParent(starUnit.transform, false);
+                var glowRT = (RectTransform)starGlow.transform;
+                glowRT.anchorMin = Vector2.zero;
+                glowRT.anchorMax = Vector2.one;
+                glowRT.offsetMin = new Vector2(-18, -18);
+                glowRT.offsetMax = new Vector2(18, 18);
+                var glowImage = starGlow.GetComponent<Image>();
+                glowImage.sprite = circle;
+                glowImage.color = new Color(1f, 0.83f, 0.18f, 0.20f);
+                glowImage.raycastTarget = false;
+
+                var starVisual = new GameObject("Icon", typeof(RectTransform), typeof(Image));
+                starVisual.transform.SetParent(starUnit.transform, false);
+                var starRT = (RectTransform)starVisual.transform;
+                starRT.anchorMin = Vector2.zero;
+                starRT.anchorMax = Vector2.one;
+                starRT.offsetMin = starRT.offsetMax = Vector2.zero;
+                var starImage = starVisual.GetComponent<Image>();
+                starImage.sprite = star;
+                starImage.preserveAspect = true;
+                starImage.raycastTarget = false;
+                var starShadow = starVisual.AddComponent<UnityEngine.UI.Shadow>();
+                starShadow.effectColor = new Color(0.35f, 0.18f, 0.03f, 0.55f);
+                starShadow.effectDistance = new Vector2(2, -4);
+                stars[i] = starUnit;
             }
 
-            // Skor pill — outlined büyük
             var scorePill = new GameObject("ScorePill", typeof(RectTransform), typeof(Image));
             scorePill.transform.SetParent(card.transform, false);
-            var spRT = (RectTransform)scorePill.transform;
-            spRT.anchorMin = new Vector2(0.18f, 0.32f); spRT.anchorMax = new Vector2(0.82f, 0.46f);
-            spRT.offsetMin = spRT.offsetMax = Vector2.zero;
-            var spImg = scorePill.GetComponent<Image>();
-            spImg.sprite = roundedMd; spImg.type = Image.Type.Sliced;
-            spImg.color = new Color(0.10f, 0.06f, 0.22f, 0.85f);
-            spImg.raycastTarget = false;
-            var spShine = new GameObject("Shine", typeof(RectTransform), typeof(Image));
-            spShine.transform.SetParent(scorePill.transform, false);
-            var spsRT = (RectTransform)spShine.transform;
-            spsRT.anchorMin = new Vector2(0.05f, 0.55f); spsRT.anchorMax = new Vector2(0.95f, 0.92f);
-            spsRT.offsetMin = spsRT.offsetMax = Vector2.zero;
-            var spsImg = spShine.GetComponent<Image>();
-            spsImg.sprite = roundedMd; spsImg.type = Image.Type.Sliced;
-            spsImg.color = new Color(1f, 1f, 1f, 0.12f);
-            spsImg.raycastTarget = false;
-            CreateText(scorePill.transform, "ScoreLabel", "SKOR",
-                new Vector2(0, 0.55f), new Vector2(1, 1f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 32, new Color(1, 1, 1, 0.7f)).raycastTarget = false;
-            var scoreText = CreateText(scorePill.transform, "ScoreText", "0",
-                new Vector2(0, 0f), new Vector2(1, 0.60f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 74, C_Accent);
-            scoreText.fontStyle = FontStyles.Bold;
-            scoreText.outlineWidth = 0.28f;
-            scoreText.outlineColor = new Color(0.30f, 0.18f, 0f, 1f);
-            scoreText.raycastTarget = false;
-            var sctShadow = scoreText.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            sctShadow.effectColor = new Color(0, 0, 0, 0.5f);
-            sctShadow.effectDistance = new Vector2(2, -3);
+            var scorePillRT = (RectTransform)scorePill.transform;
+            scorePillRT.anchorMin = new Vector2(0.20f, 0.385f);
+            scorePillRT.anchorMax = new Vector2(0.80f, 0.505f);
+            scorePillRT.offsetMin = scorePillRT.offsetMax = Vector2.zero;
+            var scorePillImage = scorePill.GetComponent<Image>();
+            scorePillImage.sprite = blueButtonSprite != null ? blueButtonSprite : roundedMd;
+            scorePillImage.type = blueButtonSprite != null ? Image.Type.Simple : Image.Type.Sliced;
+            scorePillImage.preserveAspect = false;
+            scorePillImage.color = blueButtonSprite != null ? Color.white : new Color(0.36f, 0.78f, 0.90f, 1f);
+            scorePillImage.raycastTarget = false;
 
-            // 3 modern glossy buton
+            var scoreLabel = CreateText(scorePill.transform, "ScoreLabel", "SKOR",
+                new Vector2(0.08f, 0.51f), new Vector2(0.92f, 0.86f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 24, Color.white);
+            scoreLabel.fontStyle = FontStyles.Bold;
+            scoreLabel.outlineWidth = 0.16f;
+            scoreLabel.outlineColor = new Color(0.05f, 0.24f, 0.32f, 0.75f);
+            scoreLabel.raycastTarget = false;
+            AttachLocalizedText(scoreLabel, "hud.score");
+
+            var scoreText = CreateText(scorePill.transform, "ScoreText", "0",
+                new Vector2(0.08f, 0.12f), new Vector2(0.92f, 0.62f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 52, Color.white);
+            scoreText.fontStyle = FontStyles.Bold;
+            scoreText.outlineWidth = 0.20f;
+            scoreText.outlineColor = new Color(0.05f, 0.24f, 0.32f, 0.85f);
+            scoreText.raycastTarget = false;
+
             var nextBtn = CreateModernPanelButton(card.transform, "NextLevelButton", "SONRAKİ",
-                new Vector2(0.06f, 0.16f), new Vector2(0.49f, 0.27f),
-                new Color(0.30f, 0.78f, 0.36f, 1f));
+                new Vector2(0.16f, 0.225f), new Vector2(0.84f, 0.345f),
+                new Color(0.53f, 0.80f, 0.10f, 1f), greenButtonSprite);
             var replayBtn = CreateModernPanelButton(card.transform, "ReplayButton", "TEKRAR",
-                new Vector2(0.51f, 0.16f), new Vector2(0.94f, 0.27f),
-                new Color(0.30f, 0.70f, 0.95f, 1f));
+                new Vector2(0.10f, 0.075f), new Vector2(0.49f, 0.195f),
+                new Color(0.16f, 0.67f, 0.88f, 1f), blueButtonSprite);
             var menuBtn = CreateModernPanelButton(card.transform, "MenuButton", "MENÜ",
-                new Vector2(0.22f, 0.03f), new Vector2(0.78f, 0.14f),
-                new Color(0.62f, 0.42f, 0.95f, 1f));
+                new Vector2(0.51f, 0.075f), new Vector2(0.90f, 0.195f),
+                new Color(0.93f, 0.28f, 0.28f, 1f), redButtonSprite);
+
+            AttachLocalizedText(nextBtn.transform.Find("Label")?.GetComponent<TMP_Text>(), "win.next");
+            AttachLocalizedText(replayBtn.transform.Find("Label")?.GetComponent<TMP_Text>(), "win.replay");
+            AttachLocalizedText(menuBtn.transform.Find("Label")?.GetComponent<TMP_Text>(), "win.menu");
+
+            var mascotSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/moscot.png")
+                            ?? AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/mascot.png");
+            if (mascotSprite != null)
+            {
+                var mascot = new GameObject("WinMascot", typeof(RectTransform), typeof(Image));
+                mascot.transform.SetParent(cardWrap.transform, false);
+                var mascotRT = (RectTransform)mascot.transform;
+                mascotRT.anchorMin = new Vector2(-0.055f, 0.79f);
+                mascotRT.anchorMax = new Vector2(0.225f, 1.04f);
+                mascotRT.offsetMin = mascotRT.offsetMax = Vector2.zero;
+                var mascotImage = mascot.GetComponent<Image>();
+                mascotImage.sprite = mascotSprite;
+                mascotImage.preserveAspect = true;
+                mascotImage.raycastTarget = false;
+                mascot.AddComponent<BalloonPop.Effects.LogoBob>();
+            }
+
+            var confettiGO = new GameObject("ConfettiRain", typeof(RectTransform));
+            confettiGO.transform.SetParent(overlay.transform, false);
+            var confettiRT = (RectTransform)confettiGO.transform;
+            confettiRT.anchorMin = Vector2.zero;
+            confettiRT.anchorMax = Vector2.one;
+            confettiRT.offsetMin = confettiRT.offsetMax = Vector2.zero;
+            var confetti = confettiGO.AddComponent<ConfettiRain>();
+            var confettiSO = new SerializedObject(confetti);
+            confettiSO.FindProperty("particleSprite").objectReferenceValue = circle;
+            confettiSO.FindProperty("starSprite").objectReferenceValue = star;
+            confettiSO.ApplyModifiedPropertiesWithoutUndo();
 
             var winComp = overlay.AddComponent<WinPanel>();
             var so = new SerializedObject(winComp);
@@ -2129,6 +2310,15 @@ namespace BalloonPop.EditorTools
 
             overlay.SetActive(false);
             return overlay;
+        }
+
+        private static void AttachLocalizedText(TMP_Text label, string key)
+        {
+            if (label == null) return;
+            var localized = label.gameObject.AddComponent<LocalizedText>();
+            var localizedSO = new SerializedObject(localized);
+            localizedSO.FindProperty("key").stringValue = key;
+            localizedSO.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static GameObject BuildLosePanel(Transform parent)
@@ -2571,33 +2761,38 @@ namespace BalloonPop.EditorTools
         {
             var overlay = CreateOverlay(parent, "LevelSelectPanel", tapOutsideToClose: true);
 
-            var card = CreateRoundedCard(overlay.transform, "Card",
-                new Vector2(0.05f, 0.08f), new Vector2(0.95f, 0.92f), C_PanelBg);
+            var card = CreateCandyPanelCard(overlay.transform, "Card",
+                new Vector2(0.07f, 0.055f), new Vector2(0.93f, 0.945f));
 
             var title = CreateText(card.transform, "Title", "SEVİYE SEÇ",
-                new Vector2(0.05f, 0.88f), new Vector2(0.85f, 0.96f),
-                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 76, C_Accent);
+                new Vector2(0.16f, 0.855f), new Vector2(0.84f, 0.955f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 58, CandyTitleColor);
             title.fontStyle = FontStyles.Bold;
-            title.outlineWidth = 0.28f;
-            title.outlineColor = new Color(0.18f, 0.10f, 0.40f, 1f);
+            title.enableAutoSizing = true;
+            title.fontSizeMin = 34f;
+            title.fontSizeMax = 60f;
+            title.outlineWidth = 0.12f;
+            title.outlineColor = new Color(0.36f, 0.18f, 0.05f, 0.72f);
             var titleShadow = title.gameObject.AddComponent<UnityEngine.UI.Shadow>();
-            titleShadow.effectColor = new Color(0, 0, 0, 0.5f);
-            titleShadow.effectDistance = new Vector2(2, -4);
+            titleShadow.effectColor = new Color(0.36f, 0.18f, 0.05f, 0.30f);
+            titleShadow.effectDistance = new Vector2(1, -2);
 
-            // X kapatma butonu (sağ-üst)
-            BuildCloseXButton(card.transform, new Vector2(0.86f, 0.88f), new Vector2(0.96f, 0.97f), overlay);
+            BuildCloseXButton(card.transform, new Vector2(0.83f, 0.875f),
+                new Vector2(0.965f, 0.975f), overlay);
 
-            var scrollGO = new GameObject("Scroll", typeof(RectTransform), typeof(ScrollRect), typeof(Image), typeof(RectMask2D));
+            var scrollGO = new GameObject("Scroll", typeof(RectTransform), typeof(ScrollRect), typeof(Image));
             scrollGO.transform.SetParent(card.transform, false);
             var srt = (RectTransform)scrollGO.transform;
-            srt.anchorMin = new Vector2(0.05f, 0.08f);
-            srt.anchorMax = new Vector2(0.95f, 0.84f);
+            srt.anchorMin = new Vector2(0.075f, 0.07f);
+            srt.anchorMax = new Vector2(0.925f, 0.80f);
             srt.offsetMin = srt.offsetMax = Vector2.zero;
             var sImg = scrollGO.GetComponent<Image>();
-            sImg.sprite = roundedMd; sImg.type = Image.Type.Sliced;
-            sImg.color = new Color(0,0,0,0.20f);
+            sImg.color = new Color(1f, 1f, 1f, 0f);
             var scroll = scrollGO.GetComponent<ScrollRect>();
             scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Elastic;
+            scroll.scrollSensitivity = 55f;
 
             var viewportGO = new GameObject("Viewport", typeof(RectTransform), typeof(RectMask2D));
             viewportGO.transform.SetParent(scrollGO.transform, false);
@@ -2614,10 +2809,12 @@ namespace BalloonPop.EditorTools
             crt.pivot = new Vector2(0.5f, 1);
             crt.offsetMin = crt.offsetMax = Vector2.zero;
             var glg = contentGO.GetComponent<GridLayoutGroup>();
-            glg.cellSize = new Vector2(230, 230);
-            glg.spacing = new Vector2(28, 36);
-            glg.padding = new RectOffset(28, 28, 36, 36);
+            glg.cellSize = new Vector2(205, 205);
+            glg.spacing = new Vector2(20, 28);
+            glg.padding = new RectOffset(22, 22, 22, 40);
             glg.childAlignment = TextAnchor.UpperCenter;
+            glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            glg.constraintCount = 3;
             var csf = contentGO.GetComponent<ContentSizeFitter>();
             csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             scroll.content = crt;
@@ -2636,6 +2833,95 @@ namespace BalloonPop.EditorTools
         }
 
         private static LevelButton CreateLevelButtonPrefab()
+        {
+            const string path = "Assets/Prefabs/LevelButton.prefab";
+            var normalTile = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/leveltile_normal.png");
+            var lockedTile = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/leveltile_locked.png");
+            var starSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/ui_star.png") ?? star;
+
+            var root = new GameObject("LevelButton", typeof(RectTransform), typeof(Image), typeof(Button));
+            var rootRT = (RectTransform)root.transform;
+            rootRT.sizeDelta = new Vector2(205, 205);
+            var rootImage = root.GetComponent<Image>();
+            rootImage.sprite = normalTile != null ? normalTile : roundedMd;
+            rootImage.type = normalTile != null ? Image.Type.Simple : Image.Type.Sliced;
+            rootImage.preserveAspect = true;
+            rootImage.color = Color.white;
+
+            var numberText = CreateText(root.transform, "Number", "1",
+                new Vector2(0.10f, 0.36f), new Vector2(0.90f, 0.89f),
+                Vector2.zero, Vector2.zero, TextAlignmentOptions.Center, 76, Color.white);
+            numberText.fontStyle = FontStyles.Bold;
+            numberText.enableAutoSizing = true;
+            numberText.fontSizeMin = 42f;
+            numberText.fontSizeMax = 80f;
+            numberText.outlineWidth = 0.10f;
+            numberText.outlineColor = new Color(0.36f, 0.12f, 0.08f, 0.70f);
+            numberText.raycastTarget = false;
+            var numberShadow = numberText.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            numberShadow.effectColor = new Color(0.25f, 0.08f, 0.05f, 0.38f);
+            numberShadow.effectDistance = new Vector2(1, -2);
+
+            var stars = new GameObject[3];
+            for (int i = 0; i < 3; i++)
+            {
+                var starIcon = new GameObject($"Star{i + 1}", typeof(RectTransform), typeof(Image));
+                starIcon.transform.SetParent(root.transform, false);
+                var starRT = (RectTransform)starIcon.transform;
+                // leveltile_normal.png üzerindeki oyukların ölçülen merkezleri:
+                // x=64/125/186, y=176 (üstten). Unity anchor'ı alttan ölçülür.
+                starRT.anchorMin = starRT.anchorMax = new Vector2(125f / 256f, 80f / 256f);
+                // ui_star.png içindeki şeffaf pay çıkarıldığında görünür yıldız oyuğun ölçüsüne eşitlenir.
+                starRT.sizeDelta = new Vector2(54, 54);
+                starRT.anchoredPosition = new Vector2((i - 1) * 49, 0);
+                var starImage = starIcon.GetComponent<Image>();
+                starImage.sprite = starSprite;
+                starImage.preserveAspect = true;
+                starImage.color = Color.white;
+                starImage.raycastTarget = false;
+                stars[i] = starIcon;
+            }
+
+            var locked = new GameObject("Locked", typeof(RectTransform), typeof(Image));
+            locked.transform.SetParent(root.transform, false);
+            var lockedRT = (RectTransform)locked.transform;
+            lockedRT.anchorMin = Vector2.zero;
+            lockedRT.anchorMax = Vector2.one;
+            lockedRT.offsetMin = lockedRT.offsetMax = Vector2.zero;
+            var lockedImage = locked.GetComponent<Image>();
+            lockedImage.sprite = lockedTile != null ? lockedTile : roundedMd;
+            lockedImage.type = lockedTile != null ? Image.Type.Simple : Image.Type.Sliced;
+            lockedImage.preserveAspect = true;
+            lockedImage.color = Color.white;
+            lockedImage.raycastTarget = false;
+            locked.SetActive(false);
+
+            var button = root.GetComponent<Button>();
+            button.targetGraphic = rootImage;
+            var colors = button.colors;
+            colors.normalColor = Color.white;
+            colors.highlightedColor = new Color(1f, 1f, 1f, 0.96f);
+            colors.pressedColor = new Color(0.86f, 0.86f, 0.86f, 1f);
+            colors.disabledColor = Color.white;
+            button.colors = colors;
+
+            var levelButton = root.AddComponent<LevelButton>();
+            var levelButtonSO = new SerializedObject(levelButton);
+            levelButtonSO.FindProperty("button").objectReferenceValue = button;
+            levelButtonSO.FindProperty("numberText").objectReferenceValue = numberText;
+            levelButtonSO.FindProperty("lockedIcon").objectReferenceValue = locked;
+            var starArray = levelButtonSO.FindProperty("starIcons");
+            starArray.arraySize = 3;
+            for (int i = 0; i < 3; i++)
+                starArray.GetArrayElementAtIndex(i).objectReferenceValue = stars[i];
+            levelButtonSO.ApplyModifiedPropertiesWithoutUndo();
+
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, path);
+            Object.DestroyImmediate(root);
+            return prefab.GetComponent<LevelButton>();
+        }
+
+        private static LevelButton CreateLegacyLevelButtonPrefab()
         {
             const string path = "Assets/Prefabs/LevelButton.prefab";
 
@@ -2813,7 +3099,7 @@ namespace BalloonPop.EditorTools
             {
                 cardImage.sprite = settingsPanelSprite;
                 cardImage.type = Image.Type.Simple;
-                cardImage.preserveAspect = true;
+                cardImage.preserveAspect = false;
                 cardImage.color = Color.white;
             }
 
