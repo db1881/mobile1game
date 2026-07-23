@@ -341,8 +341,9 @@ SHA-1 kimlik bilgileri Play Console'a bağlandı. Play Games değişiklikleri ya
 uygulaması `In production` durumunda. Unity Android Setup kaynakları üretildi; Play Mode kontrolünde
 servis `configured=True` ve menü bileşeni bağlı bulundu. IL2CPP/ARM64 debug APK derlemesi başarılı;
 APK SHA-1 imzası Play Console'daki `Balloon Pop Debug` kimliğiyle eşleşiyor. Son kalan doğrulama,
-bu APK üzerinde gerçek hesap seçme ve skor gönderme cihaz testidir. Ayrıca güncel imzalı AAB
-23 Temmuz 2026'da `0.1.2-internal-3` (version code `3`) adıyla Dahili test kanalında yayınlandı;
+bu APK üzerinde gerçek hesap seçme ve skor gönderme cihaz testidir. Ayrıca toplam yıldız liderliği
+ile bağlı kümeleri gezen lazer/patlama güncellemesini birleştiren güncel imzalı AAB
+23 Temmuz 2026'da `0.1.3-internal-4` (version code `4`) adıyla Dahili test kanalında yayınlandı;
 kanal etkin ve geliştirici Google
 hesabı test davetini kabul etti. Katılım bağlantısı:
 `https://play.google.com/apps/internaltest/4701107718413357996`. Ayrıntılar:

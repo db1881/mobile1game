@@ -15,8 +15,8 @@ namespace BalloonPop.EditorTools
         private const string AabOutputName = "BalloonPop.aab";
         private const string PackageId = "com.triogames.balloonpop";
         private const string UploadKeyAlias = "balloonpop";
-        private const string VersionName = "0.1.2";
-        private const int VersionCode = 3;
+        private const string VersionName = "0.1.3";
+        private const int VersionCode = 4;
 
         [MenuItem("BalloonPop/Build APK")]
         public static void BuildAPK_Menu() => DoBuild(false);
