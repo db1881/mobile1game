@@ -7,12 +7,20 @@ namespace BalloonPop.Gameplay
 {
     public static class SpecialBalloonResolver
     {
+        /// <summary>4'lü düz eşleşmenin bomba bırakma olasılığı (0..1).
+        /// Tutmazsa terfi olmaz, 4 balonun dördü de normal patlar.</summary>
+        public static float FourMatchBombChance = 0.5f;
+
         public static SpecialType DetermineSpecial(MatchGroup group)
         {
             int count = group.Cells.Count;
             if (count >= 5) return SpecialType.Rainbow;
-            // 4-match çizgi balonu kapatıldı (user istemiyor) → bomba'ya yükselt
-            if (count == 4) return SpecialType.Bomb;
+            // 4-match çizgi balonu kapatıldı (user istemiyor) → bomba'ya yükselt.
+            // Artık garanti değil: FourMatchBombChance olasılıkla bomba düşer.
+            if (count == 4)
+                return UnityEngine.Random.value < FourMatchBombChance
+                    ? SpecialType.Bomb
+                    : SpecialType.Normal;
             if (group.Shape == MatchShape.Tshape || group.Shape == MatchShape.Lshape)
                 return SpecialType.Bomb;
             return SpecialType.Normal;

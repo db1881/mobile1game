@@ -5,182 +5,184 @@ using UnityEngine;
 namespace BalloonPop.Effects
 {
     /// <summary>
-    /// Fiery "laser" effects for popped balloons. Two flavours:
+    /// Lightning-bolt effects for popped balloons. Two flavours:
     ///
-    ///  • <see cref="SpawnPath"/> — a laser that WANDERS over a whole connected cluster of
-    ///    popping balloons. It is a LineRenderer whose vertices are the balloon centres, so
-    ///    the beam always passes exactly through each balloon's centre (never cuts corners).
-    ///    The line grows one node at a time and its tip moves at constant speed, so the caller
-    ///    can pop each balloon exactly as the tip arrives. This is the main match effect.
+    ///  • <see cref="SpawnPath"/> — a bolt that WANDERS over a whole connected cluster of
+    ///    popping balloons. Each step between two neighbouring balloon centres is drawn as its
+    ///    OWN straight quad, so the bolt runs dead-straight from centre to centre and corners
+    ///    can never bend or smear it (a single LineRenderer polyline bulges and warps its
+    ///    texture at corners once the width approaches the segment length). Consecutive
+    ///    segments show consecutive horizontal slices of the art, so the bolt reads as one
+    ///    continuous streak along the path. The tip advances at constant speed so the caller
+    ///    can pop each balloon exactly as it arrives. This is the main match effect.
     ///
     ///  • <see cref="Spawn"/> — a straight beam that draws itself end-to-end. Kept for bomb /
     ///    special detonations (whole rows).
     ///
-    /// Art comes from Assets/Resources ("Lazer_Line" beam, "Lazer_blast" tip burst); if those
-    /// assets are missing the effect falls back to a procedural texture so it always renders.
+    /// Art comes from Assets/Resources ("lightning_line"); if it's missing the effect falls back
+    /// to a procedural texture so it always renders. There is deliberately no tip burst.
     /// Class/method names are left as "FlameRibbon" to avoid churn in the shared repo.
     /// </summary>
     public class FlameRibbonEffect : MonoBehaviour
     {
-        // Procedural fallbacks, built once.
-        static Sprite _beamSprite;
-        static Sprite _headSprite;
-        static Material _lineMat;
-
-        // Real painted art (loaded once from Resources).
-        static Sprite _lineArt, _blastArt;
-        static bool _lineTried, _blastTried;
+        static Sprite _beamSprite;      // procedural fallback
+        static Sprite _lineArt;
+        static bool _lineTried;
 
         static Sprite LineArt()
         {
-            if (!_lineTried) { _lineArt = Resources.Load<Sprite>("Lazer_Line"); _lineTried = true; }
+            if (!_lineTried) { _lineArt = Resources.Load<Sprite>("lightning_line"); _lineTried = true; }
             return _lineArt != null ? _lineArt : BeamSprite();
         }
 
-        static Sprite BlastArt()
-        {
-            if (!_blastTried) { _blastArt = Resources.Load<Sprite>("Lazer_blast"); _blastTried = true; }
-            return _blastArt != null ? _blastArt : HeadSprite();
-        }
-
         // ============================================================================
-        //  PATH LASER — wanders over a connected cluster, through every balloon centre
+        //  PATH BOLT — straight per-step segments through every balloon centre
         // ============================================================================
 
-        /// <summary>Spawn a laser that grows through <paramref name="path"/> (world points, one
-        /// per balloon centre) at constant speed. The line's vertices ARE those centres, so it
-        /// passes exactly through each one.</summary>
-        /// <param name="width">Beam width in world units.</param>
+        /// <summary>Spawn a bolt that grows through <paramref name="path"/> (world points, one
+        /// per balloon centre) at constant speed.</summary>
+        /// <param name="width">Bolt thickness in world units.</param>
         /// <param name="travelDuration">Seconds for the tip to travel the whole path (time the
         /// balloon pops with the same value to keep them in sync).</param>
         public static FlameRibbonEffect SpawnPath(IList<Vector3> path, float width,
                                                   Color? tint, float travelDuration)
         {
             if (path == null || path.Count == 0) return null;
-
-            var go = new GameObject("LaserPath");
+            var go = new GameObject("BoltPath");
             var fx = go.AddComponent<FlameRibbonEffect>();
-
-            var lr = go.AddComponent<LineRenderer>();
-            lr.material = LineMat();                  // painted fire beam texture
-            lr.textureMode = LineTextureMode.Stretch;
-            lr.alignment = LineAlignment.TransformZ;  // lock ribbon flat in the XY plane (no camera billboard = no wobble)
-            lr.numCornerVertices = 6;
-            lr.numCapVertices = 6;
-            lr.startWidth = width;
-            lr.endWidth = width;
-            lr.useWorldSpace = true;
-            lr.sortingOrder = 40;                     // above balloons (order 0)
-            var col = tint ?? Color.white;
-            lr.startColor = col; lr.endColor = col;
-            lr.positionCount = 1;
-            lr.SetPosition(0, WithZ(path[0], -0.4f));
-
-            // Bright painted burst that rides the moving tip.
-            var headGO = new GameObject("LaserPathHead");
-            headGO.transform.SetParent(go.transform, false);
-            var headSR = headGO.AddComponent<SpriteRenderer>();
-            headSR.sprite = BlastArt();
-            headSR.sortingOrder = 41;
-
-            fx.StartCoroutine(fx.RunPath(go, lr, headSR, path, width, travelDuration));
+            fx.StartCoroutine(fx.RunPath(go, path, width, tint ?? Color.white, travelDuration));
             return fx;
         }
 
-        IEnumerator RunPath(GameObject go, LineRenderer lr, SpriteRenderer head,
-                            IList<Vector3> pts, float width, float dur)
+        IEnumerator RunPath(GameObject go, IList<Vector3> pts, float width, Color tint, float dur)
         {
             int n = pts.Count;
-            var cum = new float[n];
-            cum[0] = 0f;
-            for (int i = 1; i < n; i++) cum[i] = cum[i - 1] + Vector3.Distance(pts[i - 1], pts[i]);
-            float total = cum[n - 1];
+            var art = LineArt();
+            float over = width * 0.30f;              // overlap past each end, so corners have no notch
 
-            Color headCol = Color.white;                       // show the burst art's own colours
-            float headBaseWorld = head.sprite.bounds.size.x;
+            if (n < 2)
+            {
+                // Single balloon: a short flash in place.
+                var only = NewSegment(go, art, 0, 1, tint);
+                only.size = new Vector2(width, width);
+                only.transform.position = WithZ(pts[0], -0.4f);
+                yield return FadeSegments(new[] { only }, 0.25f);
+                Cleanup(go, new[] { only });
+                yield break;
+            }
+
+            int segCount = n - 1;
+            var segs = new SpriteRenderer[segCount];
+            var dirs = new Vector3[segCount];
+            var lens = new float[segCount];
+            var cumStart = new float[segCount];
+            float total = 0f;
+            for (int i = 0; i < segCount; i++)
+            {
+                Vector3 a = pts[i], b = pts[i + 1];
+                Vector3 d = b - a;
+                float len = d.magnitude;
+                lens[i] = len;
+                dirs[i] = len > 1e-5f ? d / len : Vector3.right;
+                cumStart[i] = total;
+                total += len;
+
+                var sr = NewSegment(go, art, i, segCount, tint);
+                sr.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dirs[i].y, dirs[i].x) * Mathf.Rad2Deg);
+                sr.enabled = false;
+                segs[i] = sr;
+            }
+
             float d2 = Mathf.Max(dur, 0.0001f);
-
-            // Draw: grow the line through the centres while the tip travels at constant speed.
             float elapsed = 0f;
             while (elapsed < d2)
             {
-                float d = total > 1e-4f ? (elapsed / d2) * total : 0f;
-                SetPolyline(lr, pts, cum, d);
-                Vector3 tip = total > 1e-4f ? SampleAlong(pts, cum, d) : pts[0];
-                head.transform.position = WithZ(tip, -0.45f);
-                SetHead(head, headCol, 1f, width, headBaseWorld, elapsed);
+                Apply(segs, pts, dirs, lens, cumStart, (elapsed / d2) * total, width, over);
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            SetPolylineFull(lr, pts);
-            head.transform.position = WithZ(pts[n - 1], -0.45f);
+            Apply(segs, pts, dirs, lens, cumStart, total, width, over);
 
-            // Short hold, then fade the whole beam + head out together.
             float hold = 0.10f, h = 0f;
-            while (h < hold) { SetHead(head, headCol, 1f, width, headBaseWorld, elapsed + h); h += Time.deltaTime; yield return null; }
+            while (h < hold) { h += Time.deltaTime; yield return null; }
 
-            float fade = 0.22f, f = 0f;
-            while (f < fade)
+            yield return FadeSegments(segs, 0.22f);
+            Cleanup(go, segs);
+        }
+
+        // Grow each straight segment as the tip passes over it. A segment starts slightly
+        // BEFORE its first centre and, once complete, runs slightly PAST its last centre, so
+        // neighbouring segments overlap at the corner instead of leaving a notch.
+        static void Apply(SpriteRenderer[] segs, IList<Vector3> pts, Vector3[] dirs,
+                          float[] lens, float[] cumStart, float dist, float width, float over)
+        {
+            for (int i = 0; i < segs.Length; i++)
             {
-                float a = 1f - f / fade;
-                SetLineAlpha(lr, a);
-                SetHead(head, headCol, a, width, headBaseWorld, elapsed + hold + f);
+                float drawn = Mathf.Clamp(dist - cumStart[i], 0f, lens[i]);
+                if (drawn <= 1e-4f) { segs[i].enabled = false; continue; }
+                segs[i].enabled = true;
+                bool complete = drawn >= lens[i] - 1e-4f;
+                float L = drawn + over + (complete ? over : 0f);
+                Vector3 anchor = pts[i] - dirs[i] * over;
+                segs[i].size = new Vector2(L, width);
+                segs[i].transform.position = WithZ(anchor + dirs[i] * (L * 0.5f), -0.4f);
+            }
+        }
+
+        IEnumerator FadeSegments(SpriteRenderer[] segs, float dur)
+        {
+            float f = 0f;
+            while (f < dur)
+            {
+                float a = 1f - f / dur;
+                for (int i = 0; i < segs.Length; i++)
+                {
+                    if (segs[i] == null) continue;
+                    var c = segs[i].color; c.a = a; segs[i].color = c;
+                }
                 f += Time.deltaTime;
                 yield return null;
             }
+        }
+
+        static void Cleanup(GameObject go, SpriteRenderer[] segs)
+        {
+            // The per-segment slice sprites are created at runtime — release them (this does
+            // NOT touch the shared texture the slices point at).
+            for (int i = 0; i < segs.Length; i++)
+                if (segs[i] != null && segs[i].sprite != null) Destroy(segs[i].sprite);
             Destroy(go);
         }
 
-        // Reveal the polyline up to travelled distance d: full nodes already passed, plus the
-        // moving tip on the current segment. Because the nodes ARE the balloon centres, the
-        // rendered line always runs exactly through them.
-        static void SetPolyline(LineRenderer lr, IList<Vector3> pts, float[] cum, float d)
+        static SpriteRenderer NewSegment(GameObject parent, Sprite art, int index, int count, Color tint)
         {
-            int n = pts.Count;
-            if (d >= cum[n - 1]) { SetPolylineFull(lr, pts); return; }
-            int i = 1;
-            while (i < n && cum[i] < d) i++;
-            lr.positionCount = i + 1;
-            for (int k = 0; k < i; k++) lr.SetPosition(k, WithZ(pts[k], -0.4f));
-            float segLen = cum[i] - cum[i - 1];
-            float u = segLen > 1e-5f ? (d - cum[i - 1]) / segLen : 0f;
-            lr.SetPosition(i, WithZ(Vector3.Lerp(pts[i - 1], pts[i], u), -0.4f));
+            var sgo = new GameObject("BoltSeg");
+            sgo.transform.SetParent(parent.transform, false);
+            var sr = sgo.AddComponent<SpriteRenderer>();
+            sr.sprite = SliceOf(art, index, count);
+            sr.drawMode = SpriteDrawMode.Sliced;     // lets us drive size directly
+            sr.sortingOrder = 40;                    // above balloons (order 0)
+            sr.color = tint;
+            sr.size = new Vector2(0.001f, 0.001f);
+            return sr;
         }
 
-        static void SetPolylineFull(LineRenderer lr, IList<Vector3> pts)
+        // Carve the art into `count` horizontal slices so consecutive segments continue the
+        // same streak instead of each repeating the whole bolt. Always returns a NEW sprite,
+        // so Cleanup can release it without touching the imported asset.
+        static Sprite SliceOf(Sprite src, int index, int count)
         {
-            int n = pts.Count;
-            lr.positionCount = n;
-            for (int k = 0; k < n; k++) lr.SetPosition(k, WithZ(pts[k], -0.4f));
-        }
-
-        static void SetLineAlpha(LineRenderer lr, float a)
-        {
-            var c1 = lr.startColor; c1.a = a; lr.startColor = c1;
-            var c2 = lr.endColor; c2.a = a; lr.endColor = c2;
-        }
-
-        static Vector3 SampleAlong(IList<Vector3> pts, float[] cum, float d)
-        {
-            int n = pts.Count;
-            if (d <= 0f) return pts[0];
-            if (d >= cum[n - 1]) return pts[n - 1];
-            int i = 1;
-            while (i < n && cum[i] < d) i++;
-            float segLen = cum[i] - cum[i - 1];
-            float u = segLen > 1e-5f ? (d - cum[i - 1]) / segLen : 0f;
-            return Vector3.Lerp(pts[i - 1], pts[i], u);
+            var tex = src != null ? src.texture : null;
+            if (tex == null) return src;
+            int w = tex.width, h = tex.height;
+            if (count < 1) count = 1;
+            int x0 = Mathf.Clamp(Mathf.RoundToInt(index * (w / (float)count)), 0, w - 1);
+            int x1 = Mathf.Clamp(Mathf.RoundToInt((index + 1) * (w / (float)count)), x0 + 1, w);
+            return Sprite.Create(tex, new Rect(x0, 0f, x1 - x0, h), new Vector2(0.5f, 0.5f),
+                                 100f, 0, SpriteMeshType.FullRect);
         }
 
         static Vector3 WithZ(Vector3 v, float z) { v.z = z; return v; }
-
-        void SetHead(SpriteRenderer head, Color baseCol, float alpha, float width, float baseWorld, float t)
-        {
-            var c = baseCol; c.a = Mathf.Clamp01(alpha); head.color = c;
-            float w = width * (1.3f + 0.18f * Mathf.Sin(t * 48f));
-            float s = baseWorld > 1e-4f ? w / baseWorld : w;
-            head.transform.localScale = new Vector3(s, s, 1f);
-        }
 
         // ============================================================================
         //  STRAIGHT BEAM — draws end-to-end (kept for bomb / special detonations)
@@ -190,7 +192,7 @@ namespace BalloonPop.Effects
         public static FlameRibbonEffect Spawn(Sprite[] frames, Vector3 startWorld, Vector3 endWorld,
                                               float thickness, float overhang, Color? tint = null, float duration = 0.8f)
         {
-            var go = new GameObject("LaserBeam");
+            var go = new GameObject("BoltBeam");
             var fx = go.AddComponent<FlameRibbonEffect>();
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = LineArt();
@@ -209,15 +211,7 @@ namespace BalloonPop.Effects
             Vector3 dirHat = span > 0.0001f ? dir / span : Vector3.right;
             float fullLen = span + overhang;
             Vector3 startAnchor = a - dirHat * (overhang * 0.5f);
-            float angleDeg = Mathf.Atan2(dirHat.y, dirHat.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angleDeg);
-
-            var headGO = new GameObject("LaserHead");
-            var headSR = headGO.AddComponent<SpriteRenderer>();
-            headSR.sprite = BlastArt();
-            headSR.sortingOrder = 41;
-            float headBaseWorld = headSR.sprite.bounds.size.x;
-            Color headBase = Color.white;
+            transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dirHat.y, dirHat.x) * Mathf.Rad2Deg);
 
             const float drawEnd = 0.62f;
             const float holdEnd = 0.82f;
@@ -238,49 +232,20 @@ namespace BalloonPop.Effects
                 else if (k < holdEnd) beamA = 1f;
                 else beamA = Mathf.Clamp01(1f - (k - holdEnd) / (1f - holdEnd));
 
-                float flick = 1f + 0.08f * Mathf.Sin(t * 45f);
-                sr.size = new Vector2(curLen, thickness * flick);
+                sr.size = new Vector2(curLen, thickness);
                 Vector3 center = startAnchor + dirHat * (curLen * 0.5f);
                 center.z = -0.4f;
                 transform.position = center;
                 var bc = sr.color; bc.a = beamA; sr.color = bc;
 
-                float headA;
-                if (k < drawEnd) headA = (k < 0.08f) ? k / 0.08f : 1f;
-                else headA = Mathf.Clamp01(1f - (k - drawEnd) / 0.14f);
-                Vector3 tip = startAnchor + dirHat * curLen;
-                tip.z = -0.45f;
-                headGO.transform.position = tip;
-                float headWorld = thickness * (1.6f + 0.20f * Mathf.Sin(t * 50f));
-                float headScale = headBaseWorld > 1e-4f ? headWorld / headBaseWorld : headWorld;
-                headGO.transform.localScale = new Vector3(headScale, headScale, 1f);
-                var hc = headBase; hc.a = headA; headSR.color = hc;
-
                 t += Time.deltaTime;
                 yield return null;
             }
-            Destroy(headGO);
             Destroy(gameObject);
         }
 
         // ============================================================================
-        //  Materials
-        // ============================================================================
-
-        // Alpha-blended material carrying the painted fire-beam texture (mobile-safe).
-        static Material LineMat()
-        {
-            if (_lineMat != null) return _lineMat;
-            Shader sh = Shader.Find("Sprites/Default");
-            if (sh == null) sh = Shader.Find("Legacy Shaders/Diffuse");
-            _lineMat = new Material(sh) { name = "LaserLineMat(runtime)" };
-            var ls = LineArt();
-            if (ls != null && ls.texture != null) _lineMat.mainTexture = ls.texture;
-            return _lineMat;
-        }
-
-        // ============================================================================
-        //  Procedural fallbacks (used only if the Resources art is missing)
+        //  Procedural fallback (used only if the Resources art is missing)
         // ============================================================================
 
         static Sprite BeamSprite()
@@ -291,7 +256,7 @@ namespace BalloonPop.Effects
             {
                 wrapMode = TextureWrapMode.Clamp,
                 filterMode = FilterMode.Bilinear,
-                name = "LaserBeamTex"
+                name = "BoltFallbackTex"
             };
             for (int y = 0; y < H; y++)
             {
@@ -299,9 +264,9 @@ namespace BalloonPop.Effects
                 Color col;
                 if (tt < 0.16f) col = new Color(1f, 0.98f, 0.90f);
                 else if (tt < 0.42f)
-                    col = Color.Lerp(new Color(1f, 0.92f, 0.55f), new Color(1f, 0.55f, 0.14f), Mathf.InverseLerp(0.16f, 0.42f, tt));
+                    col = Color.Lerp(new Color(0.85f, 0.94f, 1f), new Color(0.35f, 0.65f, 1f), Mathf.InverseLerp(0.16f, 0.42f, tt));
                 else
-                    col = Color.Lerp(new Color(1f, 0.45f, 0.12f), new Color(0.95f, 0.18f, 0.05f), Mathf.InverseLerp(0.42f, 1f, tt));
+                    col = Color.Lerp(new Color(0.35f, 0.65f, 1f), new Color(0.12f, 0.25f, 0.85f), Mathf.InverseLerp(0.42f, 1f, tt));
                 float a = tt < 0.16f ? 1f : Mathf.Pow(1f - Mathf.InverseLerp(0.16f, 1f, tt), 1.9f);
                 col.a = Mathf.Clamp01(a);
                 for (int x = 0; x < W; x++) tex.SetPixel(x, y, col);
@@ -309,32 +274,6 @@ namespace BalloonPop.Effects
             tex.Apply();
             _beamSprite = Sprite.Create(tex, new Rect(0, 0, W, H), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);
             return _beamSprite;
-        }
-
-        static Sprite HeadSprite()
-        {
-            if (_headSprite != null) return _headSprite;
-            const int S = 64;
-            var tex = new Texture2D(S, S, TextureFormat.RGBA32, false)
-            {
-                wrapMode = TextureWrapMode.Clamp,
-                filterMode = FilterMode.Bilinear,
-                name = "LaserHeadTex"
-            };
-            Vector2 c = new Vector2((S - 1) / 2f, (S - 1) / 2f);
-            float r = S / 2f;
-            for (int y = 0; y < S; y++)
-                for (int x = 0; x < S; x++)
-                {
-                    float d = Mathf.Clamp01(Vector2.Distance(new Vector2(x, y), c) / r);
-                    float a = Mathf.Pow(1f - d, 2.2f);
-                    Color col = Color.Lerp(new Color(1f, 0.97f, 0.85f), new Color(1f, 0.50f, 0.15f), Mathf.Clamp01(d * 1.3f));
-                    col.a = Mathf.Clamp01(a);
-                    tex.SetPixel(x, y, col);
-                }
-            tex.Apply();
-            _headSprite = Sprite.Create(tex, new Rect(0, 0, S, S), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);
-            return _headSprite;
         }
     }
 }

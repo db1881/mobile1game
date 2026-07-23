@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 00838e943bac1a542a9d6a0ccff95601
+guid: 3578e194fe3f5dd4487b0f430f1ae1fd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7238681408964145325
-    second: Lazer_blast_0
-  - first:
-      213: -6177460849100170977
-    second: Lazer_blast_1
+      213: -3828815230306558480
+    second: lightning_line_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lazer_blast_0
+      name: lightning_line_0
       rect:
         serializedVersion: 2
-        x: 77
-        y: 115
-        width: 1104
-        height: 1049
+        x: 0
+        y: 180
+        width: 2508
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da03887a366f47460800000000000000
-      internalID: 7238681408964145325
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lazer_blast_1
-      rect:
-        serializedVersion: 2
-        x: 447
-        y: 1131
-        width: 21
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f19508b5610454aa0800000000000000
-      internalID: -6177460849100170977
+      spriteID: 0fdd8fe75d05ddac0800000000000000
+      internalID: -3828815230306558480
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Lazer_blast_0: 7238681408964145325
-      Lazer_blast_1: -6177460849100170977
+      lightning_line_0: -3828815230306558480
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
