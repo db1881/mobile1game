@@ -161,9 +161,6 @@ namespace BalloonPop.Core
             int curScore = ScoreManager.Instance != null ? ScoreManager.Instance.CurrentScore : 0;
             Debug.Log($"[GameManager] Level {levelNum} WON! Score: {curScore} (movesLeft bonus: +{movesLeftBonus})");
 
-            try { GameEvents.RaiseLevelWon(); }
-            catch (System.Exception e) { Debug.LogError($"[GameManager] RaiseLevelWon error: {e}"); }
-
             if (currentLevel != null && ScoreManager.Instance != null)
             {
                 try
@@ -181,6 +178,10 @@ namespace BalloonPop.Core
                     Debug.LogError($"[GameManager] MarkLevelComplete error: {e}");
                 }
             }
+
+            // Yıldız toplamı önce kaydedilir; çevrimiçi sıralama güncel toplamı bu olaydan okur.
+            try { GameEvents.RaiseLevelWon(); }
+            catch (System.Exception e) { Debug.LogError($"[GameManager] RaiseLevelWon error: {e}"); }
         }
 
         private void Update()
