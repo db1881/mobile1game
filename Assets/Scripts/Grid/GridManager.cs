@@ -325,21 +325,33 @@ namespace BalloonPop.Grid
                     GameManager.Instance.UpdateGoal(kv.Key, kv.Value);
             }
 
-            SpawnParticlesForPopped(toPop);
             SpawnScorePopups(matches, toPop);
-            SpawnFlameRibbons(matches);
 
+            // One camera shake for the whole pop (per-balloon FX now happens as each pops).
+            if (toPop.Count >= 3 && CameraFitter.Instance != null)
+                CameraFitter.Instance.Shake(popShakeAmount * Mathf.Min(toPop.Count, 6));
+
+            // Split the matched balloons into connected clusters; send ONE laser snaking over
+            // each cluster and pop every balloon the instant the laser tip reaches it, so the
+            // pops stay in sync with the wandering laser instead of all bursting at once.
+            var clusters = BuildLaserPaths(matches, toPop);
+            var onPath = new HashSet<Balloon>();
             var coroutines = new List<Coroutine>();
-            foreach (var b in toPop)
+            foreach (var cluster in clusters)
             {
-                int bx = b.X, by = b.Y;
-                if (IsInside(bx, by) && cells[bx, by].CurrentBalloon == b)
-                    cells[bx, by].CurrentBalloon = null;
-                coroutines.Add(StartCoroutine(b.PopRoutine()));
+                var pts = new List<Vector3>(cluster.Count);
+                foreach (var b in cluster) { pts.Add(GridToWorld(b.X, b.Y)); onPath.Add(b); }
+                float travel;
+                var arrive = LaserArrivalTimes(pts, out travel);
+                FlameRibbonEffect.SpawnPath(pts, cellSize * 1.1f, null, travel);
+                for (int i = 0; i < cluster.Count; i++)
+                    coroutines.Add(StartCoroutine(PopBalloonAt(cluster[i], arrive[i])));
             }
-            foreach (var c in coroutines) yield return c;
+            // Special / bomb chain-reaction balloons aren't part of the traced line — pop now.
+            foreach (var b in toPop)
+                if (!onPath.Contains(b)) coroutines.Add(StartCoroutine(PopBalloonAt(b, 0f)));
 
-            foreach (var b in toPop) ReturnToPool(b);
+            foreach (var c in coroutines) yield return c;
         }
 
         private void SpawnParticlesForPopped(HashSet<Balloon> popped)
@@ -367,22 +379,115 @@ namespace BalloonPop.Grid
             ScorePopup.Spawn(scorePopupPrefab, GridToWorld(first.X, first.Y) + Vector3.up * 0.5f, $"+{amount}");
         }
 
-        // Her eşleşme MatchFinder tarafından zaten düz bir yatay/dikey dizi olarak bulunur;
-        // grubun ilk ve son hücresi çizginin iki ucudur. Her çizgi için üzerinden alevli bir
-        // şerit geçiririz (start -> end). Renk boyalı sprite'tan gelir (tint = beyaz).
-        private void SpawnFlameRibbons(List<MatchGroup> matches)
+        // Bir balonu, lazer ucu ona vardığında (delay) patlatır: hücreyi boşaltır, patlama
+        // efektini o an çıkarır, pop animasyonunu oynatır ve balonu havuza döndürür.
+        private System.Collections.IEnumerator PopBalloonAt(Balloon b, float delay)
         {
-            if (flameRibbonFrames == null || flameRibbonFrames.Length == 0 || matches == null) return;
+            if (delay > 0f) yield return new WaitForSeconds(delay);
+            if (b == null) yield break;
+            int bx = b.X, by = b.Y;
+            if (IsInside(bx, by) && cells[bx, by].CurrentBalloon == b)
+                cells[bx, by].CurrentBalloon = null;
+            SpawnPopFxFor(b);
+            yield return b.PopRoutine();
+            ReturnToPool(b);
+        }
+
+        // Tek bir balonun patlama efekti (parçacık + flash) — patladığı anda çıkar.
+        private void SpawnPopFxFor(Balloon b)
+        {
+            if (b == null) return;
+            var color = GetVisualColor(b);
+            var pos = GridToWorld(b.X, b.Y);
+            if (particlePrefab != null) ParticleEffect.Spawn(particlePrefab, pos, color);
+            if (flashPrefab != null) FlashEffect.Spawn(flashPrefab, pos, Color.white, 1.0f, 0.18f);
+        }
+
+        // Patlayacak eşleşme balonlarını 4-komşulukla bağlı kümelere ayırır; her kümeyi
+        // en-yakın-komşu "yılan" sırasına dizer ki tek bir lazer hepsinin üzerinden geçebilsin.
+        private List<List<Balloon>> BuildLaserPaths(List<MatchGroup> matches, HashSet<Balloon> toPop)
+        {
+            var byCoord = new Dictionary<int, Balloon>();
             foreach (var group in matches)
             {
-                if (group.Cells == null || group.Cells.Count < 3) continue;
-                var startCell = group.Cells[0];
-                var endCell = group.Cells[group.Cells.Count - 1];
-                Vector3 a = GridToWorld(startCell.X, startCell.Y);
-                Vector3 b = GridToWorld(endCell.X, endCell.Y);
-                // uzunluk = patlayan balon sayısı: span=(N-1)*cellSize, +cellSize taşma => tam N hücre kapanır
-                FlameRibbonEffect.Spawn(flameRibbonFrames, a, b, cellSize * 2.4f, cellSize);
+                if (group.Cells == null) continue;
+                foreach (var cell in group.Cells)
+                {
+                    if (cell == null || !cell.HasBalloon) continue;
+                    var b = cell.CurrentBalloon;
+                    if (!toPop.Contains(b)) continue;      // özel'e terfi eden hücreler patlamaz
+                    byCoord[cell.X * 100 + cell.Y] = b;
+                }
             }
+
+            var result = new List<List<Balloon>>();
+            var visited = new HashSet<int>();
+            foreach (var kv in byCoord)
+            {
+                if (visited.Contains(kv.Key)) continue;
+                var comp = new List<Balloon>();
+                var stack = new Stack<int>();
+                stack.Push(kv.Key); visited.Add(kv.Key);
+                while (stack.Count > 0)
+                {
+                    int k = stack.Pop();
+                    comp.Add(byCoord[k]);
+                    int x = k / 100, y = k % 100;
+                    TryNeighbour(byCoord, visited, stack, (x + 1) * 100 + y);
+                    TryNeighbour(byCoord, visited, stack, (x - 1) * 100 + y);
+                    TryNeighbour(byCoord, visited, stack, x * 100 + (y + 1));
+                    TryNeighbour(byCoord, visited, stack, x * 100 + (y - 1));
+                }
+                result.Add(OrderNearestNeighbour(comp));
+            }
+            return result;
+        }
+
+        private static void TryNeighbour(Dictionary<int, Balloon> byCoord, HashSet<int> visited, Stack<int> stack, int key)
+        {
+            if (byCoord.ContainsKey(key) && !visited.Contains(key)) { visited.Add(key); stack.Push(key); }
+        }
+
+        // Bir kümeyi, sol-alttan başlayıp her adımda en yakın komşuya giderek diz.
+        private static List<Balloon> OrderNearestNeighbour(List<Balloon> comp)
+        {
+            var remaining = new List<Balloon>(comp);
+            remaining.Sort((p, q) => p.Y != q.Y ? p.Y - q.Y : p.X - q.X);
+            var path = new List<Balloon>();
+            var cur = remaining[0];
+            remaining.RemoveAt(0);
+            path.Add(cur);
+            while (remaining.Count > 0)
+            {
+                var c = cur;
+                remaining.Sort((p, q) =>
+                {
+                    int dp = Mathf.Abs(p.X - c.X) + Mathf.Abs(p.Y - c.Y);
+                    int dq = Mathf.Abs(q.X - c.X) + Mathf.Abs(q.Y - c.Y);
+                    if (dp != dq) return dp - dq;
+                    if (p.Y != q.Y) return p.Y - q.Y;
+                    return p.X - q.X;
+                });
+                cur = remaining[0];
+                remaining.RemoveAt(0);
+                path.Add(cur);
+            }
+            return path;
+        }
+
+        // Sabit hızlı geçiş: her yol noktasının varış anı + toplam süre. Lazer ucu da aynı
+        // modelle ilerlediği için balon patlamaları lazerle birebir senkron kalır.
+        private float[] LaserArrivalTimes(List<Vector3> pts, out float travel)
+        {
+            int n = pts.Count;
+            var cum = new float[n];
+            cum[0] = 0f;
+            for (int i = 1; i < n; i++) cum[i] = cum[i - 1] + Vector3.Distance(pts[i - 1], pts[i]);
+            float total = cum[n - 1];
+            travel = Mathf.Clamp(total * 0.08f, 0.16f, 0.75f);
+            var arrive = new float[n];
+            for (int i = 0; i < n; i++) arrive[i] = total > 1e-4f ? (cum[i] / total) * travel : 0f;
+            return arrive;
         }
 
         // Aynı alevli şeridi rastgele bir hücre kümesine (bomba 3x3, özel patlama) uygular:
@@ -403,7 +508,7 @@ namespace BalloonPop.Grid
                 int y = kv.Key;
                 Vector3 a = GridToWorld(minX[y], y);
                 Vector3 b = GridToWorld(maxX[y], y);
-                FlameRibbonEffect.Spawn(flameRibbonFrames, a, b, cellSize * 2.4f, cellSize);
+                FlameRibbonEffect.Spawn(flameRibbonFrames, a, b, cellSize * 0.6f, cellSize);
             }
         }
 
